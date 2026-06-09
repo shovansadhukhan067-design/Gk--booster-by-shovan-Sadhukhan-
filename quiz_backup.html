@@ -1,1 +1,49 @@
 
+<!DOCTYPE html>
+
+<html>
+<head>
+<title>GK Booster Quiz</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body{
+font-family:Arial;
+padding:20px;
+text-align:center;
+}
+button{
+display:block;
+width:100%;
+padding:12px;
+margin:10px 0;
+}
+</style>
+</head>
+<body>
+
+<h2>GK Booster Quiz</h2>
+
+<p id="question">Who is known as the Father of the Indian Constitution?</p>
+
+<button onclick="check(false)">Mahatma Gandhi</button> <button onclick="check(false)">Jawaharlal Nehru</button> <button onclick="check(true)">B. R. Ambedkar</button> <button onclick="check(false)">Subhas Chandra Bose</button>
+
+<h3 id="score">Score: 0</h3>
+
+<script>
+let score = 0;
+
+function check(correct){
+if(correct){
+score++;
+document.getElementById("score").innerHTML =
+"🏆 Score: " + score;
+alert("✅ Correct!");
+}
+else{
+alert("❌ Wrong! Correct Answer: B. R. Ambedkar");
+}
+}
+</script>
+
+</body>
+</html>
