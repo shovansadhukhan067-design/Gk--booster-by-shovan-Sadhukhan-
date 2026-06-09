@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GK Booster - Multi-Language Quiz</title>
+    <title>GK Booster - Ultimate Quiz App</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -22,12 +22,10 @@
             padding: 30px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             width: 100%;
-            max-width: 500px;
+            max-width: 550px;
             text-align: center;
             position: relative;
         }
-        
-        /* Language Switcher Button Style */
         .lang-btn {
             position: absolute;
             top: 15px;
@@ -44,7 +42,6 @@
         .lang-btn:hover {
             background-color: #dfe4ea;
         }
-
         h2 {
             color: #333;
             margin-bottom: 20px;
@@ -61,8 +58,8 @@
             background-color: #f8f9fa;
             border: 2px solid #e9ecef;
             border-radius: 12px;
-            padding: 20px 10px;
-            font-size: 18px;
+            padding: 18px 10px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -77,6 +74,9 @@
         .cat-geography:hover { border-color: #0abde3; color: #0abde3; }
         .cat-polity:hover { border-color: #10ac84; color: #10ac84; }
         .cat-science:hover { border-color: #ee5253; color: #ee5253; }
+        .cat-math:hover { border-color: #ff6b6b; color: #ff6b6b; }
+        .cat-ca:hover { border-color: #feca57; color: #feca57; }
+        .cat-english:hover { border-color: #54a0ff; color: #54a0ff; }
 
         .progress {
             font-size: 14px;
@@ -113,7 +113,6 @@
             color: white !important;
             border-color: #c0392b !important;
         }
-        
         .explanation-box {
             background-color: #e8f4fd;
             border-left: 5px solid #1da1f2;
@@ -131,7 +130,6 @@
             color: #1da1f2;
             margin-bottom: 5px;
         }
-
         .next-btn {
             background-color: #4a6cf7;
             color: white;
@@ -173,10 +171,9 @@
 <body>
 
 <div class="quiz-container">
-    <!-- Language Switcher Button -->
     <button class="lang-btn" id="lang-toggle-btn" onclick="toggleLanguage()">English</button>
     
-    <!-- স্ক্রিন ১: সাবজেক্ট সিলেকশন -->
+    <!-- স্ক্রিন ১: সাবজেক্ট সিলেকশন (৭টি ক্যাটাগরি) -->
     <div id="category-screen" class="screen active-screen">
         <h2 id="menu-title">📚 একটি বিষয় বেছে নিন</h2>
         <div class="category-grid">
@@ -184,18 +181,20 @@
             <button class="cat-btn cat-geography" onclick="startQuiz('geography')"><span id="cat-g-text">🌍 ভূগোল</span></button>
             <button class="cat-btn cat-polity" onclick="startQuiz('polity')"><span id="cat-p-text">⚖️ রাষ্ট্রবিজ্ঞান</span></button>
             <button class="cat-btn cat-science" onclick="startQuiz('science')"><span id="cat-s-text">🧪 বিজ্ঞান</span></button>
+            <button class="cat-btn cat-math" onclick="startQuiz('math')"><span id="cat-m-text">🔢 গণিত</span></button>
+            <button class="cat-btn cat-ca" onclick="startQuiz('ca')"><span id="cat-c-text">🔥 কারেন্ট অ্যাফেয়ার্স</span></button>
+            <button class="cat-btn cat-english" onclick="startQuiz('english')"><span id="cat-e-text">🔤 ইংরেজি</span></button>
         </div>
     </div>
 
     <!-- স্ক্রিন ২: মূল কুইজ স্ক্রিন -->
     <div id="quiz-screen" class="screen">
-        <div class="progress" id="progress-text">Question 1 of 10</div>
+        <div class="progress" id="progress-text">Question 1 of 5</div>
         <h2 id="question-text">Loading Question...</h2>
         <div class="options-container" id="options-box">
             <!-- Options load here -->
         </div>
         
-        <!-- Explanation Box -->
         <div class="explanation-box" id="explanation-container">
             <div class="explanation-title" id="exp-title-text">💡 সঠিক উত্তর ও তথ্য:</div>
             <div id="explanation-text">Explanation text.</div>
@@ -207,156 +206,122 @@
     <!-- স্ক্রিন ৩: রেজাল্ট স্ক্রিন -->
     <div id="result-screen" class="screen">
         <h2 id="result-title">🎉 কুইজ সম্পূর্ণ হয়েছে! 🎉</h2>
-        <p class="score-text" id="final-score-text">Your Score: 0 / 10</p>
+        <p class="score-text" id="final-score-text">Your Score: 0 / 5</p>
         <button class="restart-btn" id="home-btn-text" onclick="goToHome()">মূল মেনু 🔄</button>
     </div>
 </div>
 
 <script>
-let currentLang = 'bn'; // ডিফল্ট ভাষা বাংলা
-
-// ইন্টারফেসের লেখার অনুবাদ সমূহ
-const uiLabels = {
-    bn: {
-        menuTitle: "📚 একটি বিষয় বেছে নিন",
-        history: "📜 ইতিহাস", geography: "🌍 ভূগোল", polity: "⚖️ রাষ্ট্রবিজ্ঞান", science: "🧪 বিজ্ঞান",
-        nextBtn: "পরবর্তী প্রশ্ন ➔", expTitle: "💡 সঠিক উত্তর ও তথ্য:",
-        resultTitle: "🎉 কুইজ সম্পূর্ণ হয়েছে! 🎉", homeBtn: "মূল মেনু 🔄", progress: "প্রশ্ন"
-    },
-    en: {
-        menuTitle: "📚 Choose a Subject",
-        history: "📜 History", geography: "🌍 Geography", polity: "⚖️ Polity", science: "🧪 Science",
-        nextBtn: "Next Question ➔", expTitle: "💡 Correct Answer & Fact:",
-        resultTitle: "🎉 Quiz Completed! 🎉", homeBtn: "Main Menu 🔄", progress: "Question"
-    }
-};
-
-// বিষয়ভিত্তিক প্রশ্ন, উত্তর এবং ব্যাখ্যাসহ ডাটাবেস (বাংলা ও ইংরেজি উভয় সংস্করণে)
-const quizQuestions = {
-    bn: {
-        history: [
-            { question: "আজাদ হিন্দ ফৌজ কে গঠন করেছিলেন?", options: ["মহাত্মা গান্ধী", "নেতাজী সুভাষচন্দ্র বসু", "রাসবিহারী বসু", "ভগত সিং"], correct: 2, exp: "১৯৪২ সালে টোকিওতে রাসবিহারী বসু এটি গঠন করেন। পরে নেতাজী এর নেতৃত্বভার নেন।" },
-            { question: "পলাশীর যুদ্ধ কত সালে হয়েছিল?", options: ["১৭৫৭", "১৭৬৪", "১৮৫৭", "১৯৪৭"], correct: 0, exp: "১৭৫৭ সালের ২৩শে জুন নবাব সিরাজউদ্দৌলা এবং ব্রিটিশ ইস্ট ইন্ডিয়া কোম্পানির রবার্ট ক্লাইভের মধ্যে এই যুদ্ধ হয়েছিল।" },
-            { question: "সিন্ধু সভ্যতার অবশিষ্টাংশ 'লোথাল' কোথায় অবস্থিত?", options: ["পাঞ্জাব", "রাজস্থান", "গুজরাট", "সিন্ধু প্রদেশ"], correct: 2, exp: "লোথাল হলো সিন্ধু সভ্যতার প্রাচীনতম একটি বন্দর শহর, যা বর্তমান ভারতের ગુજરાત রাজ্যে অবস্থিত।" },
-            { question: "কাকে 'ভারতের নেপোলিয়ন' বলা হতো?", options: ["চন্দ্রগুপ্ত মৌর্য", "সমুদ্রগুপ্ত", "আকবর", "কনিষ্ক"], correct: 1, exp: "সম্রাট সমুদ্রগুপ্তের বিশাল সামরিক বিজয়ের কারণে ঐতিহাসিক ভি. এ. স্মিথ তাঁকে 'ভারতের নেপোলিয়ন' আখ্যা দেন।" },
-            { question: "ত্রিপুরী অধিবেশনে সুভাষচন্দ্র বসুর কাছে পরাজিত কংগ্রেস প্রার্থী কে ছিলেন?", options: ["জওহরলাল নেহেরু", "পট্টভি সিতারামাইয়া", "রাজেন্দ্র প্রসাদ", "সর্দার প্যাটেল"], correct: 1, exp: "১৯৩৯ সালের ত্রিপুরী কংগ্রেসে মহাত্মা গান্ধীর মনোনীত প্রার্থী পট্টভি সিতারামাইয়াকে হারিয়ে সুভাষচন্দ্র বসু দ্বিতীয়বার কংগ্রেস সভাপতি নির্বাচিত হন।" },
-            { question: "আর্যরা প্রথম ভারতের কোথায় বসতি স্থাপন করেছিল?", options: ["পাঞ্জাব", "কাশ্মীর", "সিন্ধু", "গুজরাট"], correct: 0, exp: "আর্যরা প্রথম 'সপ্তসিন্ধু' বা পাঞ্জাব অঞ্চলে বসতি গড়ে তোলে।" },
-            { question: "আইন-ই-আকবরী গ্রন্থের রচয়িতা কে?", options: ["আকবর", "আবুল ফজল", "ফৈজী", "বদায়ুনী"], correct: 1, exp: "সম্রাট আকবরের সভার নবরত্নের অন্যতম সদস্য আবুল ফজল এই বিখ্যাত গ্রন্থটি লেখেন।" },
-            { question: "কত সালে মহাত্মা গান্ধী ডান্ডি অভিযান শুরু করেন?", options: ["১৯২০", "১৯৩০", "১৯৩২", "১৯৪২"], correct: 1, exp: "১৯৩০ সালের ১২ই মার্চ মহাত্মা গান্ধী সবরমতী আশ্রম থেকে ডান্ডি পর্যন্ত লবণের ওপর ব্রিটিশ করের প্রতিবাদে আইন অমান্য আন্দোলন শুরু করেন।" },
-            { question: "বৌদ্ধদের পবিত্র ধর্মগ্রন্থের নাম কী?", options: ["বেদ", "ত্রিপিটক", "গীতা", "অঙ্গরাজ"], correct: 1, exp: "বৌদ্ধদের প্রধান ধর্মগ্রন্থ হলো 'ত্রিপিটক', যা পালি ভাষায় রচিত।" },
-            { question: "দিল্লির সুলতানি সাম্রাজ্যের প্রথম মহিলা শাসক কে ছিলেন?", options: ["নূরজাহান", "রজিয়া সুলতানা", "চাঁদ বিবি", "মুমতাজ"], correct: 1, exp: "সুলতান ইলতুতমিশের কন্যা সুলতানা রজিয়া ১২৩৬ সালে দিল্লির সিংহাসনে বসেন।" }
-        ],
-        geography: [
-            { question: "বিশ্বের বৃহত্তম মহাসাগর কোনটি?", options: ["আটলান্টিক মহাসাগর", "ভারত মহাসাগর", "প্রশান্ত মহাসাগর", "উত্তর মহাসাগর"], correct: 2, exp: "প্রশান্ত মহাসাগর হলো পৃথিবীর বৃহত্তম ও গভীরতম মহাসাগর।" },
-            { question: "কোন গ্রহকে 'লাল গ্রহ' বলা হয়?", options: ["শুক্র", "বুধ", "মঙ্গল", "বৃহস্পতি"], correct: 2, exp: "মঙ্গল গ্রহের মাটিতে প্রচুর আয়রন অক্সাইড (মরিচা) থাকায় এর রঙ লালচে দেখায়।" },
-            { question: "ভারতের দীর্ঘতম নদী কোনটি?", options: ["ব্রহ্মপুত্র", "গঙ্গা", "গোদাবরী", "সিন্ধু"], correct: 1, exp: "গঙ্গা নদী ভারতের দীর্ঘতম নদী, যার মোট দৈর্ঘ্য প্রায় ২,৫২৫ কিলোমিটার।" },
-            { question: "পশ্চিমবঙ্গের সর্বোচ্চ শৃঙ্গের নাম কী?", options: ["সান্দাকফু", "ফালুট", "টাইগার হিল", "বড়পাহাড়"], correct: 0, exp: "সান্দাকফু হলো পশ্চিমবঙ্গ ও নেপাল সীমান্তে অবস্থিত সিঙ্গালিলা পর্বতশ্রেণীর এবং সমগ্র পশ্চিমবঙ্গের সর্বোচ্চ শৃঙ্গ।" },
-            { question: "কোন কাল্পনিক রেখা ভারতের মাঝখান দিয়ে গেছে?", options: ["নিরক্ষরেখা", "কর্কটক্রান্তি রেখা", "মকরক্রান্তি রেখা", "মূল মধ্যরেখা"], correct: 1, exp: "কর্কটক্রান্তি রেখা বা ২৩.৫ ডিগ্রি উত্তর অক্ষরেখা ভারতের মোট ৮টি রাজ্যের ওপর দিয়ে মাঝখান বরাবর গেছে।" },
-            { question: "ভারতের কোন রাজ্যকে 'চিনির বাটি' বলা হয়?", options: ["পাঞ্জাব", "উত্তরপ্রদেশ", "বিহার", "পশ্চিমবঙ্গ"], correct: 1, exp: "ভারতে সবচেয়ে বেশি আখ উৎপাদিত হয় উত্তরপ্রদেশে, তাই একে 'চিনির বাটি' বলা হয়।" },
-            { question: "পৃথিবীর বৃহত্তম বদ্বীপ (Delta) কোনটি?", options: ["সুন্দরবন বদ্বীপ", "আমাজন বদ্বীপ", "মিসিসিপি বদ্বীপ", "নীলনদ বদ্বীপ"], correct: 0, exp: "গঙ্গা ও ব্রহ্মপুত্র নদীর মোহনায় গঠিত সুন্দরবন বদ্বীপ হলো বিশ্বের বৃহত্তম বদ্বীপ।" },
-            { question: "হিরাকুদ বাঁধ কোন নদীর ওপর অবস্থিত?", options: ["গঙ্গা", "মহানদী", "গোদাবরী", "নর্মদা"], correct: 1, exp: "হিরাকুদ বাঁধ ওড়িশা রাজ্যে মহানদীর ওপর নির্মিত ভারতের তথা বিশ্বের অন্যতম দীর্ঘতম মাটির বাঁধ।" },
-            { question: "কোন শহরকে 'ভারতের গোলাпи শহর' (Pink City) বলা হয়?", options: ["উদয়পুর", "জয়পুর", "যোধপুর", "আলওয়ার"], correct: 1, exp: "রাজস্থানের রাজধানী জয়পুর শহরকে 'Pink City' বলা হয়।" },
-            { question: "আন্দামান ও নিকোবর দ্বীপপুঞ্জের সর্বোচ্চ শৃঙ্গের নাম কী?", options: ["স্যাডল পিক", "মাউন্ট থুলিয়ার", "মাউন্ট দিয়াবলো", "মাউন্ট হরিয়ট"], correct: 0, exp: "উত্তর আন্দামান দ্বীপে অবস্থিত 'স্যাডল পিক' হলো আন্দামান ও নিকোবর দ্বীপপুঞ্জের সর্বোচ্চ পর্বতশৃঙ্গ।" }
-        ],
-        polity: [
-            { question: "ভারতের সংবিধান কবে থেকে কার্যকর হয়?", options: ["২৬ নভেম্বর ১৯৪৯", "২৬ জানুয়ারি ১৯৫০", "১৫ আগস্ট ১৯৪৭", "৩০ জানুয়ারি ১৯৪৮"], correct: 1, exp: "১৯৫০ সালের ২৬শে জানুয়ারি থেকে এটি পূর্ণাঙ্গভাবে কার্যকর করা হয় এবং এই দিনটি 'প্রজাতন্ত্র দিবস' হিসেবে পালিত হয়।" },
-            { question: "কাকে ভারতীয় সংবিধানের জনক বলা হয়?", options: ["ডঃ রাজেন্দ্র প্রসাদ", "মহাত্মা গান্ধী", "জওহরলাল নেহেরু", "ডঃ বি. আর. আম্বেদকর"], correct: 3, exp: "সংবিধানের খসড়া কমিটির চেয়ারম্যান ডঃ বি. আর. আম্বেদকরকে ভারতীয় সংবিধানের জনক বলা হয়।" },
-            { question: "ভারতের লোক선의 সদস্য হতে গেলে ন্যূনতম বয়স কত হওয়া প্রয়োজন?", options: ["১৮ বছর", "২১ বছর", "২৫ বছর", "৩০ বছর"], correct: 2, exp: "লোকসভার সদস্য বা ভারতের প্রধানমন্ত্রী হওয়ার জন্য ন্যূনতম বয়স ২৫ বছর হতে হয়।" },
-            { question: "ভারতের রাষ্ট্রপতিকে কে শপথ বাক্য পাঠ করান?", options: ["প্রধানমন্ত্রী", "উপরাষ্ট্রপতি", "প্রধান বিচারপতি", "লোকসভার স্পিকার"], correct: 2, exp: "ভারতের সুপ্রিম কোর্টের প্রধান বিচারপতি রাষ্ট্রপতিকে শপথ বাক্য পাঠ করান।" },
-            { question: "ভারতের সংবিধানে বর্তমানে মোট কতগুলি মৌলিক কর্তব্য আছে?", options: ["১০টি", "১১টি", "১২টি", "৯টি"], correct: 1, exp: "সংবিধানে বর্তমানে মোট ১১টি মৌলিক কর্তব্য রয়েছে (৪র্থ অধ্যায়ের 51A ধারা)।" },
-            { question: "রাজ্যসভার অধিবেশনে কে সভাপতিত্ব করেন?", options: ["রাষ্ট্রপতি", "উপরাষ্ট্রপতি", "প্রধানমন্ত্রী", "স্পিকার"], correct: 1, exp: "ভারতের উপরাষ্ট্রপতি পদাধিকারবলে সংসদের উচ্চকক্ষ অর্থাৎ রাজ্যসভার চেয়ারম্যান বা সভাপতি।" },
-            { question: "সংবিধানের কত নম্বর ধারাকে ডঃ আম্বেদকর 'সংবিধানের হৃদয় ও আত্মা' বলেছেন?", options: ["১৪ নম্বর", "১৯ নম্বর", "২১ নম্বর", "৩২ নম্বর"], correct: 3, exp: "৩২ নম্বর ধারাকে (সাংবিধানিক প্রতিবিধানের अधिकार) ডঃ আম্বেদকর 'Heart and Soul of the Constitution' বলেছেন।" },
-            { question: "ভারতের প্রথম নাগরিক কাকে বলা হয়?", options: ["প্রধানমন্ত্রী", "রাষ্ট্রপতি", "প্রধান বিচারপতি", "রাজ্যপাল"], correct: 1, exp: "ভারতের ওয়ারেন্ট অফ প্রিসিডেন্স অনুযায়ী মহামান্য রাষ্ট্রপতি হলেন দেশের প্রথম নাগরিক।" },
-            { question: "पंचায়েতি রাজ ব্যবস্থা প্রথম কোন রাজ্যে চালু হয়?", options: ["রাজস্থান", "অন্ধ্রপ্রদেশ", "পশ্চিমবঙ্গ", "বিহার"], correct: 0, exp: "১৯৫৯ সালের ২রা অক্টোবর রাজস্থানের নাগৌর জেলায় ভারতের প্রথম ত্রিস্তর বিশিষ্ট পঞ্চায়েতি রাজ ব্যবস্থার উদ্বোধন হয়।" },
-            { question: "সংবিধানের কোন অংশটি 'মৌলিক অধিকার' নিয়ে আলোচনা করে?", options: ["Part I", "Part II", "Part III", "Part IV"], correct: 2, exp: "সংবিধানের Part III এর ১২ থেকে ৩৫ নম্বর ধারার মধ্যে নাগরিকদের মৌলিক অধিকারের কথা বলা হয়েছে।" }
-        ],
-        science: [
-            { question: "কম্পিউটারের মস্তিষ্ক কাকে বলা হয়?", options: ["RAM", "Monitor", "CPU", "Hard Disk"], correct: 2, exp: "CPU (Central Processing Unit) কম্পিউটারের সমস্ত ডেটা প্রসেসিং নিয়ন্ত্রণ করে বলে একে কম্পিউটারের মস্তিষ্ক বলা হয়।" },
-            { question: "কোন ভিটামিনের অভাবে স্কার্ভি রোগ হয়?", options: ["ভিটামিন A", "ভিটামিন B", "ভিটামিন C", "ভিটামিন D"], correct: 2, exp: "ভিটামিন C এর অভাবে স্কার্ভি রোগ হয়। টক জাতীয় ফলে এই ভিটামিন প্রচুর থাকে।" },
-            { question: "মানবদেহের মোট হাড়ের সংখ্যা কত?", options: ["২০৬ টি", "৩০৬ টি", "১0৬ টি", "৪0৬ টি"], correct: 0, exp: "একজন প্রাপ্তবয়স্ক মানুষের শরীরে মোট ২০৬টি হাড় থাকে।" },
-            { question: "পেন্সিলের সিস তৈরিতে নিচের কোনটি ব্যবহৃত হয়?", options: ["কয়লা", "গ্রাফাইট", "সীসা", "চারকোল"], correct: 1, exp: "পেন্সিলের সিস তৈরিতে কার্বনের রূপভেদ গ্রাফাইট এবং কাদার মিশ্রণ ব্যবহৃত হয়।" },
-            { question: "কোনガスটি 'লাফিং গ্যাস' নামে পরিচিত?", options: ["নাইট্রাস অক্সাইড", "কার্বন মনোক্সাইড", "সালফার ডাইঅক্সাইড", "মিথেন"], correct: 0, exp: "নাইট্রাস অক্সাইড ($N_2O$) গ্যাসটি শরীরে প্রবেশ করলে হাসির উদ্রেক করে, তাই একে লাফিং গ্যাস বলে।" },
-            { question: "লোহায় মরচে পড়া কোন ধরনের পরিবর্তন?", options: ["ভৌত পরিবর্তন", "রাসায়নিক পরিবর্তন", "উভমুখী পরিবর্তন", "কোনোটিই নয়"], correct: 1, exp: "লোহায় মরচে পড়া একটি রাসায়নিক পরিবর্তন, কারণ এখানে নতুন পদার্থ জলযুক্ত ফেরিক অক্সাইড তৈরি হয়।" },
-            { question: "আলোর গতিবেগ প্রতি সেকেন্ডে আনুমানিক কত?", options: ["৩ লক্ষ কিমি", "২ লক্ষ কিমি", "৫ লক্ষ কিমি", "১ লক্ষ কিমি"], correct: 0, exp: "শূন্য মাধ্যমে আলোর গতিবেগ সেকেন্ডে প্রায় ৩,০০,০০০ কিলোমিটার।" },
-            { question: "কোন যন্ত্রের সাহায্যে ভূমিকম্পের তীব্রতা মাপা হয়?", options: ["ব্যারোমিটার", "থার্মোমিটার", "সিসমোগ্রাফ", "ল্যাকটোমিটার"], correct: 2, exp: "সিসমোগ্রাফ যন্ত্রের সাহায্যে ভূমিকম্পের তীব্রতা মাপা হয় এবং এর স্কেলটি হলো রিক্টার স্কেল।" },
-            { question: "নিচের কোনটি নোবেল গ্যাস (Noble Gas) নয়?", options: ["হিলিয়াম", "নিয়ন", "আর্গন", "হাইড্রোজেন"], correct: 3, exp: "হাইড্রোজেন নোবেল গ্যাস নয়। হিলিয়াম, নিয়ন, আর্গন হলো নিষ্ক্রিয় বা নোবেল গ্যাস।" },
-            { question: "মানবদেহের বৃহত্তম গ্রন্থি (Gland) কোনটি?", options: ["থাইরয়েড", "যকৃৎ (Liver)", "পিটুইটারি", "অগ্ন্যাশয়"], correct: 1, exp: "যকৃৎ বা লিভার (Liver) হলো মানবদেহের বৃহত্তম অভ্যন্তরীণ অঙ্গ এবং সর্ববৃহৎ গ্রন্থি।" }
-        ]
-    },
-    en: {
-        history: [
-            { question: "Who founded the Azad Hind Fauj?", options: ["Mahatma Gandhi", "Netaji Subhas Chandra Bose", "Rash Behari Bose", "Bhagat Singh"], correct: 2, exp: "Rash Behari Bose founded the INA in Tokyo in 1942. Later, Netaji Subhas Chandra Bose took over its leadership." },
-            { question: "In which year did the Battle of Plassey take place?", options: ["1757", "1764", "1857", "1947"], correct: 0, exp: "The Battle of Plassey was fought on 23 June 1757 between Siraj-ud-Daulah, the last independent Nawab of Bengal, and the British East India Company led by Robert Clive." },
-            { question: "Where is 'Lothal', the ancient Indus Valley Site, located?", options: ["Punjab", "Rajasthan", "Gujarat", "Sindh"], correct: 2, exp: "Lothal was an ancient port city of the Indus Valley Civilization, located in modern-day Gujarat, India." },
-            { question: "Who was known as the 'Napoleon of India'?", options: ["Chandragupta Maurya", "Samudragupta", "Akbar", "Kanishka"], correct: 1, exp: "Historian V.A. Smith called Samudragupta the 'Napoleon of India' due to his great military conquests and bravery." },
-            { question: "Who was the Congress candidate defeated by Subhas Chandra Bose in the Tripuri Session?", options: ["Jawaharlal Nehru", "Pattabhi Sitaramayya", "Rajendra Prasad", "Sardar Patel"], correct: 1, exp: "In the 1939 Tripuri Congress, Subhas Chandra Bose defeated Mahatma Gandhi's nominee, Pattabhi Sitaramayya, to become President." },
-            { question: "Where did Aryans first settle in India?", options: ["Punjab", "Kashmir", "Sindh", "Gujarat"], correct: 0, exp: "The Aryans first settled in the 'Sapta Sindhu' or Punjab region around 1500 BC." },
-            { question: "Who wrote 'Ain-i-Akbari'?", options: ["Akbar", "Abul Fazl", "Faizi", "Badauni"], correct: 1, exp: "Abul Fazl, one of the navaratnas in Akbar's court, wrote Akbar's biography 'Akbarnama', of which 'Ain-i-Akbari' is a part." },
-            { question: "In which year did Mahatma Gandhi start the Dandi March?", options: ["1920", "1930", "1932", "1942"], correct: 1, exp: "Mahatma Gandhi started the Dandi March on 12 March 1930 from Sabarmati Ashram to protest against the British salt monopoly." },
-            { question: "What is the holy book of Buddhists called?", options: ["Vedas", "Tripitaka", "Gita", "Angas"], correct: 1, exp: "The 'Tripitaka' is the primary holy scripture of Buddhism, written in the Pali language." },
-            { question: "Who was the first female ruler of the Delhi Sultanate?", options: ["Noor Jahan", "Razia Sultana", "Chand Bibi", "Mumtaz"], correct: 1, exp: "Sultana Razia, the daughter of Iltutmish, ascended the throne of Delhi in 1236 and was the only female Muslim ruler of Delhi." }
-        ],
-        geography: [
-            { question: "Which is the largest ocean in the world?", options: ["Atlantic Ocean", "Indian Ocean", "Pacific Ocean", "Arctic Ocean"], correct: 2, exp: "The Pacific Ocean is the largest and deepest ocean on Earth." },
-            { question: "Which planet is known as the 'Red Planet'?", options: ["Venus", "Mercury", "Mars", "Jupiter"], correct: 2, exp: "Mars is known as the Red Planet because of the abundance of iron oxide (rust) on its surface." },
-            { question: "Which is the longest river in India?", options: ["Brahmaputra", "Ganga", "Godavari", "Indus"], correct: 1, exp: "The Ganga is the longest river in India, with a total length of approximately 2,525 km." },
-            { question: "What is the name of the highest peak in West Bengal?", options: ["Sandakphu", "Phalut", "Tiger Hill", "Biharinath"], correct: 0, exp: "Sandakphu is the highest peak in West Bengal (3,636 meters), located on the Singalila ridge." },
-            { question: "Which imaginary line passes through the middle of India?", options: ["Equator", "Tropic of Cancer", "Tropic of Capricorn", "Prime Meridian"], correct: 1, exp: "The Tropic of Cancer (23.5 degrees North latitude) passes through 8 states in India." },
-            { question: "Which state is known as the 'Sugar Bowl of India'?", options: ["Punjab", "Uttar Pradesh", "Bihar", "West Bengal"], correct: 1, exp: "Uttar Pradesh is the largest producer of sugarcane in India, hence it is called the 'Sugar Bowl of India'." },
-            { question: "Which is the largest delta in the world?", options: ["Sundarbans Delta", "Amazon Delta", "Mississippi Delta", "Nile Delta"], correct: 0, exp: "The Sundarbans Delta, formed by the confluence of Ganga and Brahmaputra, is the world's largest delta." },
-            { question: "Hirakud Dam is built on which river?", options: ["Ganga", "Mahanadi", "Godavari", "Narmada"], correct: 1, exp: "Hirakud Dam is built across the Mahanadi river in Odisha and is one of the longest earthen dams in the world." },
-            { question: "Which city is known as the 'Pink City of India'?", options: ["Udaipur", "Jaipur", "Jodhpur", "Alwar"], correct: 1, exp: "Jaipur, the capital of Rajasthan, is known as the Pink City because the city was painted pink during the Prince of Wales' visit in 1876." },
-            { question: "What is the highest peak of Andaman and Nicobar Islands?", options: ["Saddle Peak", "Mount Thullier", "Mount Diavolo", "Mount Harriet"], correct: 0, exp: "Saddle Peak, located in North Andaman, is the highest mountain peak in the island group (732 meters)." }
-        ],
-        polity: [
-            { question: "When did the Constitution of India come into force?", options: ["26 Nov 1949", "26 Jan 1950", "15 Aug 1947", "30 Jan 1948"], correct: 1, exp: "The Constitution came into force on 26 January 1950, which is celebrated as Republic Day." },
-            { question: "Who is known as the Father of the Indian Constitution?", options: ["Dr. Rajendra Prasad", "Mahatma Gandhi", "Jawaharlal Nehru", "Dr. B. R. Ambedkar"], correct: 3, exp: "Dr. B.R. Ambedkar is regarded as the Father of the Indian Constitution due to his immense role as the Chairman of the Drafting Committee." },
-            { question: "What is the minimum age required to become a member of the Lok Sabha?", options: ["18 years", "21 years", "25 years", "30 years"], correct: 2, exp: "A person must be at least 25 years old to become a member of the Lok Sabha or the Prime Minister of India." },
-            { question: "Who administers the oath of office to the President of India?", options: ["Prime Minister", "Vice-President", "Chief Justice of India", "Speaker of Lok Sabha"], correct: 2, exp: "The Chief Justice of India administers the oath of office to the President." },
-            { question: "How many Fundamental Duties are currently there in the Indian Constitution?", options: ["10", "11", "12", "9"], correct: 1, exp: "Currently, there are 11 Fundamental Duties under Article 51A (Part IV-A) of the Constitution." },
-            { question: "Who presides over the sessions of the Rajya Sabha?", options: ["President", "Vice-President", "Prime Minister", "Speaker"], correct: 1, exp: "The Vice-President of India is the ex-officio Chairman and presides over the Rajya Sabha." },
-            { question: "Which Article was called the 'Heart and Soul of the Constitution' by Dr. Ambedkar?", options: ["Article 14", "Article 19", "Article 21", "Article 32"], correct: 3, exp: "Dr. Ambedkar called Article 32 (Right to Constitutional Remedies) the Heart and Soul because it allows citizens to approach the Supreme Court for protection of rights." },
-            { question: "Who is known as the First Citizen of India?", options: ["Prime Minister", "President", "Chief Justice", "Governor"], correct: 1, exp: "According to the Indian Order of Precedence, the President of India is the First Citizen of the nation." },
-            { question: "In which state was the Panchayati Raj system first introduced?", options: ["Rajasthan", "Andhra Pradesh", "West Bengal", "Bihar"], correct: 0, exp: "Panchayati Raj was first introduced in Nagaur district of Rajasthan on 2 October 1959 by Jawaharlal Nehru." },
-            { question: "Which part of the Constitution deals with 'Fundamental Rights'?", options: ["Part I", "Part II", "Part III", "Part IV"], correct: 2, exp: "Part III (Articles 12 to 35) of the Constitution deals with the Fundamental Rights of citizens." }
-        ],
-        science: [
-            { question: "Which is called the brain of the computer?", options: ["RAM", "Monitor", "CPU", "Hard Disk"], correct: 2, exp: "The CPU (Central Processing Unit) processes all information and controls computer functions, so it is called the brain." },
-            { question: "Scurvy disease is caused by the deficiency of which vitamin?", options: ["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin D"], correct: 2, exp: "Scurvy is caused by Vitamin C deficiency. Citrus fruits are rich sources of this vitamin." },
-            { question: "What is the total number of bones in an adult human body?", options: ["206", "306", "106", "406"], correct: 0, exp: "An adult human body has 206 bones, whereas a newborn baby has around 300 bones." },
-            { question: "Which of the following is used in making pencil lead?", options: ["Coal", "Graphite", "Lead", "Charcoal"], correct: 1, exp: "Pencil leads are made from a mixture of graphite (an allotrope of carbon) and clay." },
-            { question: "Which gas is commonly known as 'Laughing Gas'?", options: ["Nitrous Oxide", "Carbon Monoxide", "Sulfur Dioxide", "Methane"], correct: 0, exp: "Nitrous Oxide ($N_2O$) causes mild euphoria and laughter when inhaled, hence called laughing gas." },
-            { question: "Rusting of iron is what type of change?", options: ["Physical change", "Chemical change", "Reversible change", "None of these"], correct: 1, exp: "Rusting is a chemical change because a new substance, hydrated ferric oxide, is formed through a reaction with moisture and oxygen." },
-            { question: "What is the approximate speed of light per second?", options: ["3 Lakh km", "2 Lakh km", "5 Lakh km", "1 Lakh km"], correct: 0, exp: "The speed of light in a vacuum is approximately 3,00,000 kilometers per second ($3 \times 10^8$ m/s)." },
-            { question: "Which instrument is used to measure the intensity of an earthquake?", options: ["Barometer", "Thermometer", "Seismograph", "Lactometer"], correct: 2, exp: "A Seismograph is used to detect and record earthquakes. The magnitude is measured on the Richter Scale." },
-            { question: "Which of the following is NOT a Noble Gas?", options: ["Helium", "Neon", "Argon", "Hydrogen"], correct: 3, exp: "Hydrogen is a highly reactive gas. Helium, Neon, and Argon are inert or Noble gases." },
-            { question: "Which is the largest gland in the human body?", options: ["Thyroid", "Liver", "Pituitary", "Pancreas"], correct: 1, exp: "The Liver is the largest internal organ and the largest gland in the human body." }
-        ]
-    }
-};
-
+let currentLang = 'bn'; 
 let currentCategory = '';
 let currentQuestions = [];
 let currentQuestionIndex = 0;
 let score = 0;
 let answered = false;
 
-// ইন্টারফেস আপডেট করার ফাংশন
+const uiLabels = {
+    bn: {
+        menuTitle: "📚 একটি বিষয় বেছে নিন",
+        history: "📜 ইতিহাস", geography: "🌍 ভূগোল", polity: "⚖️ রাষ্ট্রবিজ্ঞান", science: "🧪 বিজ্ঞান",
+        math: "🔢 গণিত", ca: "🔥 কারেন্ট অ্যাফেয়ার্স", english: "🔤 ইংরেজি",
+        nextBtn: "পরবর্তী প্রশ্ন ➔", expTitle: "💡 সঠিক উত্তর ও সমাধান:",
+        resultTitle: "🎉 কুইজ সম্পূর্ণ হয়েছে! 🎉", homeBtn: "মূল মেনু 🔄", progress: "প্রশ্ন"
+    },
+    en: {
+        menuTitle: "📚 Choose a Subject",
+        history: "📜 History", geography: "🌍 Geography", polity: "⚖️ Polity", science: "🧪 Science",
+        math: "🔢 Mathematics", ca: "🔥 Current Affairs", english: "🔤 English",
+        nextBtn: "Next Question ➔", expTitle: "💡 Correct Answer & Solution:",
+        resultTitle: "🎉 Quiz Completed! 🎉", homeBtn: "Main Menu 🔄", progress: "Question"
+    }
+};
+
+// প্রশ্ন ও উত্তর ডাটাবেস (নতুন বিষয়সহ ৫টি করে নমুনা প্রশ্ন সেট করা হলো, আপনি পরে বাড়াতে পারবেন)
+const quizQuestions = {
+    bn: {
+        history: [
+            { question: "আজাদ হিন্দ ফৌজ কে গঠন করেছিলেন?", options: ["মহাত্মা গান্ধী", "নেতাজী সুভাষচন্দ্র বসু", "রাসবিহারী বসু", "ভগত সিং"], correct: 2, exp: "১৯৪২ সালে টোকিওতে রাসবিহারী বসু এটি গঠন করেন। পরে নেতাজী এর নেতৃত্বভার নেন।" },
+            { question: "পলাশীর যুদ্ধ কত সালে হয়েছিল?", options: ["১৭৫৭", "১৭৬৪", "১৮৫৭", "১৯৪৭"], correct: 0, exp: "১৭৫৭ সালের ২৩শে জুন নবাব সিরাজউদ্দৌলা এবং ব্রিটিশ ইস্ট ইন্ডিয়া কোম্পানির রবার্ট ক্লাইভের মধ্যে এই যুদ্ধ হয়েছিল।" }
+        ],
+        geography: [
+            { question: "বিশ্বের বৃহত্তম মহাসাগর কোনটি?", options: ["আটলান্টিক মহাসাগর", "ভারত মহাসাগর", "প্রশান্ত মহাসাগর", "উত্তর মহাসাগর"], correct: 2, exp: "প্রশান্ত মহাসাগর হলো পৃথিবীর বৃহত্তম ও গভীরতম মহাসাগর।" },
+            { question: "কোন গ্রহকে 'লাল গ্রহ' বলা হয়?", options: ["শুক্র", "বুধ", "মঙ্গল", "বৃহস্পতি"], correct: 2, exp: "মঙ্গল গ্রহের মাটিতে প্রচুর আয়রন অক্সাইড থাকায় এর রঙ লাল দেখায়।" }
+        ],
+        polity: [
+            { question: "ভারতের সংবিধান কবে থেকে কার্যকর হয়?", options: ["২৬ নভেম্বর ১৯৪৯", "২৬ জানুয়ারি ১৯৫০", "১৫ আগস্ট ১৯৪৭", "৩০ জানুয়ারি ১৯৪৮"], correct: 1, exp: "১৯৫০ সালের ২৬শে জানুয়ারি থেকে এটি পূর্ণাঙ্গভাবে কার্যকর করা হয় এবং এই দিনটি 'প্রজাতন্ত্র দিবস' হিসেবে পালিত হয়।" },
+            { question: "কাকে भारतीय সংবিধানের জনক বলা হয়?", options: ["ডঃ রাজেন্দ্র প্রসাদ", "মহাত্মা গান্ধী", "জওহরলাল নেহেরু", "ডঃ বি. আর. আম্বেদকর"], correct: 3, exp: "সংবিধানের খসড়া কমিটির চেয়ারম্যান ডঃ বি. আর. আম্বেদকরকে ভারতীয় সংবিধানের জনক বলা হয়।" }
+        ],
+        science: [
+            { question: "কম্পিউটারের মস্তিষ্ক কাকে বলা হয়?", options: ["RAM", "Monitor", "CPU", "Hard Disk"], correct: 2, exp: "CPU (Central Processing Unit) কম্পিউটারের সমস্ত ডেটা প্রসেসিং নিয়ন্ত্রণ করে।" },
+            { question: "কোন ভিটামিনের অভাবে স্কার্ভি রোগ হয়?", options: ["ভিটামিন A", "ভিটামিন B", "ভিটামিন C", "ভিটামিন D"], correct: 2, exp: "ভিটামিন C এর অভাবে স্কার্ভি রোগ হয়। টক জাতীয় ফলে এই ভিটামিন প্রচুর থাকে।" }
+        ],
+        // 🔢 গণিত সেকশন (Short Tricks সহ ব্যাখ্যা)
+        math: [
+            { question: "দুটি সংখ্যার অনুপাত ৩:৪ এবং তাদের গসাগু (HCF) ৪ হলে, সংখ্যা দুটির লসাগু (LCM) কত?", options: ["১২", "২৪", "৪৮", "৩৬"], correct: 2, exp: "শর্ট ট্রিক: লসাগু = অনুপাতদ্বয়ের গুণফল × গসাগু। অর্থাৎ, ৩ × ৪ × ৪ = ৪৮।" },
+            { question: "একটি বস্তু ২৭০ টাকায় বিক্রি করায় ১০% ক্ষতি হলো। বস্তুটির ক্রয়মূল্য কত ছিল?", options: ["২৪৩ টাকা", "৩০০ টাকা", "২৮০ টাকা", "৩২০ টাকা"], correct: 1, exp: "১০% ক্ষতি মানে বিক্রয়মূল্য ৯০%। সুতরাং, ৯০% = ২৭০ টাকা হলে, ১০০% (ক্রয়মূল্য) = (২৭০ × ১০০) / ৯০ = ৩০০ টাকা।" }
+        ],
+        // 🔥 কারেন্ট অ্যাফেয়ার্স সেকশন
+        ca: [
+            { question: "২০২৪ সালের টি-২০ বিশ্বকাপ (T20 World Cup) কোন দেশ জিতেছে?", options: ["দক্ষিণ আফ্রিকা", "ভারত", "অস্ট্রেলিয়া", "ইংল্যান্ড"], correct: 1, exp: "২০২৪ সালের জুন মাসে ফাইনালে দক্ষিণ আফ্রিকাকে হারিয়ে ভারত দ্বিতীয়বারের জন্য টি-২০ বিশ্বকাপ চ্যাম্পিয়ন হয়।" },
+            { question: "বর্তমানে (২০২৬ সালে) ভারতের প্রধান নির্বাচন কমিশনার (Chief Election Commissioner) কে?", options: ["রাজীব কুমার", "অনুপ চন্দ্র পাণ্ডে", "সুনীল অরোরা", "শ্রী হীরালাল সামরিয়া"], correct: 0, exp: "রাজীব কুমার হলেন ভারতের ২৫তম প্রধান নির্বাচন কমিশনার।" }
+        ],
+        // 🔤 ইংরেজি সেকশন
+        english: [
+            { question: "Select the correct Synonym of 'ABANDON':", options: ["Keep", "Leave / Forsake", "Support", "Adopt"], correct: 1, exp: "'Abandon' মানে বর্জন করা বা ছেড়ে দেওয়া। এর সমার্থক শব্দ (Synonym) হলো 'Leave' বা 'Forsake'।" },
+            { question: "Fill in the blank: He is proficient ________ English.", options: ["in", "at", "with", "for"], correct: 0, exp: "'Proficient' শব্দটির পর উপযুক্ত Preposition হিসেবে 'in' বসে (Proficient in something মানে কোনো বিষয়ে দক্ষ)।" }
+        ]
+    },
+    en: {
+        history: [
+            { question: "Who founded the Azad Hind Fauj?", options: ["Mahatma Gandhi", "Netaji Subhas Chandra Bose", "Rash Behari Bose", "Bhagat Singh"], correct: 2, exp: "Rash Behari Bose founded the INA in Tokyo in 1942. Later, Netaji took over leadership." },
+            { question: "In which year did the Battle of Plassey take place?", options: ["1757", "1764", "1857", "1947"], correct: 0, exp: "Fought on 23 June 1757 between Nawab Siraj-ud-Daulah and Robert Clive of the British East India Company." }
+        ],
+        geography: [
+            { question: "Which is the largest ocean in the world?", options: ["Atlantic Ocean", "Indian Ocean", "Pacific Ocean", "Arctic Ocean"], correct: 2, exp: "The Pacific Ocean is the largest and deepest ocean on Earth." },
+            { question: "Which planet is known as the 'Red Planet'?", options: ["Venus", "Mercury", "Mars", "Jupiter"], correct: 2, exp: "Mars is called the Red Planet due to the abundance of iron oxide on its surface." }
+        ],
+        polity: [
+            { question: "When did the Constitution of India come into force?", options: ["26 Nov 1949", "26 Jan 1950", "15 Aug 1947", "30 Jan 1948"], correct: 1, exp: "It came into full force on 26 January 1950, celebrated as Republic Day." },
+            { question: "Who is known as the Father of the Indian Constitution?", options: ["Dr. Rajendra Prasad", "Mahatma Gandhi", "Jawaharlal Nehru", "Dr. B. R. Ambedkar"], correct: 3, exp: "Dr. B.R. Ambedkar is regarded as the Father of the Indian Constitution due to his role as Chairman of the Drafting Committee." }
+        ],
+        science: [
+            { question: "Which is called the brain of the computer?", options: ["RAM", "Monitor", "CPU", "Hard Disk"], correct: 2, exp: "The CPU (Central Processing Unit) processes all information and controls computer functions." },
+            { question: "Scurvy disease is caused by the deficiency of which vitamin?", options: ["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin D"], correct: 2, exp: "Scurvy is caused by Vitamin C deficiency. Citrus fruits are rich sources of this vitamin." }
+        ],
+        // 🔢 Mathematics (English Version)
+        math: [
+            { question: "The ratio of two numbers is 3:4 and their HCF is 4. Find their LCM.", options: ["12", "24", "48", "36"], correct: 2, exp: "Short Trick: LCM = Product of Ratios × HCF. Therefore, 3 × 4 × 4 = 48." },
+            { question: "By selling an article for ₹270, a loss of 10% is incurred. What was its cost price?", options: ["₹243", "₹300", "₹280", "₹320"], correct: 1, exp: "10% loss means Selling Price is 90%. So, 90% = 270. Therefore, 100% (CP) = (270 × 100) / 90 = ₹300." }
+        ],
+        // 🔥 Current Affairs (English Version)
+        ca: [
+            { question: "Which country won the Men's T20 World Cup in 2024?", options: ["South Africa", "India", "Australia", "England"], correct: 1, exp: "India won their second T20 World Cup title by defeating South Africa in the final in June 2024." },
+            { question: "Who is the current Chief Election Commissioner of India (in 2026)?", options: ["Rajiv Kumar", "Anup Chandra Pandey", "Sunil Arora", "Hiralal Samariya"], correct: 0, exp: "Rajiv Kumar is the 25th Chief Election Commissioner of India." }
+        ],
+        // 🔤 English Section
+        english: [
+            { question: "Select the correct Synonym of 'ABANDON':", options: ["Keep", "Leave / Forsake", "Support", "Adopt"], correct: 1, exp: "'Abandon' means to completely leave or give up something. Synonyms include Leave or Forsake." },
+            { question: "Fill in the blank: He is proficient ________ English.", options: ["in", "at", "with", "for"], correct: 0, exp: "The appropriate preposition after 'Proficient' is 'in' (Proficient in a language/subject)." }
+        ]
+    }
+};
+
 function updateUI() {
     document.getElementById("menu-title").innerText = uiLabels[currentLang].menuTitle;
     document.getElementById("cat-h-text").innerText = uiLabels[currentLang].history;
     document.getElementById("cat-g-text").innerText = uiLabels[currentLang].geography;
     document.getElementById("cat-p-text").innerText = uiLabels[currentLang].polity;
     document.getElementById("cat-s-text").innerText = uiLabels[currentLang].science;
+    document.getElementById("cat-m-text").innerText = uiLabels[currentLang].math;
+    document.getElementById("cat-c-text").innerText = uiLabels[currentLang].ca;
+    document.getElementById("cat-e-text").innerText = uiLabels[currentLang].english;
     document.getElementById("next-button").innerText = uiLabels[currentLang].nextBtn;
     document.getElementById("exp-title-text").innerText = uiLabels[currentLang].expTitle;
     document.getElementById("result-title").innerText = uiLabels[currentLang].resultTitle;
     document.getElementById("home-btn-text").innerText = uiLabels[currentLang].homeBtn;
     
-    // বোতামের লেখা পরিবর্তন
     document.getElementById("lang-toggle-btn").innerText = currentLang === 'bn' ? 'English' : 'বাংলা';
     
-    // কুইজ স্ক্রিন সচল থাকলে রানিং প্রশ্ন রি-লোড করা
     if(document.getElementById("quiz-screen").classList.contains("active-screen")) {
         currentQuestions = quizQuestions[currentLang][currentCategory];
         let currentQuestion = currentQuestions[currentQuestionIndex];
@@ -373,7 +338,6 @@ function updateUI() {
     }
 }
 
-// ভাষা পরিবর্তন করার ফাংশন
 function toggleLanguage() {
     currentLang = currentLang === 'bn' ? 'en' : 'bn';
     updateUI();
@@ -451,7 +415,6 @@ function goToHome() {
     document.getElementById("category-screen").classList.add("active-screen");
 }
 
-// প্রারম্ভিক UI লোড
 updateUI();
 </script>
 
