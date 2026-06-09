@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GK Booster - Ultimate Quiz App</title>
+    <title>GK Booster - CGL Special</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea, #764ba2);
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -20,7 +20,7 @@
             background-color: white;
             border-radius: 15px;
             padding: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             width: 100%;
             max-width: 550px;
             text-align: center;
@@ -39,37 +39,21 @@
             cursor: pointer;
             transition: all 0.2s;
         }
-        .lang-btn:hover {
-            background-color: #dfe4ea;
-        }
-        h2 {
-            color: #333;
-            margin-bottom: 20px;
-            font-size: 24px;
-            margin-top: 15px;
-        }
-        .category-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
-        }
+        .lang-btn:hover { background-color: #dfe4ea; }
+        h2 { color: #333; margin-bottom: 20px; font-size: 24px; margin-top: 15px; }
+        .category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
         .cat-btn {
             background-color: #f8f9fa;
             border: 2px solid #e9ecef;
             border-radius: 12px;
-            padding: 18px 10px;
-            font-size: 16px;
+            padding: 15px 10px;
+            font-size: 15px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
             color: #495057;
         }
-        .cat-btn:hover {
-            background-color: #e2e6ea;
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
+        .cat-btn:hover { background-color: #e2e6ea; transform: translateY(-2px); }
         .cat-history:hover { border-color: #ff9f43; color: #ff9f43; }
         .cat-geography:hover { border-color: #0abde3; color: #0abde3; }
         .cat-polity:hover { border-color: #10ac84; color: #10ac84; }
@@ -77,19 +61,8 @@
         .cat-math:hover { border-color: #ff6b6b; color: #ff6b6b; }
         .cat-ca:hover { border-color: #feca57; color: #feca57; }
         .cat-english:hover { border-color: #54a0ff; color: #54a0ff; }
-
-        .progress {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-        .options-container {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
+        .progress { font-size: 14px; color: #666; margin-bottom: 15px; font-weight: bold; }
+        .options-container { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
         .option-btn {
             background-color: #f0f2f5;
             border: 2px solid #e4e6eb;
@@ -98,21 +71,10 @@
             font-size: 16px;
             cursor: pointer;
             text-align: left;
-            transition: all 0.3s ease;
+            transition: all 0.2s ease;
         }
-        .option-btn:hover {
-            background-color: #e4e6eb;
-        }
-        .correct {
-            background-color: #2ecc71 !important;
-            color: white !important;
-            border-color: #27ae60 !important;
-        }
-        .wrong {
-            background-color: #e74c3c !important;
-            color: white !important;
-            border-color: #c0392b !important;
-        }
+        .correct { background-color: #2ecc71 !important; color: white !important; border-color: #27ae60 !important; }
+        .wrong { background-color: #e74c3c !important; color: white !important; border-color: #c0392b !important; }
         .explanation-box {
             background-color: #e8f4fd;
             border-left: 5px solid #1da1f2;
@@ -120,52 +82,20 @@
             padding: 15px;
             margin-bottom: 20px;
             text-align: left;
-            font-size: 15px;
+            font-size: 14px;
             color: #2c3e50;
             display: none;
             line-height: 1.5;
         }
-        .explanation-title {
-            font-weight: bold;
-            color: #1da1f2;
-            margin-bottom: 5px;
-        }
+        .explanation-title { font-weight: bold; color: #1da1f2; margin-bottom: 5px; }
         .next-btn {
-            background-color: #4a6cf7;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 25px;
-            font-size: 16px;
-            cursor: pointer;
-            display: none;
-            width: 100%;
-            font-weight: bold;
+            background-color: #4a6cf7; color: white; border: none; border-radius: 8px;
+            padding: 12px 25px; font-size: 16px; cursor: pointer; display: none; width: 100%; font-weight: bold;
         }
-        .next-btn:hover {
-            background-color: #3554d1;
-        }
-        .screen {
-            display: none;
-        }
-        .active-screen {
-            display: block;
-        }
-        .score-text {
-            font-size: 22px;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        .restart-btn {
-            background-color: #2ecc71;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 12px 25px;
-            font-size: 16px;
-            cursor: pointer;
-            font-weight: bold;
-        }
+        .screen { display: none; }
+        .active-screen { display: block; }
+        .score-text { font-size: 22px; margin-bottom: 20px; color: #333; }
+        .restart-btn { background-color: #2ecc71; color: white; border: none; border-radius: 8px; padding: 12px 25px; font-size: 16px; cursor: pointer; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -173,40 +103,37 @@
 <div class="quiz-container">
     <button class="lang-btn" id="lang-toggle-btn" onclick="toggleLanguage()">English</button>
     
-    <!-- স্ক্রিন ১: সাবজেক্ট সিলেকশন (৭টি ক্যাটাগরি) -->
+    <!-- ক্যাটাগরি স্ক্রিন -->
     <div id="category-screen" class="screen active-screen">
-        <h2 id="menu-title">📚 একটি বিষয় বেছে নিন</h2>
+        <h2 id="menu-title">📚 SSC CGL 2025 PYQ & Special Practice</h2>
         <div class="category-grid">
             <button class="cat-btn cat-history" onclick="startQuiz('history')"><span id="cat-h-text">📜 ইতিহাস</span></button>
             <button class="cat-btn cat-geography" onclick="startQuiz('geography')"><span id="cat-g-text">🌍 ভূগোল</span></button>
             <button class="cat-btn cat-polity" onclick="startQuiz('polity')"><span id="cat-p-text">⚖️ রাষ্ট্রবিজ্ঞান</span></button>
             <button class="cat-btn cat-science" onclick="startQuiz('science')"><span id="cat-s-text">🧪 বিজ্ঞান</span></button>
-            <button class="cat-btn cat-math" onclick="startQuiz('math')"><span id="cat-m-text">🔢 গণিত</span></button>
+            <button class="cat-btn cat-math" onclick="startQuiz('math')"><span id="cat-m-text">🔢 গণিত (Tricks)</span></button>
             <button class="cat-btn cat-ca" onclick="startQuiz('ca')"><span id="cat-c-text">🔥 কারেন্ট অ্যাফেয়ার্স</span></button>
             <button class="cat-btn cat-english" onclick="startQuiz('english')"><span id="cat-e-text">🔤 ইংরেজি</span></button>
         </div>
     </div>
 
-    <!-- স্ক্রিন ২: মূল কুইজ স্ক্রিন -->
+    <!-- কুইজ স্ক্রিন -->
     <div id="quiz-screen" class="screen">
-        <div class="progress" id="progress-text">Question 1 of 5</div>
+        <div class="progress" id="progress-text">Question 1</div>
         <h2 id="question-text">Loading Question...</h2>
-        <div class="options-container" id="options-box">
-            <!-- Options load here -->
-        </div>
+        <div class="options-container" id="options-box"></div>
         
         <div class="explanation-box" id="explanation-container">
-            <div class="explanation-title" id="exp-title-text">💡 সঠিক উত্তর ও তথ্য:</div>
-            <div id="explanation-text">Explanation text.</div>
+            <div class="explanation-title" id="exp-title-text">💡 সমাধান ও ব্যাখ্যা:</div>
+            <div id="explanation-text">Explanation.</div>
         </div>
-
         <button class="next-btn" id="next-button" onclick="nextQuestion()">Next Question ➔</button>
     </div>
 
-    <!-- স্ক্রিন ৩: রেজাল্ট স্ক্রিন -->
+    <!-- রেজাল্ট স্ক্রিন -->
     <div id="result-screen" class="screen">
         <h2 id="result-title">🎉 কুইজ সম্পূর্ণ হয়েছে! 🎉</h2>
-        <p class="score-text" id="final-score-text">Your Score: 0 / 5</p>
+        <p class="score-text" id="final-score-text">Your Score: 0</p>
         <button class="restart-btn" id="home-btn-text" onclick="goToHome()">মূল মেনু 🔄</button>
     </div>
 </div>
@@ -221,87 +148,83 @@ let answered = false;
 
 const uiLabels = {
     bn: {
-        menuTitle: "📚 একটি বিষয় বেছে নিন",
+        menuTitle: "📚 SSC CGL PYQ ও স্পেশাল প্র্যাকটিস",
         history: "📜 ইতিহাস", geography: "🌍 ভূগোল", polity: "⚖️ রাষ্ট্রবিজ্ঞান", science: "🧪 বিজ্ঞান",
         math: "🔢 গণিত", ca: "🔥 কারেন্ট অ্যাফেয়ার্স", english: "🔤 ইংরেজি",
-        nextBtn: "পরবর্তী প্রশ্ন ➔", expTitle: "💡 সঠিক উত্তর ও সমাধান:",
+        nextBtn: "পরবর্তী প্রশ্ন ➔", expTitle: "💡 সঠিক উত্তর ও ব্যাখ্যা:",
         resultTitle: "🎉 কুইজ সম্পূর্ণ হয়েছে! 🎉", homeBtn: "মূল মেনু 🔄", progress: "প্রশ্ন"
     },
     en: {
-        menuTitle: "📚 Choose a Subject",
+        menuTitle: "📚 SSC CGL PYQ & Special Practice",
         history: "📜 History", geography: "🌍 Geography", polity: "⚖️ Polity", science: "🧪 Science",
         math: "🔢 Mathematics", ca: "🔥 Current Affairs", english: "🔤 English",
-        nextBtn: "Next Question ➔", expTitle: "💡 Correct Answer & Solution:",
+        nextBtn: "Next Question ➔", expTitle: "💡 Solution & Fact:",
         resultTitle: "🎉 Quiz Completed! 🎉", homeBtn: "Main Menu 🔄", progress: "Question"
     }
 };
 
-// প্রশ্ন ও উত্তর ডাটাবেস (নতুন বিষয়সহ ৫টি করে নমুনা প্রশ্ন সেট করা হলো, আপনি পরে বাড়াতে পারবেন)
+// CGL ট্রেন্ড মেনে সাজানো প্রশ্ন গুচ্ছ
 const quizQuestions = {
     bn: {
         history: [
-            { question: "আজাদ হিন্দ ফৌজ কে গঠন করেছিলেন?", options: ["মহাত্মা গান্ধী", "নেতাজী সুভাষচন্দ্র বসু", "রাসবিহারী বসু", "ভগত সিং"], correct: 2, exp: "১৯৪২ সালে টোকিওতে রাসবিহারী বসু এটি গঠন করেন। পরে নেতাজী এর নেতৃত্বভার নেন।" },
-            { question: "পলাশীর যুদ্ধ কত সালে হয়েছিল?", options: ["১৭৫৭", "১৭৬৪", "১৮৫৭", "১৯৪৭"], correct: 0, exp: "১৭৫৭ সালের ২৩শে জুন নবাব সিরাজউদ্দৌলা এবং ব্রিটিশ ইস্ট ইন্ডিয়া কোম্পানির রবার্ট ক্লাইভের মধ্যে এই যুদ্ধ হয়েছিল।" }
+            { question: "সিন্ধু সভ্যতার কোন স্থানটিতে একটি বিখ্যাত 'বিশাল স্নানাগার' (Great Bath) পাওয়া গেছে?", options: ["হরপ্পা", "লোথাল", "কালিবঙ্গান", "মহেঞ্জোদাড়ো"], correct: 3, exp: "মহেঞ্জোদাড়োতে বিশাল স্নানাগারটি পাওয়া গেছে যা সিন্ধু সভ্যতার অন্যতম বৃহৎ স্থাপত্য।" },
+            { question: "কে বিখ্যাত সোমনাথ মন্দির লুণ্ঠন করেছিলেন?", options: ["মহম্মদ ঘোরী", "সুলতান মামুদ", "চেঙ্গিজ খান", "তৈমুর লং"], correct: 1, exp: "১০২৫ খ্রিষ্টাব্দে গজনীর সুলতান মামুদ গুজরাটের বিখ্যাত সোমনাথ মন্দির আক্রমণ ও লুণ্ঠন করেন।" },
+            { question: "১৮৫৭ সালের মহাবিদ্রোহের সময় ভারতের গভর্নর জেনারেল কে ছিলেন?", options: ["লর্ড ডালহৌসি", "লর্ড ক্যানিং", "লর্ড কার্জন", "লর্ড বেন্টিঙ্ক"], correct: 1, exp: "লর্ড ক্যানিং মহাবিদ্রোহের সময় গভর্নর জেনারেল ছিলেন এবং তিনি ভারতের প্রথম ভাইসরয় হন।" }
         ],
         geography: [
-            { question: "বিশ্বের বৃহত্তম মহাসাগর কোনটি?", options: ["আটলান্টিক মহাসাগর", "ভারত মহাসাগর", "প্রশান্ত মহাসাগর", "উত্তর মহাসাগর"], correct: 2, exp: "প্রশান্ত মহাসাগর হলো পৃথিবীর বৃহত্তম ও গভীরতম মহাসাগর।" },
-            { question: "কোন গ্রহকে 'লাল গ্রহ' বলা হয়?", options: ["শুক্র", "বুধ", "মঙ্গল", "বৃহস্পতি"], correct: 2, exp: "মঙ্গল গ্রহের মাটিতে প্রচুর আয়রন অক্সাইড থাকায় এর রঙ লাল দেখায়।" }
+            { question: "নিম্নের কোন নদীটি 'দক্ষিণ ভারতের গঙ্গা' নামে পরিচিত?", options: ["কৃষ্ণা", "গোদাবরী", "কাবেরী", "নর্মদা"], correct: 1, exp: "দৈর্ঘ্য এবং অববাহিকার আকারের দিক থেকে বড় হওয়ায় গোদাবরী নদীকে 'দক্ষিণ গঙ্গা' বা 'বৃদ্ধ গঙ্গা' বলা হয়।" },
+            { question: "কোন প্রণালী ভারত ও শ্রীলঙ্কাকে পৃথক করেছে?", options: ["১০ ডিগ্রি চ্যানেল", "পক প্রণালী", "মালাক্কা প্রণালী", "বেরিং প্রণালী"], correct: 1, exp: "পক প্রণালী (Palk Strait) ভারত ও শ্রীলঙ্কার মাঝে অবস্থিত একটি অগভীর জলপথ।" }
         ],
         polity: [
-            { question: "ভারতের সংবিধান কবে থেকে কার্যকর হয়?", options: ["২৬ নভেম্বর ১৯৪৯", "২৬ জানুয়ারি ১৯৫০", "১৫ আগস্ট ১৯৪৭", "৩০ জানুয়ারি ১৯৪৮"], correct: 1, exp: "১৯৫০ সালের ২৬শে জানুয়ারি থেকে এটি পূর্ণাঙ্গভাবে কার্যকর করা হয় এবং এই দিনটি 'প্রজাতন্ত্র দিবস' হিসেবে পালিত হয়।" },
-            { question: "কাকে भारतीय সংবিধানের জনক বলা হয়?", options: ["ডঃ রাজেন্দ্র প্রসাদ", "মহাত্মা গান্ধী", "জওহরলাল নেহেরু", "ডঃ বি. আর. আম্বেদকর"], correct: 3, exp: "সংবিধানের খসড়া কমিটির চেয়ারম্যান ডঃ বি. আর. আম্বেদকরকে ভারতীয় সংবিধানের জনক বলা হয়।" }
+            { question: "ভারতীয় সংবিধানের কোন অনুচ্ছেদ অনুযায়ী সুপ্রিম কোর্ট 'রিট' (Writs) জারি করতে পারে?", options: ["অনুচ্ছেদ ১৪", "অনুচ্ছেদ ৩২", "অনুচ্ছেদ ২২৬", "অনুচ্ছেদ ২৪৬"], correct: 1, exp: "অনুচ্ছেদ ৩২ (সাংবিধানিক প্রতিবিধানের অধিকার) অনুযায়ী নাগরিকের মৌলিক অধিকার রক্ষায় সুপ্রিম কোর্ট ৫ প্রকার রিট জারি করতে পারে।" },
+            { question: "ভারতের উপরাষ্ট্রপতি পদাধিকারবলে কোন কক্ষের চেয়ারম্যান হন?", options: ["লোকসভা", "রাজ্যসভা", "বিধানসভা", "নীতি আয়োগ"], correct: 1, exp: "সংবিধানের ৬৪ নম্বর অনুচ্ছেদ অনুযায়ী উপরাষ্ট্রপতি লোকসভার নয়, রাজ্যসভার পদাধিকারবলে চেয়ারম্যান হন।" }
         ],
         science: [
-            { question: "কম্পিউটারের মস্তিষ্ক কাকে বলা হয়?", options: ["RAM", "Monitor", "CPU", "Hard Disk"], correct: 2, exp: "CPU (Central Processing Unit) কম্পিউটারের সমস্ত ডেটা প্রসেসিং নিয়ন্ত্রণ করে।" },
-            { question: "কোন ভিটামিনের অভাবে স্কার্ভি রোগ হয়?", options: ["ভিটামিন A", "ভিটামিন B", "ভিটামিন C", "ভিটামিন D"], correct: 2, exp: "ভিটামিন C এর অভাবে স্কার্ভি রোগ হয়। টক জাতীয় ফলে এই ভিটামিন প্রচুর থাকে।" }
+            { question: "নিম্নের কোনটির পরিমাপের একক 'লাইট ইয়ার' বা আলোকবর্ষ?", options: ["সময়", "দূরত্ব", "আলোর তীব্রতা", "গতিবেগ"], correct: 1, exp: "মহাজাগতিক বিশাল দূরত্ব পরিমাপ করার জন্য আলোকবর্ষ (Light Year) ব্যবহার করা হয়। ১ আলোকবর্ষ = আলো ১ বছরে যে দূরত্ব অতিক্রম করে।" },
+            { question: "কোন হরমোনকে 'লড়ো অথবা মরো' (Fight or Flight) হরমোন বলা হয়?", options: ["ইনসুলিন", "অ্যাড্রিনালিন", "থাইরক্সিন", "পিটুইটারি"], correct: 1, exp: "জরুরি বা আপদকালীন পরিস্থিতিতে শরীরকে মানসিক বা শারীরিক চাপের সাথে মানিয়ে নিতে অ্যাড্রিনালিন হরমোন দ্রুত ক্ষরিত হয়।" }
         ],
-        // 🔢 গণিত সেকশন (Short Tricks সহ ব্যাখ্যা)
         math: [
-            { question: "দুটি সংখ্যার অনুপাত ৩:৪ এবং তাদের গসাগু (HCF) ৪ হলে, সংখ্যা দুটির লসাগু (LCM) কত?", options: ["১২", "২৪", "৪৮", "৩৬"], correct: 2, exp: "শর্ট ট্রিক: লসাগু = অনুপাতদ্বয়ের গুণফল × গসাগু। অর্থাৎ, ৩ × ৪ × ৪ = ৪৮।" },
-            { question: "একটি বস্তু ২৭০ টাকায় বিক্রি করায় ১০% ক্ষতি হলো। বস্তুটির ক্রয়মূল্য কত ছিল?", options: ["২৪৩ টাকা", "৩০০ টাকা", "২৮০ টাকা", "৩২০ টাকা"], correct: 1, exp: "১০% ক্ষতি মানে বিক্রয়মূল্য ৯০%। সুতরাং, ৯০% = ২৭০ টাকা হলে, ১০০% (ক্রয়মূল্য) = (২৭০ × ১০০) / ৯০ = ৩০০ টাকা।" }
+            { question: "যদি কোনো আসল চক্রবৃদ্ধি সুদে ৩ বছরে সুদে-আসলে ৩ গুণ হয়, তবে তা কত বছরে ৯ গুণ হবে?", options: ["৬ বছর", "৯ বছর", "৫ বছর", "১২ বছর"], correct: 0, exp: "ট্রিক: ৩ গুণ হয় ৩ বছরে। ৯ গুণ মানে $৩^২$ গুণ। সময় হবে = (পাওয়ার ২ × আগের বছর ৩) = ৬ বছর।" },
+            { question: "A একটি কাজ ১০ দিনে এবং B সেই কাজ ১৫ দিনে করতে পারে। তারা একসাথে কাজটি কত দিনে শেষ করবে?", options: ["৫ দিন", "৬ দিন", "৮ দিন", "৭ দিন"], correct: 1, exp: "শর্ট ট্রিক: $(A \times B) / (A + B) = (১০ \times ১৫) / (১০ + ১৫) = ১৫০ / ২৫ = ৬$ দিন।" }
         ],
-        // 🔥 কারেন্ট অ্যাফেয়ার্স সেকশন
         ca: [
-            { question: "২০২৪ সালের টি-২০ বিশ্বকাপ (T20 World Cup) কোন দেশ জিতেছে?", options: ["দক্ষিণ আফ্রিকা", "ভারত", "অস্ট্রেলিয়া", "ইংল্যান্ড"], correct: 1, exp: "২০২৪ সালের জুন মাসে ফাইনালে দক্ষিণ আফ্রিকাকে হারিয়ে ভারত দ্বিতীয়বারের জন্য টি-২০ বিশ্বকাপ চ্যাম্পিয়ন হয়।" },
-            { question: "বর্তমানে (২০২৬ সালে) ভারতের প্রধান নির্বাচন কমিশনার (Chief Election Commissioner) কে?", options: ["রাজীব কুমার", "অনুপ চন্দ্র পাণ্ডে", "সুনীল অরোরা", "শ্রী হীরালাল সামরিয়া"], correct: 0, exp: "রাজীব কুমার হলেন ভারতের ২৫তম প্রধান নির্বাচন কমিশনার।" }
+            { question: "২০২৬ সালের ফিফা বিশ্বকাপ (FIFA World Cup) যৌথভাবে কোন দেশগুলোতে আয়োজিত হতে চলেছে?", options: ["ইউএসএ, মেক্সিকো, কানাডা", "ব্রাজিল ও আর্জেন্টিনা", "কাতার ও সৌদি আরব", "ফ্রান্স ও জার্মানি"], correct: 0, exp: "২০২৬ সালের ফিফা ফুটবল বিশ্বকাপ উত্তর আমেরিকার তিনটি দেশ—আমেরিকা (USA), মেক্সিকো এবং কানাডায় যৌথভাবে অনুষ্ঠিত হবে।" },
+            { question: "সম্প্রতি ভারতের কোন স্পিন বোলার আন্তর্জাতিক ক্রিকেটে ৫০০টি টেস্ট উইকেটের মাইলফলক স্পর্শ করেছেন?", options: ["রবীন্দ্র জাদেজা", "রবিচন্দ্রন অশ্বিন", "কুলদীপ যাদব", "যুজবেন্দ্র চাহাল"], correct: 1, exp: "রবিচন্দ্রন অশ্বিন অনিল কুম্বলের পর দ্বিতীয় ভারতীয় বোলার হিসেবে টেস্ট ক্রিকেটে ৫০০ উইকেটের ক্লাবে প্রবেশ করেছেন।" }
         ],
-        // 🔤 ইংরেজি সেকশন
         english: [
-            { question: "Select the correct Synonym of 'ABANDON':", options: ["Keep", "Leave / Forsake", "Support", "Adopt"], correct: 1, exp: "'Abandon' মানে বর্জন করা বা ছেড়ে দেওয়া। এর সমার্থক শব্দ (Synonym) হলো 'Leave' বা 'Forsake'।" },
-            { question: "Fill in the blank: He is proficient ________ English.", options: ["in", "at", "with", "for"], correct: 0, exp: "'Proficient' শব্দটির পর উপযুক্ত Preposition হিসেবে 'in' বসে (Proficient in something মানে কোনো বিষয়ে দক্ষ)।" }
+            { question: "Choose the correct Antonym of 'FRAGILE':", options: ["Weak", "Delicate", "Strong / Robust", "Brittle"], correct: 2, exp: "'Fragile' মানে যা সহজে ভেঙে যায় (ভঙ্গুর)। এর বিপরীত শব্দ (Antonym) হলো 'Strong' বা 'Robust' (শক্তিশালী)।" },
+            { question: "Spot the error: 'Each of the students (A) / have compiled (B) / the assignment (C) / No Error (D) '", options: ["A", "B", "C", "D"], correct: 1, exp: "'Each of' এর পর Noun বহুবচন হলেও Verb সবসময় একবচন (Singular) হয়। তাই 'have' এর জায়গায় 'has' হবে।" }
         ]
     },
     en: {
         history: [
-            { question: "Who founded the Azad Hind Fauj?", options: ["Mahatma Gandhi", "Netaji Subhas Chandra Bose", "Rash Behari Bose", "Bhagat Singh"], correct: 2, exp: "Rash Behari Bose founded the INA in Tokyo in 1942. Later, Netaji took over leadership." },
-            { question: "In which year did the Battle of Plassey take place?", options: ["1757", "1764", "1857", "1947"], correct: 0, exp: "Fought on 23 June 1757 between Nawab Siraj-ud-Daulah and Robert Clive of the British East India Company." }
+            { question: "At which Indus Valley site was the famous 'Great Bath' discovered?", options: ["Harappa", "Lothal", "Kalibangan", "Mohenjo-daro"], correct: 3, exp: "The Great Bath was discovered in Mohenjo-daro, representing advanced ancient planning." },
+            { question: "Who plundered the famous Somnath Temple in 1025 AD?", options: ["Mahmud of Ghazni", "Muhammad Ghori", "Genghis Khan", "Timur"], correct: 0, exp: "Sultan Mahmud of Ghazni attacked and looted the wealthy Somnath Temple in Gujarat." },
+            { question: "Who was the Governor-General of India during the Revolt of 1857?", options: ["Lord Dalhousie", "Lord Canning", "Lord Curzon", "Lord Bentinck"], correct: 1, exp: "Lord Canning was the Governor-General during the mutiny and became the first Viceroy of India." }
         ],
         geography: [
-            { question: "Which is the largest ocean in the world?", options: ["Atlantic Ocean", "Indian Ocean", "Pacific Ocean", "Arctic Ocean"], correct: 2, exp: "The Pacific Ocean is the largest and deepest ocean on Earth." },
-            { question: "Which planet is known as the 'Red Planet'?", options: ["Venus", "Mercury", "Mars", "Jupiter"], correct: 2, exp: "Mars is called the Red Planet due to the abundance of iron oxide on its surface." }
+            { question: "Which river is popularly known as the 'Ganga of South India'?", options: ["Krishna", "Godavari", "Cauvery", "Narmada"], correct: 1, exp: "Due to its length and large river basin, River Godavari is called 'Dakshina Ganga'." },
+            { question: "Which strait separates India from Sri Lanka?", options: ["10 Degree Channel", "Palk Strait", "Malacca Strait", "Bering Strait"], correct: 1, exp: "The Palk Strait is a shallow channel that lies between India and Sri Lanka." }
         ],
         polity: [
-            { question: "When did the Constitution of India come into force?", options: ["26 Nov 1949", "26 Jan 1950", "15 Aug 1947", "30 Jan 1948"], correct: 1, exp: "It came into full force on 26 January 1950, celebrated as Republic Day." },
-            { question: "Who is known as the Father of the Indian Constitution?", options: ["Dr. Rajendra Prasad", "Mahatma Gandhi", "Jawaharlal Nehru", "Dr. B. R. Ambedkar"], correct: 3, exp: "Dr. B.R. Ambedkar is regarded as the Father of the Indian Constitution due to his role as Chairman of the Drafting Committee." }
+            { question: "Which Article of the Constitution empowers the Supreme Court to issue Writs?", options: ["Article 14", "Article 32", "Article 226", "Article 246"], correct: 1, exp: "Under Article 32, citizens can move to the Supreme Court for enforcement of Fundamental Rights via 5 types of writs." },
+            { question: "The Vice-President of India is the ex-officio Chairman of which house?", options: ["Lok Sabha", "Rajya Sabha", "Legislative Assembly", "NITI Aayog"], correct: 1, exp: "According to the Constitution, the Vice-President of India acts as the ex-officio Chairman of the Rajya Sabha." }
         ],
         science: [
-            { question: "Which is called the brain of the computer?", options: ["RAM", "Monitor", "CPU", "Hard Disk"], correct: 2, exp: "The CPU (Central Processing Unit) processes all information and controls computer functions." },
-            { question: "Scurvy disease is caused by the deficiency of which vitamin?", options: ["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin D"], correct: 2, exp: "Scurvy is caused by Vitamin C deficiency. Citrus fruits are rich sources of this vitamin." }
+            { question: "Which of the following is measured using the unit 'Light Year'?", options: ["Time", "Distance", "Intensity of Light", "Speed"], correct: 1, exp: "A Light Year is a unit of astronomical distance, equivalent to the distance that light travels in one year." },
+            { question: "Which hormone is known as the 'Emergency' or 'Fight-or-Flight' hormone?", options: ["Insulin", "Adrenaline", "Thyroxine", "Pituitary"], correct: 1, exp: "Adrenaline is secreted rapidly during stressful or dangerous situations to prepare the body to react." }
         ],
-        // 🔢 Mathematics (English Version)
         math: [
-            { question: "The ratio of two numbers is 3:4 and their HCF is 4. Find their LCM.", options: ["12", "24", "48", "36"], correct: 2, exp: "Short Trick: LCM = Product of Ratios × HCF. Therefore, 3 × 4 × 4 = 48." },
-            { question: "By selling an article for ₹270, a loss of 10% is incurred. What was its cost price?", options: ["₹243", "₹300", "₹280", "₹320"], correct: 1, exp: "10% loss means Selling Price is 90%. So, 90% = 270. Therefore, 100% (CP) = (270 × 100) / 90 = ₹300." }
+            { question: "A sum of money at compound interest trebles itself in 3 years. In how many years will it become 9 times?", options: ["6 years", "9 years", "5 years", "12 years"], correct: 0, exp: "Trick: 3 times in 3 years. 9 times means $3^2$. Total Time = (Power 2 × Base Time 3) = 6 years." },
+            { question: "A can do a piece of work in 10 days and B in 15 days. Working together, in how many days can they finish it?", options: ["5 days", "6 days", "8 days", "7 days"], correct: 1, exp: "Short Trick: $(A \times B) / (A + B) = (10 \times 15) / (10 + 15) = 150 / 25 = 6$ days." }
         ],
-        // 🔥 Current Affairs (English Version)
         ca: [
-            { question: "Which country won the Men's T20 World Cup in 2024?", options: ["South Africa", "India", "Australia", "England"], correct: 1, exp: "India won their second T20 World Cup title by defeating South Africa in the final in June 2024." },
-            { question: "Who is the current Chief Election Commissioner of India (in 2026)?", options: ["Rajiv Kumar", "Anup Chandra Pandey", "Sunil Arora", "Hiralal Samariya"], correct: 0, exp: "Rajiv Kumar is the 25th Chief Election Commissioner of India." }
+            { question: "Which countries are jointly hosting the FIFA World Cup 2026?", options: ["USA, Mexico, Canada", "Brazil & Argentina", "Qatar & Saudi Arabia", "France & Germany"], correct: 0, exp: "The FIFA World Cup 2026 will be jointly hosted by three North American nations: USA, Mexico, and Canada." },
+            { question: "Which Indian spinner recently achieved the milestone of taking 500 Test wickets?", options: ["Ravindra Jadeja", "Ravichandran Ashwin", "Kuldeep Yadav", "Yuzvendra Chahal"], correct: 1, exp: "Ravichandran Ashwin became the second Indian bowler after Anil Kumble to join the elite 500 Test wickets club." }
         ],
-        // 🔤 English Section
         english: [
-            { question: "Select the correct Synonym of 'ABANDON':", options: ["Keep", "Leave / Forsake", "Support", "Adopt"], correct: 1, exp: "'Abandon' means to completely leave or give up something. Synonyms include Leave or Forsake." },
-            { question: "Fill in the blank: He is proficient ________ English.", options: ["in", "at", "with", "for"], correct: 0, exp: "The appropriate preposition after 'Proficient' is 'in' (Proficient in a language/subject)." }
+            { question: "Choose the correct Antonym of 'FRAGILE':", options: ["Weak", "Delicate", "Strong / Robust", "Brittle"], correct: 2, exp: "'Fragile' means easily broken. Its opposite is Strong or Robust." },
+            { question: "Spot the error: 'Each of the students (A) / have compiled (B) / the assignment (C) / No Error (D) '", options: ["A", "B", "C", "D"], correct: 1, exp: "After 'Each of', the verb must always be singular. Therefore, change 'have' to 'has'." }
         ]
     }
 };
@@ -319,7 +242,6 @@ function updateUI() {
     document.getElementById("exp-title-text").innerText = uiLabels[currentLang].expTitle;
     document.getElementById("result-title").innerText = uiLabels[currentLang].resultTitle;
     document.getElementById("home-btn-text").innerText = uiLabels[currentLang].homeBtn;
-    
     document.getElementById("lang-toggle-btn").innerText = currentLang === 'bn' ? 'English' : 'বাংলা';
     
     if(document.getElementById("quiz-screen").classList.contains("active-screen")) {
@@ -327,94 +249,58 @@ function updateUI() {
         let currentQuestion = currentQuestions[currentQuestionIndex];
         document.getElementById("question-text").innerText = currentQuestion.question;
         document.getElementById("progress-text").innerText = `${uiLabels[currentLang].progress} ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
-        
         let buttons = document.getElementById("options-box").children;
-        for(let i=0; i<buttons.length; i++) {
-            buttons[i].innerText = currentQuestion.options[i];
-        }
-        if(answered) {
-            document.getElementById("explanation-text").innerText = currentQuestion.exp;
-        }
+        for(let i=0; i<buttons.length; i++) { buttons[i].innerText = currentQuestion.options[i]; }
+        if(answered) { document.getElementById("explanation-text").innerText = currentQuestion.exp; }
     }
 }
 
-function toggleLanguage() {
-    currentLang = currentLang === 'bn' ? 'en' : 'bn';
-    updateUI();
-}
-
+function toggleLanguage() { currentLang = currentLang === 'bn' ? 'en' : 'bn'; updateUI(); }
 function startQuiz(category) {
-    currentCategory = category;
-    currentQuestions = quizQuestions[currentLang][currentCategory];
-    currentQuestionIndex = 0;
-    score = 0;
-    
+    currentCategory = category; currentQuestions = quizQuestions[currentLang][currentCategory];
+    currentQuestionIndex = 0; score = 0;
     document.getElementById("category-screen").classList.remove("active-screen");
     document.getElementById("quiz-screen").classList.add("active-screen");
-    
     loadQuestion();
 }
 
 function loadQuestion() {
-    answered = false;
-    document.getElementById("next-button").style.display = "none";
+    answered = false; document.getElementById("next-button").style.display = "none";
     document.getElementById("explanation-container").style.display = "none";
-    
     let currentQuestion = currentQuestions[currentQuestionIndex];
-    
     document.getElementById("progress-text").innerText = `${uiLabels[currentLang].progress} ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
     document.getElementById("question-text").innerText = currentQuestion.question;
-    
-    let optionsBox = document.getElementById("options-box");
-    optionsBox.innerHTML = "";
-    
+    let optionsBox = document.getElementById("options-box"); optionsBox.innerHTML = "";
     currentQuestion.options.forEach((option, index) => {
-        let button = document.createElement("button");
-        button.innerText = option;
-        button.classList.add("option-btn");
-        button.onclick = () => selectOption(button, index);
-        optionsBox.appendChild(button);
+        let button = document.createElement("button"); button.innerText = option; button.classList.add("option-btn");
+        button.onclick = () => selectOption(button, index); optionsBox.appendChild(button);
     });
 }
 
 function selectOption(selectedBtn, optionIndex) {
-    if(answered) return;
-    answered = true;
-    
+    if(answered) return; answered = true;
     let currentQuestion = currentQuestions[currentQuestionIndex];
     let allOptions = document.getElementById("options-box").children;
-    
-    if(optionIndex === currentQuestion.correct) {
-        selectedBtn.classList.add("correct");
-        score++;
-    } else {
-        selectedBtn.classList.add("wrong");
-        allOptions[currentQuestion.correct].classList.add("correct");
-    }
-    
+    if(optionIndex === currentQuestion.correct) { selectedBtn.classList.add("correct"); score++; }
+    else { selectedBtn.classList.add("wrong"); allOptions[currentQuestion.correct].classList.add("correct"); }
     document.getElementById("explanation-text").innerText = currentQuestion.exp;
     document.getElementById("explanation-container").style.display = "block";
-    
     document.getElementById("next-button").style.display = "block";
 }
 
 function nextQuestion() {
     currentQuestionIndex++;
-    
-    if(currentQuestionIndex < currentQuestions.length) {
-        loadQuestion();
-    } else {
+    if(currentQuestionIndex < currentQuestions.length) { loadQuestion(); }
+    else {
         document.getElementById("quiz-screen").classList.remove("active-screen");
         document.getElementById("result-screen").classList.add("active-screen");
         document.getElementById("final-score-text").innerText = `Your Score: ${score} / ${currentQuestions.length}`;
     }
 }
-
 function goToHome() {
     document.getElementById("result-screen").classList.remove("active-screen");
     document.getElementById("category-screen").classList.add("active-screen");
 }
-
 updateUI();
 </script>
 
