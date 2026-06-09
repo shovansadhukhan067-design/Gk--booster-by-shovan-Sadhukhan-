@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html>
 <head>
 <title>GK Booster Quiz</title>
@@ -7,14 +8,13 @@
 body{
 font-family:Arial;
 padding:20px;
-background:#f5f5f5;
+text-align:center;
 }
 button{
 display:block;
-margin:10px 0;
-padding:12px;
 width:100%;
-font-size:18px;
+padding:12px;
+margin:10px 0;
 }
 </style>
 </head>
@@ -22,21 +22,24 @@ font-size:18px;
 
 <h2>GK Booster Quiz</h2>
 
-<p>Who is known as the Father of the Indian Constitution?</p>
+<p id="question">Who is known as the Father of the Indian Constitution?</p>
 
-<button onclick="check(false)">Mahatma Gandhi</button>
-<button onclick="check(false)">Jawaharlal Nehru</button>
-<button onclick="check(true)">B. R. Ambedkar</button>
-<button onclick="check(false)">Subhas Chandra Bose</button>
+<button onclick="check(false)">Mahatma Gandhi</button> <button onclick="check(false)">Jawaharlal Nehru</button> <button onclick="check(true)">B. R. Ambedkar</button> <button onclick="check(false)">Subhas Chandra Bose</button>
 
-<p id="result"></p>
+<h3 id="score">Score: 0</h3>
 
 <script>
+let score = 0;
+
 function check(correct){
 if(correct){
-document.getElementById("result").innerHTML="✅ Correct!";
-}else{
-document.getElementById("result").innerHTML="❌ Wrong! Correct Answer: B. R. Ambedkar";
+score++;
+document.getElementById("score").innerHTML =
+"🏆 Score: " + score;
+alert("✅ Correct!");
+}
+else{
+alert("❌ Wrong! Correct Answer: B. R. Ambedkar");
 }
 }
 </script>
