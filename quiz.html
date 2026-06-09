@@ -1,14 +1,13 @@
-
 <!DOCTYPE html>
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GK Booster - Quiz Room</title>
+    <title>GK Booster - Subject Quiz</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #74ebd5, #9face6);
+            background: linear-gradient(135deg, #667eea, #764ba2);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -21,7 +20,7 @@
             background-color: white;
             border-radius: 15px;
             padding: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
             width: 100%;
             max-width: 500px;
             text-align: center;
@@ -31,6 +30,34 @@
             margin-bottom: 20px;
             font-size: 24px;
         }
+        .category-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .cat-btn {
+            background-color: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 20px 10px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #495057;
+        }
+        .cat-btn:hover {
+            background-color: #e2e6ea;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        /* সাবজেক্ট ভিত্তিক আলাদা রঙ */
+        .cat-history:hover { border-color: #ff9f43; color: #ff9f43; }
+        .cat-geography:hover { border-color: #0abde3; color: #0abde3; }
+        .cat-polity:hover { border-color: #10ac84; color: #10ac84; }
+        .cat-science:hover { border-color: #ee5253; color: #ee5253; }
+
         .progress {
             font-size: 14px;
             color: #666;
@@ -55,7 +82,6 @@
         }
         .option-btn:hover {
             background-color: #e4e6eb;
-            border-color: #ccd0d5;
         }
         .correct {
             background-color: #2ecc71 !important;
@@ -78,13 +104,15 @@
             display: none;
             width: 100%;
             font-weight: bold;
-            transition: background 0.2s;
         }
         .next-btn:hover {
             background-color: #3554d1;
         }
-        .result-screen {
+        .screen {
             display: none;
+        }
+        .active-screen {
+            display: block;
         }
         .score-text {
             font-size: 22px;
@@ -106,94 +134,96 @@
 <body>
 
 <div class="quiz-container">
-    <!-- Quiz Playing Screen -->
-    <div id="quiz-box">
-        <div class="progress" id="progress-text">Question 1 of 10</div>
+    
+    <!-- স্ক্রিন ১: সাবজেক্ট সিলেকশন স্ক্রিন -->
+    <div id="category-screen" class="screen active-screen">
+        <h2>📚 একটি বিষয় বেছে নিন</h2>
+        <div class="category-grid">
+            <button class="cat-btn cat-history" onclick="startQuiz('history')">📜 ইতিহাস</button>
+            <button class="cat-btn cat-geography" onclick="startQuiz('geography')">🌍 ভূগোল</button>
+            <button class="cat-btn cat-polity" onclick="startQuiz('polity')">⚖️ রাষ্ট্রবিজ্ঞান</button>
+            <button class="cat-btn cat-science" onclick="startQuiz('science')">🧪 বিজ্ঞান</button>
+        </div>
+    </div>
+
+    <!-- স্ক্রিন ২: মূল কুইজ স্ক্রিন -->
+    <div id="quiz-screen" class="screen">
+        <div class="progress" id="progress-text">Question 1 of 5</div>
         <h2 id="question-text">Loading Question...</h2>
         <div class="options-container" id="options-box">
-            <!-- Options will load here via JavaScript -->
+            <!-- Options load here -->
         </div>
         <button class="next-btn" id="next-button" onclick="nextQuestion()">Next Question ➔</button>
     </div>
 
-    <!-- Result Screen -->
-    <div id="result-box" class="result-screen">
-        <h2>🎉 Quiz Completed! 🎉</h2>
-        <p class="score-text" id="final-score-text">Your Score: 0 / 10</p>
-        <button class="restart-btn" onclick="restartQuiz()">Try Again 🔄</button>
+    <!-- স্ক্রিন ৩: রেজাল্ট স্ক্রিন -->
+    <div id="result-screen" class="screen">
+        <h2>🎉 কুইজ সম্পূর্ণ হয়েছে! 🎉</h2>
+        <p class="score-text" id="final-score-text">Your Score: 0 / 5</p>
+        <button class="restart-btn" onclick="goToHome()">মূল মেনু 🔄</button>
     </div>
 </div>
 
 <script>
-// ১০টি জিকে প্রশ্ন ও উত্তরের লিস্ট
-const quizData = [
-    {
-        question: "ভারতের রাজধানী কোনটি?",
-        options: ["কলকাতা", "মুম্বাই", "নয়াদিল্লি", "চেন্নাই"],
-        correct: 2
-    },
-    {
-        question: "পশ্চিমবঙ্গের রাজ্য পশুর নাম কী?",
-        options: ["রয়েল বেঙ্গল টাইগার", "মেছো বিড়াল", "হাতি", "হরিণ"],
-        correct: 1
-    },
-    {
-        question: "সূর্য একটি কী?",
-        options: ["গ্রহ", "উপগ্রহ", "নক্ষত্র", "ধূমকেতু"],
-        correct: 2
-    },
-    {
-        question: "বিশ্বের বৃহত্তম মহাসাগর কোনটি?",
-        options: ["আটলান্টিক মহাসাগর", "ভারত মহাসাগর", "প্রশান্ত মহাসাগর", "উত্তর মহাসাগর"],
-        correct: 2
-    },
-    {
-        question: "মানবদেহের মোট হাড়ের সংখ্যা কত?",
-        options: ["২০৬ টি", "৩০৬ টি", "১0৬ টি", "৪0৬ টি"],
-        correct: 0
-    },
-    {
-        question: "ক্রিকেট খেলায় পিচের দৈর্ঘ্য কত গজ হয়?",
-        options: ["২০ গজ", "২২ গজ", "২৪ গজ", "২৫ গজ"],
-        correct: 1
-    },
-    {
-        question: "কোন গ্রহকে 'লাল গ্রহ' বলা হয়?",
-        options: ["শুক্র", "বুধ", "মঙ্গল", "বৃহস্পতি"],
-        correct: 2
-    },
-    {
-        question: "আজাদ হিন্দ ফৌজ কে গঠন করেছিলেন?",
-        options: ["মহাত্মা গান্ধী", "নেতাজী সুভাষচন্দ্র বসু", "রাসবিহারী বসু", "ভগত সিং"],
-        correct: 2 // ঐতিহাসিক দল গঠনে রাসবিহারী বসু মুখ্য ভূমিকা নেন, পরে সুভাষচন্দ্র নেতৃত্ব দেন।
-    },
-    {
-        question: "কম্পিউটারের মস্তিষ্ক কাকে বলা হয়?",
-        options: ["RAM", "Monitor", "CPU", "Hard Disk"],
-        correct: 2
-    },
-    {
-        question: "কোন ভিটামিনের অভাবে স্কার্ভি রোগ হয়?",
-        options: ["ভিটামিন A", "ভিটামিন B", "ভিটামিন C", "ভিটামিন D"],
-        correct: 2
-    }
-];
+// বিষয়ভিত্তিক প্রশ্ন ও উত্তরের ডাটাবেস (প্রতি বিষয়ে ৫টি করে বাছাই করা প্রশ্ন)
+const quizQuestions = {
+    history: [
+        { question: "আজাদ হিন্দ ফৌজ কে গঠন করেছিলেন?", options: ["মহাত্মা গান্ধী", "নেতাজী সুভাষচন্দ্র বসু", "রাসবিহারী বসু", "ভগত সিং"], correct: 2 },
+        { question: "পলাশীর যুদ্ধ কত সালে হয়েছিল?", options: ["১৭৫৭", "১৭৬৪", "১৮৫৭", "১৯৪৭"], correct: 0 },
+        { question: "সিন্ধু সভ্যতার অবশিষ্টাংশ 'লোথাল' কোথায় অবস্থিত?", options: ["পাঞ্জাব", "রাজস্থান", "গুজরাট", "সিন্ধু প্রদেশ"], correct: 2 },
+        { question: "কাকে 'ভারতের নেপোলিয়ন' বলা হতো?", options: ["চন্দ্রগুপ্ত মৌর্য", "সমুদ্রগুপ্ত", "আকবর", "কনিষ্ক"], correct: 1 },
+        { question: "ত্রিপুরী অধিবেশনে সুভাষচন্দ্র বসুর কাছে পরাজিত কংগ্রেস প্রার্থী কে ছিলেন?", options: ["জওহরলাল নেহেরু", "পট্টভি সিতারামাইয়া", "রাজেন্দ্র প্রসাদ", "সর্দার প্যাটেল"], correct: 1 }
+    ],
+    geography: [
+        { question: "বিশ্বের বৃহত্তম মহাসাগর কোনটি?", options: ["আটলান্টিক মহাসাগর", "ভারত মহাসাগর", "প্রশান্ত মহাসাগর", "উত্তর মহাসাগর"], correct: 2 },
+        { question: "কোন গ্রহকে 'লাল গ্রহ' বলা হয়?", options: ["শুক্র", "বুধ", "মঙ্গল", "বৃহস্পতি"], correct: 2 },
+        { question: "ভারতের দীর্ঘতম নদী কোনটি?", options: ["ব্রহ্মপুত্র", "গঙ্গা", "গোদাবরী", "সিন্ধু"], correct: 1 },
+        { question: "পশ্চিমবঙ্গের সর্বোচ্চ শৃঙ্গের নাম কী?", options: ["সান্দাকফু", "ফালুট", "টাইগার হিল", "বড়পাহাড়"], correct: 0 },
+        { question: "কোন কাল্পনিক রেখা ভারতের মাঝখান দিয়ে গেছে?", options: ["নিরক্ষরেখা", "কর্কটক্রান্তি রেখা", "মকরক্রান্তি রেখা", "মূল মধ্যরেখা"], correct: 1 }
+    ],
+    polity: [
+        { question: "ভারতের সংবিধান কবে থেকে কার্যকর হয়?", options: ["২৬ নভেম্বর ১৯৪৯", "২৬ জানুয়ারি ১৯৫০", "১৫ আগস্ট ১৯৪৭", "৩০ জানুয়ারি ১৯৪৮"], correct: 1 },
+        { question: "কাকে ভারতীয় সংবিধানের জনক বলা হয়?", options: ["ডঃ রাজেন্দ্র প্রসাদ", "মহাত্মা গান্ধী", "জওহরলাল নেহেরু", "ডঃ বি. আর. আম্বেদকর"], correct: 3 },
+        { question: "ভারতের লোকসভার সদস্য হতে গেলে ন্যূনতম বয়স কত হওয়া প্রয়োজন?", options: ["১৮ বছর", "২১ বছর", "২৫ বছর", "৩০ বছর"], correct: 2 },
+        { question: "ভারতের রাষ্ট্রপতিকে কে শপথ বাক্য পাঠ করান?", options: ["প্রধানমন্ত্রী", "উপরাষ্ট্রপতি", "প্রধান বিচারপতি", "লোকসভার স্পিকার"], correct: 2 },
+        { question: "ভারতের সংবিধানে বর্তমানে মোট কতগুলি মৌলিক কর্তব্য আছে?", options: ["১০টি", "১১টি", "১২টি", "৯টি"], correct: 1 }
+    ],
+    science: [
+        { question: "কম্পিউটারের মস্তিষ্ক কাকে বলা হয়?", options: ["RAM", "Monitor", "CPU", "Hard Disk"], correct: 2 },
+        { question: "কোন ভিটামিনের অভাবে স্কার্ভি রোগ হয়?", options: ["ভিটামিন A", "ভিটামিন B", "ভিটামিন C", "ভিটামিন D"], correct: 2 },
+        { question: "মানবদেহের মোট হাড়ের সংখ্যা কত?", options: ["২০৬ টি", "৩০৬ টি", "১0৬ টি", "৪0৬ টি"], correct: 0 },
+        { question: "পেন্সিলের সিস তৈরিতে নিচের কোনটি ব্যবহৃত হয়?", options: ["কয়লা", "গ্রাফাইট", "সীসা", "চারকোল"], correct: 1 },
+        { question: "কোন গ্যাসটি 'লাফিং গ্যাস' নামে পরিচিত?", options: ["নাইট্রাস অক্সাইড", "কার্বন মনোক্সাইড", "সালফার ডাইঅক্সাইড", "মিথেন"], correct: 0 }
+    ]
+};
 
+let currentQuestions = [];
 let currentQuestionIndex = 0;
 let score = 0;
 let answered = false;
+
+// কুইজ শুরু করার ফাংশন
+function startQuiz(category) {
+    currentQuestions = quizQuestions[category];
+    currentQuestionIndex = 0;
+    score = 0;
+    
+    // স্ক্রিন পরিবর্তন
+    document.getElementById("category-screen").classList.remove("active-screen");
+    document.getElementById("quiz-screen").classList.add("active-screen");
+    
+    loadQuestion();
+}
 
 function loadQuestion() {
     answered = false;
     document.getElementById("next-button").style.display = "none";
     
-    let currentQuestion = quizData[currentQuestionIndex];
+    let currentQuestion = currentQuestions[currentQuestionIndex];
     
-    // প্রোগ্রেস এবং প্রশ্ন সেট করা
-    document.getElementById("progress-text").innerText = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+    document.getElementById("progress-text").innerText = `Question ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
     document.getElementById("question-text").innerText = currentQuestion.question;
     
-    // অপশনগুলো লোড করা
     let optionsBox = document.getElementById("options-box");
     optionsBox.innerHTML = "";
     
@@ -207,10 +237,10 @@ function loadQuestion() {
 }
 
 function selectOption(selectedBtn, optionIndex) {
-    if(answered) return; // একবার উত্তর দিলে আর ক্লিক করা যাবে না
+    if(answered) return;
     answered = true;
     
-    let currentQuestion = quizData[currentQuestionIndex];
+    let currentQuestion = currentQuestions[currentQuestionIndex];
     let allOptions = document.getElementById("options-box").children;
     
     if(optionIndex === currentQuestion.correct) {
@@ -218,37 +248,29 @@ function selectOption(selectedBtn, optionIndex) {
         score++;
     } else {
         selectedBtn.classList.add("wrong");
-        // সঠিক উত্তরটি সবুজ করে দেখানো
         allOptions[currentQuestion.correct].classList.add("correct");
     }
     
-    // Next বোতামটি দেখানো
     document.getElementById("next-button").style.display = "block";
 }
 
 function nextQuestion() {
     currentQuestionIndex++;
     
-    if(currentQuestionIndex < quizData.length) {
+    if(currentQuestionIndex < currentQuestions.length) {
         loadQuestion();
     } else {
-        // কুইজ শেষ, রেজাল্ট দেখাও
-        document.getElementById("quiz-box").style.display = "none";
-        document.getElementById("result-box").style.display = "block";
-        document.getElementById("final-score-text").innerText = `Your Score: ${score} / ${quizData.length}`;
+        document.getElementById("quiz-screen").classList.remove("active-screen");
+        document.getElementById("result-screen").classList.add("active-screen");
+        document.getElementById("final-score-text").innerText = `Your Score: ${score} / ${currentQuestions.length}`;
     }
 }
 
-function restartQuiz() {
-    currentQuestionIndex = 0;
-    score = 0;
-    document.getElementById("quiz-box").style.display = "block";
-    document.getElementById("result-box").style.display = "none";
-    loadQuestion();
+// মূল মেনুতে ফিরে যাওয়ার ফাংশন
+function goToHome() {
+    document.getElementById("result-screen").classList.remove("active-screen");
+    document.getElementById("category-screen").classList.add("active-screen");
 }
-
-// প্রথমবার কুইজ চালু করা
-loadQuestion();
 </script>
 
 </body>
