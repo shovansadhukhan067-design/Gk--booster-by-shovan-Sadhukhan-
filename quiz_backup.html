@@ -47,3 +47,262 @@ alert("❌ Wrong! Correct Answer: B. R. Ambedkar");
 
 </body>
 </html>
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GK Booster - Quiz Room</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #74ebd5, #9face6);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .quiz-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .progress {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .options-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .option-btn {
+            background-color: #f0f2f5;
+            border: 2px solid #e4e6eb;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.3s ease;
+        }
+        .option-btn:hover {
+            background-color: #e4e6eb;
+            border-color: #ccd0d5;
+        }
+        .correct {
+            background-color: #2ecc71 !important;
+            color: white !important;
+            border-color: #27ae60 !important;
+        }
+        .wrong {
+            background-color: #e74c3c !important;
+            color: white !important;
+            border-color: #c0392b !important;
+        }
+        .next-btn {
+            background-color: #4a6cf7;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            display: none;
+            width: 100%;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .next-btn:hover {
+            background-color: #3554d1;
+        }
+        .result-screen {
+            display: none;
+        }
+        .score-text {
+            font-size: 22px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .restart-btn {
+            background-color: #2ecc71;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 25px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-container">
+    <!-- Quiz Playing Screen -->
+    <div id="quiz-box">
+        <div class="progress" id="progress-text">Question 1 of 10</div>
+        <h2 id="question-text">Loading Question...</h2>
+        <div class="options-container" id="options-box">
+            <!-- Options will load here via JavaScript -->
+        </div>
+        <button class="next-btn" id="next-button" onclick="nextQuestion()">Next Question ➔</button>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="result-box" class="result-screen">
+        <h2>🎉 Quiz Completed! 🎉</h2>
+        <p class="score-text" id="final-score-text">Your Score: 0 / 10</p>
+        <button class="restart-btn" onclick="restartQuiz()">Try Again 🔄</button>
+    </div>
+</div>
+
+<script>
+// ১০টি জিকে প্রশ্ন ও উত্তরের লিস্ট
+const quizData = [
+    {
+        question: "ভারতের রাজধানী কোনটি?",
+        options: ["কলকাতা", "মুম্বাই", "নয়াদিল্লি", "চেন্নাই"],
+        correct: 2
+    },
+    {
+        question: "পশ্চিমবঙ্গের রাজ্য পশুর নাম কী?",
+        options: ["রয়েল বেঙ্গল টাইগার", "মেছো বিড়াল", "হাতি", "হরিণ"],
+        correct: 1
+    },
+    {
+        question: "সূর্য একটি কী?",
+        options: ["গ্রহ", "উপগ্রহ", "নক্ষত্র", "ধূমকেতু"],
+        correct: 2
+    },
+    {
+        question: "বিশ্বের বৃহত্তম মহাসাগর কোনটি?",
+        options: ["আটলান্টিক মহাসাগর", "ভারত মহাসাগর", "প্রশান্ত মহাসাগর", "উত্তর মহাসাগর"],
+        correct: 2
+    },
+    {
+        question: "মানবদেহের মোট হাড়ের সংখ্যা কত?",
+        options: ["২০৬ টি", "৩০৬ টি", "১0৬ টি", "৪0৬ টি"],
+        correct: 0
+    },
+    {
+        question: "ক্রিকেট খেলায় পিচের দৈর্ঘ্য কত গজ হয়?",
+        options: ["২০ গজ", "২২ গজ", "২৪ গজ", "২৫ গজ"],
+        correct: 1
+    },
+    {
+        question: "কোন গ্রহকে 'লাল গ্রহ' বলা হয়?",
+        options: ["শুক্র", "বুধ", "মঙ্গল", "বৃহস্পতি"],
+        correct: 2
+    },
+    {
+        question: "আজাদ হিন্দ ফৌজ কে গঠন করেছিলেন?",
+        options: ["মহাত্মা গান্ধী", "নেতাজী সুভাষচন্দ্র বসু", "রাসবিহারী বসু", "ভগত সিং"],
+        correct: 2 // ঐতিহাসিক দল গঠনে রাসবিহারী বসু মুখ্য ভূমিকা নেন, পরে সুভাষচন্দ্র নেতৃত্ব দেন।
+    },
+    {
+        question: "কম্পিউটারের মস্তিষ্ক কাকে বলা হয়?",
+        options: ["RAM", "Monitor", "CPU", "Hard Disk"],
+        correct: 2
+    },
+    {
+        question: "কোন ভিটামিনের অভাবে স্কার্ভি রোগ হয়?",
+        options: ["ভিটামিন A", "ভিটামিন B", "ভিটামিন C", "ভিটামিন D"],
+        correct: 2
+    }
+];
+
+let currentQuestionIndex = 0;
+let score = 0;
+let answered = false;
+
+function loadQuestion() {
+    answered = false;
+    document.getElementById("next-button").style.display = "none";
+    
+    let currentQuestion = quizData[currentQuestionIndex];
+    
+    // প্রোগ্রেস এবং প্রশ্ন সেট করা
+    document.getElementById("progress-text").innerText = `Question ${currentQuestionIndex + 1} of ${quizData.length}`;
+    document.getElementById("question-text").innerText = currentQuestion.question;
+    
+    // অপশনগুলো লোড করা
+    let optionsBox = document.getElementById("options-box");
+    optionsBox.innerHTML = "";
+    
+    currentQuestion.options.forEach((option, index) => {
+        let button = document.createElement("button");
+        button.innerText = option;
+        button.classList.add("option-btn");
+        button.onclick = () => selectOption(button, index);
+        optionsBox.appendChild(button);
+    });
+}
+
+function selectOption(selectedBtn, optionIndex) {
+    if(answered) return; // একবার উত্তর দিলে আর ক্লিক করা যাবে না
+    answered = true;
+    
+    let currentQuestion = quizData[currentQuestionIndex];
+    let allOptions = document.getElementById("options-box").children;
+    
+    if(optionIndex === currentQuestion.correct) {
+        selectedBtn.classList.add("correct");
+        score++;
+    } else {
+        selectedBtn.classList.add("wrong");
+        // সঠিক উত্তরটি সবুজ করে দেখানো
+        allOptions[currentQuestion.correct].classList.add("correct");
+    }
+    
+    // Next বোতামটি দেখানো
+    document.getElementById("next-button").style.display = "block";
+}
+
+function nextQuestion() {
+    currentQuestionIndex++;
+    
+    if(currentQuestionIndex < quizData.length) {
+        loadQuestion();
+    } else {
+        // কুইজ শেষ, রেজাল্ট দেখাও
+        document.getElementById("quiz-box").style.display = "none";
+        document.getElementById("result-box").style.display = "block";
+        document.getElementById("final-score-text").innerText = `Your Score: ${score} / ${quizData.length}`;
+    }
+}
+
+function restartQuiz() {
+    currentQuestionIndex = 0;
+    score = 0;
+    document.getElementById("quiz-box").style.display = "block";
+    document.getElementById("result-box").style.display = "none";
+    loadQuestion();
+}
+
+// প্রথমবার কুইজ চালু করা
+loadQuestion();
+</script>
+
+</body>
+</html>
