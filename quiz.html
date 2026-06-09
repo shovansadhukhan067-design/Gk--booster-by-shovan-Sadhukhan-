@@ -3,140 +3,266 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GK Booster - CGL 2026 Perfect</title>
+    <title>GK Booster - CGL 2026 Ultimate Pro</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            min-height: 100vh;
+        }
+        body {
+            background-color: #0b111e;
+            color: #ffffff;
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 0;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-        .quiz-container {
-            background-color: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            width: 100%;
-            max-width: 580px;
-            text-align: center;
-            position: relative;
-        }
-        .lang-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: #f1f2f6;
-            border: 1px solid #ced4da;
-            padding: 6px 12px;
-            font-size: 13px;
-            font-weight: bold;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .lang-btn:hover { background-color: #dfe4ea; }
-        h2 { color: #333; margin-bottom: 20px; font-size: 24px; margin-top: 15px; }
-        .category-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 20px; }
-        .cat-btn {
-            background-color: #f8f9fa;
-            border: 2px solid #e9ecef;
-            border-radius: 12px;
-            padding: 15px 10px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            color: #495057;
-        }
-        .cat-btn:hover { background-color: #e2e6ea; transform: translateY(-2px); }
-        .cat-history:hover { border-color: #ff9f43; color: #ff9f43; }
-        .cat-geography:hover { border-color: #0abde3; color: #0abde3; }
-        .cat-polity:hover { border-color: #10ac84; color: #10ac84; }
-        .cat-science:hover { border-color: #ee5253; color: #ee5253; }
-        .cat-math:hover { border-color: #ff6b6b; color: #ff6b6b; }
-        .cat-ca:hover { border-color: #feca57; color: #feca57; }
-        .cat-english:hover { border-color: #54a0ff; color: #54a0ff; }
-        
-        .progress { font-size: 14px; color: #666; margin-bottom: 15px; font-weight: bold; }
-        .options-container { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
-        .option-btn {
-            background-color: #f0f2f5;
-            border: 2px solid #e4e6eb;
-            border-radius: 8px;
-            padding: 12px 20px;
-            font-size: 15px;
-            cursor: pointer;
-            text-align: left;
-            transition: all 0.2s ease;
-        }
-        .correct { background-color: #2ecc71 !important; color: white !important; border-color: #27ae60 !important; }
-        .wrong { background-color: #e74c3c !important; color: white !important; border-color: #c0392b !important; }
-        
-        .explanation-box {
-            background-color: #e8f4fd;
-            border-left: 5px solid #1da1f2;
-            border-radius: 6px;
+            min-height: 100vh;
             padding: 15px;
-            margin-bottom: 20px;
-            text-align: left;
-            font-size: 14px;
-            color: #2c3e50;
-            display: none;
-            line-height: 1.5;
         }
-        .explanation-title { font-weight: bold; color: #1da1f2; margin-bottom: 5px; }
-        .next-btn {
-            background-color: #4a6cf7; color: white; border: none; border-radius: 8px;
-            padding: 12px 25px; font-size: 16px; cursor: pointer; display: none; width: 100%; font-weight: bold;
+        .app-container {
+            background-color: #111827;
+            width: 100%;
+            max-width: 450px;
+            min-height: 85vh;
+            border-radius: 30px;
+            border: 1px solid #1f2937;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: relative;
+            padding-bottom: 75px;
+            overflow-x: hidden;
         }
-        .screen { display: none; }
+        .app-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #111827;
+        }
+        .app-title {
+            font-size: 22px;
+            font-weight: 800;
+            color: #facc15;
+            letter-spacing: 0.5px;
+        }
+        .header-icons {
+            display: flex;
+            gap: 15px;
+            font-size: 18px;
+            color: #9ca3af;
+            cursor: pointer;
+        }
+        .screen { display: none; padding: 0 20px; animation: fadeIn 0.3s ease; }
         .active-screen { display: block; }
-        .score-text { font-size: 22px; margin-bottom: 20px; color: #333; }
-        .restart-btn { background-color: #2ecc71; color: white; border: none; border-radius: 8px; padding: 12px 25px; font-size: 16px; cursor: pointer; font-weight: bold; }
+        .welcome-banner {
+            background: linear-gradient(135deg, #1d4ed8, #1e40af);
+            border-radius: 16px;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        .welcome-text h3 { font-size: 18px; color: #ffffff; margin-bottom: 4px; }
+        .welcome-text p { font-size: 13px; color: #93c5fd; }
+        .trophy-img { font-size: 45px; color: #facc15; }
+        .level-card {
+            background-color: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 16px;
+            padding: 15px;
+            margin-bottom: 25px;
+        }
+        .level-info { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 14px; }
+        .level-title { color: #a78bfa; font-weight: bold; }
+        .xp-text { color: #9ca3af; }
+        .progress-bar { background-color: #374151; height: 8px; border-radius: 10px; overflow: hidden; }
+        .progress-fill { background-color: #06b6d4; height: 100%; width: 75%; border-radius: 10px; }
+        .section-title { font-size: 16px; font-weight: 700; color: #f3f4f6; margin-bottom: 15px; text-align: left; }
+        .category-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .cat-card {
+            border-radius: 14px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.2s;
+        }
+        .cat-card:active { transform: scale(0.97); }
+        .cat-icon { font-size: 24px; width: 40px; text-align: center; }
+        .cat-info h4 { font-size: 14px; font-weight: 700; color: #ffffff; }
+        .cat-info p { font-size: 11px; color: rgba(255, 255, 255, 0.7); margin-top: 2px; }
+        .c-history { background-color: #ff9f43; }
+        .c-geography { background-color: #0abde3; }
+        .c-polity { background-color: #10ac84; }
+        .c-science { background-color: #ee5253; }
+        .c-math { background-color: #5f27cd; }
+        .c-ca { background-color: #ff6b6b; }
+        .c-english { background-color: #54a0ff; }
+        .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .timer-box { background-color: rgba(239, 68, 68, 0.15); border: 1px solid #ef4444; padding: 6px 14px; border-radius: 20px; color: #ef4444; font-weight: bold; font-size: 14px; display: flex; align-items: center; gap: 6px; }
+        .q-count { font-size: 14px; color: #9ca3af; font-weight: bold; }
+        .question-box { font-size: 18px; line-height: 1.5; font-weight: 600; color: #ffffff; margin-bottom: 25px; text-align: left; }
+        .options-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+        .opt-btn { background-color: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 15px; color: #d1d5db; text-align: left; font-size: 15px; cursor: pointer; transition: all 0.2s; }
+        .correct { background-color: rgba(16, 185, 129, 0.15) !important; border-color: #10b981 !important; color: #10b981 !important; font-weight: bold; }
+        .wrong { background-color: rgba(239, 68, 68, 0.15) !important; border-color: #ef4444 !important; color: #ef4444 !important; font-weight: bold; }
+        .explanation-box { background-color: rgba(59, 130, 246, 0.1); border-left: 4px solid #3b82f6; border-radius: 8px; padding: 15px; margin-bottom: 20px; text-align: left; font-size: 14px; display: none; line-height: 1.5; }
+        .next-btn { background-color: #3b82f6; color: white; border: none; padding: 14px; border-radius: 12px; width: 100%; font-size: 16px; font-weight: bold; cursor: pointer; display: none; }
+        .result-card { background-color: #1f2937; border-radius: 20px; padding: 30px 20px; border: 1px solid #374151; margin-top: 20px; }
+        .result-trophy { font-size: 60px; color: #facc15; margin-bottom: 15px; }
+        .result-score { font-size: 32px; font-weight: 800; color: #ffffff; margin-bottom: 5px; }
+        .result-status { font-size: 16px; color: #10b981; font-weight: bold; margin-bottom: 25px; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; }
+        .stat-item { background-color: #111827; padding: 12px; border-radius: 10px; text-align: center; }
+        .stat-label { font-size: 12px; color: #9ca3af; margin-bottom: 4px; }
+        .stat-val { font-size: 16px; font-weight: bold; }
+        .home-btn { background-color: #10b981; color: white; border: none; padding: 14px; border-radius: 12px; width: 100%; font-size: 16px; font-weight: bold; cursor: pointer; }
+        .bottom-nav {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 65px;
+            background-color: #1f2937;
+            border-top: 1px solid #374151;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-bottom-left-radius: 28px;
+            border-bottom-right-radius: 28px;
+        }
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #9ca3af;
+            font-size: 12px;
+            cursor: pointer;
+            text-decoration: none;
+            gap: 4px;
+        }
+        .nav-item i { font-size: 18px; }
+        .nav-active { color: #facc15; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
 
-<div class="quiz-container">
-    <button class="lang-btn" id="lang-toggle-btn" onclick="toggleLanguage()">English</button>
-    
-    <!-- ক্যাটাগরি স্ক্রিন -->
-    <div id="category-screen" class="screen active-screen">
-        <h2 id="menu-title">🏁 SSC CGL 2026 Ultimate Practice Board</h2>
+<div class="app-container">
+    <div class="app-header">
+        <div class="app-title">GK BOOSTER</div>
+        <div class="header-icons">
+            <i class="fas fa-language" onclick="toggleLanguage()"></i>
+            <i class="fas fa-bell"></i>
+        </div>
+    </div>
+
+    <!-- হোম স্ক্রিন -->
+    <div id="home-screen" class="screen active-screen">
+        <div class="welcome-banner">
+            <div class="welcome-text">
+                <h3 id="b-welcome">Hello, Aspirant!</h3>
+                <p id="b-sub">Let's Boost Your GK</p>
+            </div>
+            <div class="trophy-img"><i class="fas fa-trophy"></i></div>
+        </div>
+
+        <div class="level-card">
+            <div class="level-info">
+                <span class="level-title" id="lvl-text">Level 12 (Intermediate)</span>
+                <span class="xp-text">3200 / 5000 XP</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+        </div>
+
+        <div class="section-title" id="sect-title">Choose a Category</div>
+
         <div class="category-grid">
-            <button class="cat-btn cat-history" onclick="startQuiz('history')"><span id="cat-h-text">📜 ইতিহাস (২০)</span></button>
-            <button class="cat-btn cat-geography" onclick="startQuiz('geography')"><span id="cat-g-text">🌍 ভূগোল (২০)</span></button>
-            <button class="cat-btn cat-polity" onclick="startQuiz('polity')"><span id="cat-p-text">⚖️ রাষ্ট্রবিজ্ঞান (২০)</span></button>
-            <button class="cat-btn cat-science" onclick="startQuiz('science')"><span id="cat-s-text">🧪 বিজ্ঞান (২০)</span></button>
-            <button class="cat-btn cat-math" onclick="startQuiz('math')"><span id="cat-m-text">🔢 গণিত (২০)</span></button>
-            <button class="cat-btn cat-ca" onclick="startQuiz('ca')"><span id="cat-c-text">🔥 কারেন্ট অ্যাফেয়ার্স (২০)</span></button>
-            <button class="cat-btn cat-english" onclick="startQuiz('english')"><span id="cat-e-text">🔤 ইংরেজি (২০)</span></button>
+            <div class="cat-card c-history" onclick="startQuiz('history')">
+                <div class="cat-icon"><i class="fas fa-landmark"></i></div>
+                <div class="cat-info"><h4>History</h4><p>20 Qs</p></div>
+            </div>
+            <div class="cat-card c-geography" onclick="startQuiz('geography')">
+                <div class="cat-icon"><i class="fas fa-globe-asia"></i></div>
+                <div class="cat-info"><h4>Geography</h4><p>20 Qs</p></div>
+            </div>
+            <div class="cat-card c-polity" onclick="startQuiz('polity')">
+                <div class="cat-icon"><i class="fas fa-balance-scale"></i></div>
+                <div class="cat-info"><h4>Polity</h4><p>20 Qs</p></div>
+            </div>
+            <div class="cat-card c-science" onclick="startQuiz('science')">
+                <div class="cat-icon"><i class="fas fa-flask"></i></div>
+                <div class="cat-info"><h4>Science</h4><p>20 Qs</p></div>
+            </div>
+            <div class="cat-card c-math" onclick="startQuiz('math')">
+                <div class="cat-icon"><i class="fas fa-calculator"></i></div>
+                <div class="cat-info"><h4>Math</h4><p>20 Qs</p></div>
+            </div>
+            <div class="cat-card c-ca" onclick="startQuiz('ca')">
+                <div class="cat-icon"><i class="fas fa-fire"></i></div>
+                <div class="cat-info"><h4>Current Affairs</h4><p>20 Qs</p></div>
+            </div>
+            <div class="cat-card c-english" onclick="startQuiz('english')">
+                <div class="cat-icon"><i class="fas fa-font"></i></div>
+                <div class="cat-info"><h4>English</h4><p>20 Qs</p></div>
+            </div>
         </div>
     </div>
 
     <!-- কুইজ স্ক্রিন -->
     <div id="quiz-screen" class="screen">
-        <div class="progress" id="progress-text">Question 1</div>
-        <h2 id="question-text">Loading...</h2>
-        <div class="options-container" id="options-box"></div>
+        <div class="quiz-header">
+            <div class="q-count" id="progress-text">Question 1/20</div>
+            <div class="timer-box"><i class="fas fa-clock"></i> <span id="timer-val">00:00</span></div>
+        </div>
+        <div class="question-box" id="question-text">Loading...</div>
+        <div class="options-list" id="options-box"></div>
         
         <div class="explanation-box" id="explanation-container">
-            <div class="explanation-title" id="exp-title-text">💡 সমাধান ও ব্যাখ্যা:</div>
-            <div id="explanation-text">Explanation.</div>
+            <div style="font-weight: bold; color: #3b82f6; margin-bottom: 4px;" id="exp-title">💡 Explanation:</div>
+            <div id="explanation-text">Solution.</div>
         </div>
         <button class="next-btn" id="next-button" onclick="nextQuestion()">Next Question ➔</button>
     </div>
 
     <!-- রেজাল্ট স্ক্রিন -->
     <div id="result-screen" class="screen">
-        <h2 id="result-title">🎉 কুইজ সম্পূর্ণ হয়েছে! 🎉</h2>
-        <p class="score-text" id="final-score-text">Your Score: 0</p>
-        <button class="restart-btn" id="home-btn-text" onclick="goToHome()">মূল মেনু 🔄</button>
+        <div class="result-card">
+            <div class="result-trophy"><i class="fas fa-award"></i></div>
+            <h3 id="res-header">Quiz Completed!</h3>
+            <div class="result-score" id="final-score-text">0 / 20</div>
+            <div class="result-status" id="res-status">Excellent Work!</div>
+
+            <div class="stats-grid">
+                <div class="stat-item"><div class="stat-label" id="lbl-correct">Correct</div><div class="stat-val" id="stat-correct" style="color: #10b981;">0</div></div>
+                <div class="stat-item"><div class="stat-label" id="lbl-wrong">Wrong</div><div class="stat-val" id="stat-wrong" style="color: #ef4444;">0</div></div>
+                <div class="stat-item"><div class="stat-label" id="lbl-accuracy">Accuracy</div><div class="stat-val" id="stat-accuracy" style="color: #3b82f6;">0%</div></div>
+                <div class="stat-item"><div class="stat-label" id="lbl-time">Time Spent</div><div class="stat-val" id="stat-time" style="color: #facc15;">00:00</div></div>
+            </div>
+
+            <button class="home-btn" id="back-home-text" onclick="goToHome()">Main Menu 🔄</button>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <div class="nav-item nav-active" onclick="goToHome()"><i class="fas fa-home"></i><span id="nav-home">Home</span></div>
+        <div class="nav-item" onclick="alert('Quiz Section Active!')"><i class="fas fa-book-open"></i><span id="nav-quiz">Quiz</span></div>
+        <div class="nav-item" onclick="alert('Analysis updates post-quiz!')"><i class="fas fa-chart-bar"></i><span id="nav-analysis">Analysis</span></div>
+        <div class="nav-item" onclick="alert('Leaderboard Comming Soon!')"><i class="fas fa-trophy"></i><span id="nav-leader">Leaderboard</span></div>
     </div>
 </div>
 
@@ -146,31 +272,33 @@ let currentCategory = '';
 let currentQuestions = [];
 let currentQuestionIndex = 0;
 let score = 0;
+let wrongAnswers = 0;
 let answered = false;
+let timerInterval;
+let totalSeconds = 0;
 
 const uiLabels = {
     bn: {
-        menuTitle: "🏁 SSC CGL 2026 আলটিমেট প্র্যাকটিস বোর্ড",
-        history: "📜 ইতিহাস (২০)", geography: "🌍 ভূগোল (২০)", polity: "⚖️ রাষ্ট্রবিজ্ঞান (২০)", science: "🧪 বিজ্ঞান (২০)",
-        math: "🔢 গণিত (২০)", ca: "🔥 কারেন্ট অ্যাফেয়ার্স (২০)", english: "🔤 ইংরেজি (২০)",
-        nextBtn: "পরবর্তী প্রশ্ন ➔", expTitle: "💡 সঠিক উত্তর ও ব্যাখ্যা:",
-        resultTitle: "🎉 মক টেস্ট সম্পূর্ণ হয়েছে! 🎉", homeBtn: "মূল মেনু 🔄", progress: "প্রশ্ন"
+        welcome: "হ্যালো, অ্যাস্পিরেন্ট!", sub: "চলুন জিকে বুস্ট করি", level: "লেভেল ১২ (মধ্যবর্তী)",
+        category: "একটি বিষয় বেছে নিন", next: "পরবর্তী প্রশ্ন ➔", exp: "💡 সমাধান ও ব্যাখ্যা:",
+        resHeader: "কুইজ সম্পূর্ণ হয়েছে!", status: "অসাধারণ কাজ!", lblCorrect: "সঠিক",
+        lblWrong: "ভুল", accuracy: "সঠিকতার হার", time: "মোট সময়", mainM: "মূল মেনু 🔄",
+        nHome: "হোম", nQuiz: "কুইজ", nAnalysis: "বিশ্লেষণ", nLeader: "লিডারবোর্ড"
     },
     en: {
-        menuTitle: "🏁 SSC CGL 2026 Ultimate Practice Board",
-        history: "📜 History (20)", geography: "🌍 Geography (20)", polity: "⚖️ Polity (20)", science: "🧪 Science (20)",
-        math: "🔢 Mathematics (20)", ca: "🔥 Current Affairs (20)", english: "🔤 English (20)",
-        nextBtn: "Next Question ➔", expTitle: "💡 Solution & Fact:",
-        resultTitle: "🎉 Mock Test Completed! 🎉", homeBtn: "Main Menu 🔄", progress: "Question"
+        welcome: "Hello, Aspirant!", sub: "Let's Boost Your GK", level: "Level 12 (Intermediate)",
+        category: "Choose a Category", next: "Next Question ➔", exp: "💡 Explanation:",
+        resHeader: "Quiz Completed!", status: "Excellent Work!", lblCorrect: "Correct",
+        lblWrong: "Wrong", accuracy: "Accuracy", time: "Time Spent", mainM: "Main Menu 🔄",
+        nHome: "Home", nQuiz: "Quiz", nAnalysis: "Analysis", nLeader: "Leaderboard"
     }
 };
 
-// ডাটাবেস - প্রতিটি বিষয়ে ২০টি করে প্রশ্ন (মোট ১৪০টি প্রশ্ন ও সমাধান)
 const quizQuestions = {
     bn: {
         history: [
             { question: "হরপ্পা সভ্যতার কোন প্রত্নতাত্ত্বিক স্থানে প্রাচীনতম কাঠের লাঙল ব্যবহারের প্রমাণ পাওয়া গেছে?", options: ["লোথাল", "কালিবঙ্গান", "ধোলাবীরা", "বানাওয়ালি"], correct: 1, exp: "রাজস্থানের কালিবঙ্গানে লাঙল দেওয়া চাষের জমির খোঁজ মিলেছে।" },
-            { question: "ঋগ্বেদে কোন নদীর তীরে বিখ্যাত 'দশ রাজার যুদ্ধ' (Battle of Ten Kings) সংঘটিত হয়েছিল?", options: ["শতদ্রু", "সিন্ধু", "পরuষ্ণী (রবি)", "বিতস্তা"], correct: 2, exp: "পরুষ্ণী বা রবি নদীর তীরে রাজা সুদাস ও দশ রাজার জোটের মধ্যে এই যুদ্ধ হয়।" },
+            { question: "ঋগ্বেদে কোন নদীর তীরে বিখ্যাত 'দশ রাজার যুদ্ধ' (Battle of Ten Kings) সংঘটিত হয়েছিল?", options: ["শতদ্রু", "সিন্ধু", "পরুষ্ণী (রবি)", "বিতস্তা"], correct: 2, exp: "পরুষ্ণী বা রবি নদীর তীরে রাজা সুদাস ও দশ রাজার জোটের মধ্যে এই যুদ্ধ হয়।" },
             { question: "গৌতম বুদ্ধের মহাপরিনির্বাণ কোন মহাজনপদে ঘটেছিল?", options: ["অঙ্গ", "মগধ", "মল্ল", "বৎস"], correct: 2, exp: "কুশীনগরে মল্ল মহাজনপদের রাজধানীতে বুদ্ধদেব দেহত্যাগ করেন।" },
             { question: "মেগাস্থিনিস কার রাজত্বকালে ভারতে এসেছিলেন?", options: ["চন্দ্রগুপ্ত মৌর্য", "বিন্দুসার", "অশোক", "হর্ষবর্ধন"], correct: 0, exp: "গ্রিক শাসক সেলুকাসের দূত হয়ে মেগাস্থিনিস চন্দ্রগুপ্ত মৌর্যের সভায় আসেন এবং 'ইন্ডিকা' লেখেন।" },
             { question: "গুপ্ত বংশের কোন সম্রাটকে 'কবিরাজ' উপাধি দেওয়া হয়েছিল?", options: ["শ্রীগুপ্ত", "প্রথম চন্দ্রগুপ্ত", "সমুদ্রগুপ্ত", "দ্বিতীয় চন্দ্রগুপ্ত"], correct: 2, exp: "মুদ্রায় বীণা বাজানো ছবি এবং সাহিত্য অনুরাগের জন্য সমুদ্রগুপ্তকে কবিরাজ বলা হতো।" },
@@ -179,23 +307,23 @@ const quizQuestions = {
             { question: "বিজয়নগর সাম্রাজ্যের কৃষ্ণদেব রায় কোন রাজবংশের অন্তর্ভুক্ত ছিলেন?", options: ["সঙ্গম", "সালুভ", "তুলুভ", "অরাভিদু"], correct: 2, exp: "কৃষ্ণদেব রায় বিজয়নগরের বিখ্যাত তুলুভ রাজবংশের শ্রেষ্ঠ শাসক ছিলেন।" },
             { question: "আইন-ই-আকবরী অনুযায়ী মোঘল সাম্রাজ্য কয়টি সুবা বা প্রদেশে বিভক্ত ছিল?", options: ["১২", "১৫", "১৮", "১০"], correct: 0, exp: "আইন-ই-আকবরী গ্রন্থ অনুযায়ী আকবরের রাজত্বের শুরুর দিকে মোট ১২টি সুবা বা প্রদেশ ছিল।" },
             { question: "আমির খসরু কোন সুলতানের সভাকবি ছিলেন?", options: ["ইলতুতমিশ", "বলবন", "আলাউদ্দিন খিলজি", "ফিরোজ শাহ তুঘলক"], correct: 2, exp: "আমির খসরু আলাউদ্দিন খিলজি সহ দিল্লির একাধিক সুলতানের রাজত্বকাল দেখেছিলেন।" },
-            { question: "কোন শিখ গুরু বিখ্যাত 'খালসা' (Khalsa) পন্থ প্রতিষ্ঠা করেন?", options: ["গুরু নানক", "গুরু অর্জুন দেব", "গুরু তেগ বাহাদুর", "গুরু গোবিন্দ সিং"], correct: 3, exp: "১৬৯৯ সালে দশম শিখ গুরু গোবিন্দ সিং আনন্দপুর সাহেবে খালসা বাহিনী গঠন করেন।" },
+            { question: "কোন শিখ গুরু বিখ্যাত 'খালসা' (Khalsa) পপন্থ প্রতিষ্ঠা করেন?", options: ["গুরু নানক", "গুরু অর্জুন দেব", "গুরু তেগ বাহাদুর", "গুরু গোবিন্দ সিং"], correct: 3, exp: "১৬৯৯ সালে দশম শিখ গুরু গোবিন্দ সিং আনন্দপুর সাহেবে খালসা বাহিনী গঠন করেন।" },
             { question: "কত সালে এবং কার মধ্যে বক্সারের যুদ্ধ হয়েছিল?", options: ["১৭৫৭, সিরাজ ও ক্লাইভ", "১৭৬৪, মীর কাসিম জোট ও হেক্টর মুনরো", "১৭৬১, মারাঠা ও আবদালী", "১৭৬৫, শাহ আলম ও ক্লাইভ"], correct: 1, exp: "১৭৬৪ সালের ২২ অক্টোবর যৌথ ভারতীয় শক্তির সঙ্গে ব্রিটিশ সেনা হেক্টর মুনরোর এই যুদ্ধ হয়।" },
             { question: "কে ভারতে 'স্থায়ী বন্দোবস্ত' (Permanent Settlement) চালু করেন?", options: ["ওয়ারেন হেস্টিংস", "লর্ড কর্নওয়ালিস", "লর্ড ওয়েলেসলি", "লর্ড ডালহৌসি"], correct: 1, exp: "১৭৯৩ সালে বাংলার রাজস্ব ব্যবস্থার আমূল পরিবর্তনে কর্নওয়ালিস এটি প্রবর্তন করেন।" },
             { question: "১৮৫৭ সালের মহাবিদ্রোহে কানপুরের নেতৃত্ব কে দিয়েছিলেন?", options: ["বাহাদুর শাহ II", "নানা সাহেব", "বেগম হজরত মহল", "কুঁয়ার সিং"], correct: 1, exp: "কানপুরে পেশোয়া নানা সাহেব ও তাঁতিয়া টোপী বিদ্রোহ পরিচালনা করেছিলেন।" },
-            { question: "কে বিখ্যাত 'আর্য সমাজ' (Arya Samaj) প্রতিষ্ঠা করেন?", options: ["রাজা রামমোহন রায়", "দেবেন্দ্রনাথ ঠাকুর", "স্বামী دয়ানন্দ সরস্বতী", "আত্মারাম পাণ্ডুরঙ্গ"], correct: 2, exp: "১৮৭৫ সালে বোম্বাইতে 'বেদের দিকে ফিরে যাও' স্লোগান দিয়ে দয়ানন্দ সরস্বতী আর্য সমাজ গড়েন।" },
+            { question: "কে বিখ্যাত 'আর্য সমাজ' (Arya Samaj) প্রতিষ্ঠা করেন?", options: ["রাজা রামমোহন রায়", "দেবেন্দ্রনাথ ঠাকুর", "স্বামী দয়ানন্দ সরস্বতী", "আত্মারাম পাণ্ডুরঙ্গ"], correct: 2, exp: "১৮৭৫ সালে বোম্বাইতে 'বেদের দিকে ফিরে যাও' স্লোগান দিয়ে দয়ানন্দ সরস্বতী আর্য সমাজ গড়েন।" },
             { question: "কত সালে ভারতীয় জাতীয় কংগ্রেসের প্রথম অধিবেশন বোম্বাইতে বসেছিল?", options: ["১৮৮৩", "১৮৮৫", "১৮৮৯", "১৮৯০"], correct: 1, exp: "১৮৮৫ সালের ডিসেম্বরে উমেশচন্দ্র বন্দ্যোপাধ্যায়ের সভাপতিত্বে গোকুলদাস তেজপাল সংস্কৃত কলেজে প্রথম অধিবেশন বসে।" },
             { question: "১৯০৫ সালের বঙ্গভঙ্গের সময় ভারতের ভাইসরয় কে ছিলেন?", options: ["লর্ড রিপন", "লর্ড কার্জন", "লর্ড মিন্টো", "লর্ড হার্ডিঞ্জ"], correct: 1, exp: "বাঙালি জাতীয়তাবাদ দমনের উদ্দেশ্যে লর্ড কার্জন ১৯০৫ সালে বাংলা ভাগের কথা ঘোষণা করেন।" },
-            { question: "কবে এবং কোথায় গদর পার্টি (Ghadar Party) প্রতিষ্ঠিত হয়েছিল?", options: ["১৯১৩, সান ফ্রান্সিসকো", "১৯১৫, লন্ডন", "১৯批০, প্যারিস", "১৯০৭, টোকিও"], correct: 0, exp: "লালা হরদয়াল এবং সোহন সিং ভাকনা আমেরিকার সান ফ্রান্সিসকোতে গদর পার্টি তৈরি করেন।" },
+            { question: "কবে এবং কোথায় গদর পার্টি (Ghadar Party) প্রতিষ্ঠিত হয়েছিল?", options: ["১৯১৩, সান ফ্রান্সিসকো", "১৯১৫, লন্ডন", "১৯২০, প্যারিস", "১৯০৭, টোকিও"], correct: 0, exp: "লালা হরদয়াল এবং সোহন সিং ভাকনা আমেরিকার সান ফ্রান্সিসকোতে গদর পার্টি তৈরি করেন।" },
             { question: "গান্ধীজি তাঁর জীবনে প্রথম সত্যাগ্রহ আন্দোলন ভারতে কোথায় শুরু করেন?", options: ["খেড়া", "আমেদাবাদ", "চম্পারণ", "বার্দোলী"], correct: 2, exp: "১৯১৭ সালে বিহারের চম্পারণে নীলচাষীদের ওপর তিনকাঠিয়া প্রথার বিরুদ্ধে প্রথম সত্যাগ্রহ করেন।" },
-            { question: "১৯২৯ সালের কংগ্রেসের লাহোর অধিবেশনের সভাপতি কে ছিলেন যেখানে 'পূর্ণ স্বরাজ'-এর প্রস্তাব নেওয়া হয়?", options: ["মহাত্মা গান্ধী", "জওহরলাল নেহেরু", "সুباشচন্দ্র বসু", "মতিলাল নেহেরু"], correct: 1, exp: "জওহরলাল নেহেরুর সভাপতিত্বে রাভী নদীর তীরে পূর্ণ স্বরাজের লক্ষ্য গৃহীত হয়।" }
+            { question: "১৯২৯ সালের কংগ্রেসের লাহোর অধিবেশনের সভাপতি কে ছিলেন যেখানে 'পূর্ণ স্বরাজ'-এর প্রস্তাব নেওয়া হয়?", options: ["মহাত্মা গান্ধী", "জওহরলাল নেহেরু", "সুভাষচন্দ্র বসু", "মতিলাল নেহেরু"], correct: 1, exp: "জওহরলাল নেহেরুর সভাপতিত্বে রাভী নদীর তীরে পূর্ণ স্বরাজের লক্ষ্য গৃহীত হয়।" }
         ],
         geography: [
             { question: "ভারতের প্রাচীনতম এবং বৃহত্তম কয়লাখনি কোনটি?", options: ["ঝরিয়া", "রানীগঞ্জ", "বোকারো", "সিংরৌলি"], correct: 1, exp: "পশ্চিমবঙ্গের রানীগঞ্জ হলো ভারতের প্রথম এবং প্রাচীনতম কয়লা উত্তোলন কেন্দ্র।" },
-            { question: "কোন पर्वतমালা ভারতীয় উপদ্বীপের জলবিভাজিকা (Water Divide) হিসেবে কাজ করে?", options: ["হিমালয়", "আরাবল্লী", "পশ্চিমঘাট", "পূর্বঘাট"], correct: 2, exp: "পশ্চিমঘাট पर्वतমালা উপদ্বীপীয় ভারতের পূর্ববাহিনী ও পশ্চিমবাহিনী নদীগুলোর মাঝে প্রধান জলবিভাজিকা।" },
-            { question: "পশ্চিমবঙ্গের সাথে কয়টি ভারতের প্রতিবেশী দেশের সীমানা রয়েছে?", options: ["২টি", "৩টি", "৪টি", "৫টি"], correct: 1, exp: "তিনটি দেশের সীমানা রয়েছে—বাংলাদেশ, ভারত-নেপাল এবং ভুটান।" },
+            { question: "কোন পর্বতমালা ভারতীয় উপদ্বীপের জলবিভাজিকা (Water Divide) হিসেবে কাজ করে?", options: ["হিমালয়", "আরাবল্লী", "পশ্চিমঘাট", "পূর্বঘাট"], correct: 2, exp: "পশ্চিমঘাট পর্বতমালা উপদ্বীপীয় ভারতের পূর্ববাহিনী ও পশ্চিমবাহিনী নদীগুলোর মাঝে প্রধান জলবিভাজিকা।" },
+            { question: "পশ্চিমবঙ্গের সাথে কয়টি ভারতের প্রতিবেশী দেশের সীমানা রয়েছে?", options: ["২টি", "৩টি", "৪টি", "৫টি"], correct: 1, exp: "তিনটি দেশের সীমানা রয়েছে—বাংলাদেশ, ভুটান এবং নেপাল।" },
             { question: "নাথু লা পাস (Nathu La Pass) ভারতের কোন রাজ্যে অবস্থিত?", options: ["উত্তরাখণ্ড", "হিমাচল প্রদেশ", "সিকিম", "অরুণাচল প্রদেশ"], correct: 2, exp: "সিকিমে অবস্থিত এই পাসটি প্রাচীন সিল্ক রুটের অংশ এবং ভারত-চীন বাণিজ্যের পথ।" },
-            { question: "ভারতের কোন হ্রদটি উল্কাপাতের (Meteorite Impact) ফলে তৈরি হয়েছে বলে মনে করা হয়?", options: ["চিল্কা", "লোনাক হ্রদ", "উলার", "ডাল হ্রদ"], correct: 1, exp: "মহারাষ্ট্রের булধানা জেলায় অবস্থিত লোনাক হ্রদ একটি বিখ্যাত ক্রেটার হ্রদ।" },
+            { question: "ভারতের কোন হ্রদটি উল্কাপাতের (Meteorite Impact) ফলে তৈরি হয়েছে বলে মনে করা হয়?", options: ["চিল্কা", "লোনাক হ্রদ", "উলার", "ডাল হ্রদ"], correct: 1, exp: "মহারাষ্ট্রের বুলถมศึกษา জেলায় অবস্থিত লোনাক হ্রদ একটি বিখ্যাত ক্রেটার হ্রদ।" },
             { question: "কফি উৎপাদনের জন্য ভারতের কোন মৃত্তিকা সবচেয়ে উপযোগী?", options: ["ল্যাটেরাইট মৃত্তিকা", "কৃষ্ণ মৃত্তিকা", "পলি মৃত্তিকা", "লোহিত মৃত্তিকা"], correct: 0, exp: "কর্ণাটক ও পার্বত্য অঞ্চলের ল্যাটেরাইট মৃত্তিকায় কফি চাষ সবচেয়ে ভালো হয়।" },
             { question: "কোন নদীকে 'बिहारের দুঃখ' (Sorrow of Bihar) বলা হয়?", options: ["দামোদর", "কোসী", "গণ্ডক", "সোন"], correct: 1, exp: "কোসী নদী বারবার গতিপথ পরিবর্তন করে উত্তর বিহারে মারাত্মক বন্যা ঘটায়।" },
             { question: "ভারতের বৃহত্তম উপহ্রদ বা লগুন (Lagoon) কোনটি?", options: ["পেমবানাদ", "চিল্কা", "পুলিকট", "কোলেরু"], correct: 1, exp: "ওড়িশার চিল্কা হ্রদ হলো এশিয়ার বৃহত্তম এবং বিশ্বের দ্বিতীয় বৃহত্তম লোনা জলের উপহ্রদ।" },
@@ -203,9 +331,9 @@ const quizQuestions = {
             { question: "ভারতের কোন রাজ্যটি আয়তনের দিক থেকে বৃহত্তম?", options: ["মধ্যপ্রদেশ", "মহারাষ্ট্র", "রাজস্থান", "উত্তরপ্রদেশ"], correct: 2, exp: "রাজস্থান ভারতের বৃহত্তম রাজ্য, আর জনসংখ্যায় উত্তরপ্রদেশ বৃহত্তম।" },
             { question: "কোন প্রণালী আন্দামান ও নিকোবর দ্বীপপুঞ্জকে পরস্পর থেকে পৃথক করেছে?", options: ["৯ ডিগ্রি চ্যানেল", "১০ ডিগ্রি চ্যানেল", "ডানকান প্যাসেজ", "গ্র্যান্ড চ্যানেল"], correct: 1, exp: "১০ ডিগ্রি উত্তর অক্ষরেখা বা চ্যানেল আন্দামান ও নিকোবর দ্বীপপুঞ্জকে বিভক্ত করেছে।" },
             { question: "ভারতের প্রথম বহুমুখী নদী উপত্যকা পরিকল্পনা (Multipurpose Project) কোনটি?", options: ["ভাকরা নাঙ্গাল", "দামোদর উপত্যকা (DVC)", "হিরাকুদ", "নাগার্জুন সাগর"], correct: 1, exp: "১৯৪৮ সালে আমেরিকার টেনেসী ভ্যালির অনুকরণে ডিভিসি (DVC) তৈরি হয়।" },
-            { question: "কৃষ্ণ মৃত্তিকা (Regur Soil) কোন চাষের জন্য সবথেকে আদর্শ?", options: ["ধান", "গম", "তুলা (কার্পাস)", "চা"], correct: 2, exp: " his ধারণ ক্ষমতা বেশি থাকায় ব্ল্যাক কটন সয়েল বা কৃষ্ণ মৃত্তিকায় তুলা চাষ দারুণ হয়।" },
+            { question: "কৃষ্ণ মৃত্তিকা (Regur Soil) কোন চাষের জন্য সবথেকে আদর্শ?", options: ["ধান", "গম", "তুলা (কার্পাস)", "চা"], correct: 2, exp: "জলধারণ ক্ষমতা বেশি থাকায় ব্ল্যাক কটন সয়েল বা কৃষ্ণ মৃত্তিকায় তুলা চাষ দারুণ হয়।" },
             { question: "কোন শহরকে 'ভারতের ম্যানচেস্টার' বলা হয়?", options: ["مুম্বাই", "আমেদাবাদ", "কানপুর", "কোয়েম্বাটুর"], correct: 1, exp: "গুজরাটের আমেদাবাদ টেক্সটাইল বা কাপড়ের মিলের প্রাচুর্যের জন্য এই নামে পরিচিত।" },
-            { question: "দক্ষিণ গোলার্ধে দীর্ঘতম দিন কোন তারিখে হয়?", options: ["২১শে জুন", "২২শে ডিসেম্বর", "২৩শে সেপ্টেম্বর", "২১শে মার্চ"], correct: 1, exp: "২২শে ডিসেম্বর মকর সংক্রান্তি হয়, তাই দক্ষিণ গোলার্ধে দিন সবচেয়ে বড় এবং উত্তর গোলার্ধে রাত সবচেয়ে বড় হয়।" },
+            { question: "দক্ষিণ গোলার্ধে দীর্ঘতম দিন কোন তারিখে হয়?", options: ["২১শে জুন", "২২শে ডিসেম্বর", "২৩শে সেপ্টেম্বর", "২১শে মার্চ"], correct: 1, exp: "২২শে ডিসেম্বর মকর সংক্রান্তি হয়, তাই दक्षिण গোলার্ধে দিন সবচেয়ে বড় এবং উত্তর গোলার্ধে রাত সবচেয়ে বড় হয়।" },
             { question: "কোন বায়ুকে 'ডাক্তার বায়ু' (Doctor Wind) বলা হয়?", options: ["লু", "হারমাটান", "চিনুক", "মিস্ত্রাল"], correct: 1, exp: "পশ্চিম আফ্রিকার গিনি উপকূলে আরামদায়ক ও শুষ্ক আবহাওয়া নিয়ে আসায় হারমাটানকে ডক্টর উইন্ড বলে।" },
             { question: "বিশ্বের বৃহত্তম নদী দ্বীপ (River Island) 'মাজুলী' কোন নদীতে অবস্থিত?", options: ["গঙ্গা", "সিন্ধু", "ব্রহ্মপুত্র", "গোদাবরী"], correct: 2, exp: "আসামের ব্রহ্মপুত্র নদীর বুকে অবস্থিত মাজুলী হলো বিশ্বের বৃহত্তম নদী দ্বীপ।" },
             { question: "ভারতের কোন রাজ্যের উপকূলরেখা (Coastline) দীর্ঘতম?", options: ["তামিলনাড়ু", "মহারাষ্ট্র", "অন্ধ্রপ্রদেশ", "গুজরাট"], correct: 3, exp: "গুজরাটের উপকূলরেখা সবচেয়ে দীর্ঘ (প্রায় ১,৬০০ কিমি)। দ্বিতীয় স্থানে অন্ধ্রপ্রদেশ।" },
@@ -214,28 +342,28 @@ const quizQuestions = {
         ],
         polity: [
             { question: "ভারতীয় সংবিধানের কোন পার্ট বা অংশে 'মৌলিক অধিকার' বর্ণিত রয়েছে?", options: ["Part II", "Part III", "Part IV", "Part V"], correct: 1, exp: "Part III-এর ১২ থেকে ৩৫ নম্বর অনুচ্ছেদে মৌলিক অধিকারের উল্লেখ আছে।" },
-            { question: "সংবিধান সভার প্রথম অস্থায়ী সভাপতি কে ছিলেন?", options: ["ডঃ রাজেন্দ্র প্রসাদ", "ডঃ বি আর আম্বেদকর", "ডঃ সচ্চিদানন্দ সিনহা", "জওহরলাল নেহেরু"], correct: 2, exp: "৯ই ডিসেম্বর ১৯৪৬ প্রথম সভায় প্রবীণতম সদস্য হিসেবে সচ্চিদানন্দ সিনহা অস্থায়ী সভাপতি হন।" },
+            { question: "সংविधान সভার প্রথম অস্থায়ী সভাপতি কে ছিলেন?", options: ["ডঃ রাজেন্দ্র প্রসাদ", "ডঃ বি আর আম্বেদকর", "ডঃ সচ্চিদানন্দ সিনহা", "জওহরলাল নেহেরু"], correct: 2, exp: "৯ই ডিসেম্বর ১৯৪৬ প্রথম সভায় প্রবীণতম সদস্য হিসেবে সচ্চিদানন্দ সিনহা অস্থায়ী সভাপতি হন।" },
             { question: "কোন দেশের সংবিধান থেকে 'জরুরি অবস্থা' (Emergency)-র ধারণা গৃহীত হয়েছে?", options: ["আমেরিকা", "জার্মানি (Weimar)", "আয়ারল্যান্ড", "অস্ট্রেলিয়া"], correct: 1, exp: "জার্মানির ভাইমার সংবিধান থেকে জরুরি অবস্থার সময় মৌলিক অধিকার স্থগিত রাখার ধারণা নেওয়া হয়েছে।" },
             { question: "ভারতীয় সংবিধানের কত নম্বর অনুচ্ছেদে 'অস্পৃশ্যতা দূরীকরণ' (Abolition of Untouchability)-র কথা বলা হয়েছে?", options: ["অনুচ্ছেদ ১৪", "অনুচ্ছেদ ১৫", "অনুচ্ছেদ ১৬", "অনুচ্ছেদ ১৭"], correct: 3, exp: "১৭ নম্বর অনুচ্ছেদ অনুযায়ী সমাজে অস্পৃশ্যতা আচরণ দণ্ডনীয় অপরাধ।" },
             { question: "কে ভারতের লোকসভার প্রথম স্পিকার (Speaker) ছিলেন?", options: ["সর্দার হুকুম সিং", "জি ভি মাভলঙ্কর", "এম এ আয়াঙ্গার", "কে এস হেগড়ে"], correct: 1, exp: "গণেশ বাসুদেব মাভলঙ্কর স্বাধীন ভারতের প্রথম লোকসভার স্পিকার ছিলেন।" },
-            { question: "রাষ্ট্রপতির ইমপিচমেন্ট বা পদচ্যুতি প্রক্রিয়া সংবিধানের কত নম্বর অনুচ্ছেদে রয়েছে?", options: ["অনুচ্ছেদ ৫২", "অনুচ্ছেদ ৫৬", "অনুচ্ছেদ ৬১", "অনুচ্ছেদ ৭২"], correct: 2, exp: "৬১ নম্বর অনুচ্ছেদ অনুযায়ী সংবিধান লঙ্ঘনের অভিযোগে সংসদের যেকোনো কক্ষে রাষ্ট্রপতির বিরুদ্ধে ইমপিচমেন্ট আনা যায়।" },
+            { question: "রাষ্ট্রপতির ইমপিচমেন্ট বা পদচ্যুতি প্রক্রিয়া সংবিধানের কত নম্বর অনুচ্ছেদে রয়েছে?", options: ["অনুচ্ছেদ ৫২", "অনুচ্ছেদ ৫৬", "অনুচ্ছেদ ৬১", "অনুচ্ছেদ ७২"], correct: 2, exp: "৬১ নম্বর অনুচ্ছেদ অনুযায়ী সংবিধান লঙ্ঘনের অভিযোগে সংসদের যেকোনো কক্ষে রাষ্ট্রপতির বিরুদ্ধে ইমপিচমেন্ট আনা যায়।" },
             { question: "ভারতের সংবিধানে 'মৌলিক कर्तव्य' কততম সংশোধনীর মাধ্যমে যুক্ত করা হয়েছিল?", options: ["৪৪তম", "৪২তম", "৫২তম", "৮৬তম"], correct: 1, exp: "১৯৭৬ সালে ৪২তম সংশোধনীর মাধ্যমে সর্দার স্বরণ সিং কমিটির সুপারিশে ১০টি মৌলিক কর্তব্য যুক্ত হয়।" },
             { question: "সংসদের যৌথ অধিবেশনে (Joint Sitting) কে সভাপতিত্ব করেন?", options: ["রাষ্ট্রপতি", "উপরাষ্ট্রপতি", "প্রধানমন্ত্রী", "লোকসভার স্পিকার"], correct: 3, exp: "১০৮ নম্বর অনুচ্ছেদ অনুযায়ী যৌথ অধিবেশন রাষ্ট্রপতি ডাকলেও সভাপতিত্ব করেন লোকসভার স্পিকার।" },
             { question: "অর্থ বিল (Money Bill) কেবলমাত্র সংসদের কোন কক্ষে উত্থাপন করা যায়?", options: ["রাজ্যসভা", "লোকসভা", "উভয় কক্ষে", "যৌথ অধিবেশনে"], correct: 1, exp: "১১০ নম্বর অনুচ্ছেদ অনুযায়ী অর্থ বিল শুধু লোকসভাতেই আনা যায়।" },
-            { question: "কোন ধারাকে বি আর আম্বেদকর 'সংবিধানের হৃদয় ও আত্মা' বলেছিলেন?", options: ["ধারা ১৯", "ধারা ২১", "ধারা ৩২", "ধারা ২২৬"], correct: 2, exp: "৩২ নম্বর সুপ্রিম কোর্টে রিট জারির অধিকারকে তিনি এই আখ্যা দেন।" },
+            { question: "কোন ধারাকে বি আর আম্বেদকর 'সংবিধানের হৃদয় ও আত্মা' বলেছেন?", options: ["ধারা ১৯", "ধারা ২১", "ধারা ৩২", "ধারা ২২৬"], correct: 2, exp: "৩২ নম্বর সুপ্রিম কোর্টে রিট জারির অধিকারকে তিনি এই আখ্যা দেন।" },
             { question: "ভারতের নির্বাচন কমিশন (Election Commission) একটি কী ধরনের সংস্থা?", options: ["সংবিধিবদ্ধ সংস্থা", "সাংবিধানিক সংস্থা", "বেসরকারি সংস্থা", "উপদেষ্টা সংস্থা"], correct: 1, exp: "৩২৪ নম্বর ধারা অনুযায়ী নির্বাচন কমিশন একটি স্থায়ী সাংবিধানিক স্বায়ত্তশাসিত সংস্থা।" },
             { question: "কোন রাজ্যের রাজ্যপালকে কে শপথ বাক্য পাঠ করান?", options: ["রাষ্ট্রপতি", "প্রধানমন্ত্রী", "সংশ্লিষ্ট রাজ্যের হাইকোর্টের প্রধান বিচারপতি", "সুপ্রিম কোর্টের প্রধান বিচারপতি"], correct: 2, exp: "নিয়োগ রাষ্ট্রপতি করলেও রাজ্যপালকে শপথ দেওয়ান ওই রাজ্যের হাইকোর্টের চিফ জাস্টিস।" },
             { question: "সংবিধানের কত নম্বর তফসিলে (Schedule) দলত্যাগ বিরোধী আইন (Anti-Defection Law) রয়েছে?", options: ["৮ম", "৯ম", "১০ম", "১১শ"], correct: 2, exp: "১৯৮৫ সালে ৫২তম সংশোধনীর মাধ্যমে ১০ম তফসিলে এই আইন যুক্ত হয়।" },
-            { question: "পঞ্চায়েতি রাজ ব্যবস্থা সংবিধানে আইনি স্বীকৃতি পায় কততম সংশোধনীর মাধ্যমে?", options: ["৭১তম", "৭২তম", "৭৩তম", "৭৪তম"], correct: 2, exp: "১৯৯২ সালে ۷৩তম সংশোধনীর মাধ্যমে একাদশ তফসিলে পঞ্চায়েত ব্যবস্থা স্বীকৃতি পায়।" },
+            { question: "পঞ্চায়েতি রাজ ব্যবস্থা সংবিধানে আইনি স্বীকৃতি পায় কততম সংশোধনীর মাধ্যমে?", options: ["৭১তম", "৭২তম", "৭৩তম", "৭৪তম"], correct: 2, exp: "১৯৯২ সালে ৭৩তম সংশোধনীর মাধ্যমে একাদশ তফসিলে পঞ্চায়েত ব্যবস্থা স্বীকৃতি পায়।" },
             { question: "ভারতের অর্থ কমিশন (Finance Commission) প্রতি কত বছর অন্তর গঠিত হয়?", options: ["৩ বছর", "৪ বছর", "৫ বছর", "৬ বছর"], correct: 2, exp: "২৮০ নম্বর অনুচ্ছেদ অনুযায়ী রাষ্ট্রপতি প্রতি ৫ বছর অন্তর কেন্দ্রীয় অর্থ কমিশন গঠন করেন।" },
             { question: "সুপ্রিম কোর্টের বিচারকদের অবসরের বয়স কত বছর?", options: ["৬০ বছর", "৬২ বছর", "৬৫ বছর", "৭০ বছর"], correct: 2, exp: "সুপ্রিম কোর্টের বিচারপতিদের ৬৫ বছর এবং হাইকোর্টের বিচারপতিদের ক্ষেত্রে ৬২ বছর বয়স সীমা।" },
-            { question: "ভারতের প্রথম সাধারণ নির্বাচন (General Election) কত সালে অনুষ্ঠিত হয়েছিল?", options: ["১৯৪৭", "১৯৫০", "১৯৫১-৫২", "১৯৫৫"], correct: 2, exp: "২৫শে অক্টোবর ১৯৫১ থেকে ২১শে ফেব্রুয়ারি ১৯五২ পর্যন্ত প্রথম লোকসভা নির্বাচন চলে।" },
+            { question: "ভারতের প্রথম সাধারণ নির্বাচন (General Election) কত সালে অনুষ্ঠিত হয়েছিল?", options: ["১৯৪৭", "১৯৫০", "১৯৫১-৫২", "১৯৫৫"], correct: 2, exp: "২৫শে অক্টোবর ১৯৫১ থেকে ২১শে ফেব্রুয়ারি ১৯৫২ পর্যন্ত প্রথম লোকসভা নির্বাচন চলে।" },
             { question: "সংবিধানের কোন অনুচ্ছেদের অধীনে সমস্ত সরকারি চাকরি বা কর্মসংস্থানে সমান সুযোগের কথা বলা হয়েছে?", options: ["অনুচ্ছেদ ১৪", "অনুচ্ছেদ ১৫", "অনুচ্ছেদ ১৬", "অনুচ্ছেদ ১৯"], correct: 2, exp: "১৬ নম্বর অনুচ্ছেদে রাষ্ট্রীয় কর্মসংস্থানে সকল নাগরিকের সমান অধিকার সুরক্ষিত করা হয়েছে।" },
             { question: "কে ভারতের 'জরুরি অবস্থা' ঘোষণা করতে পারেন?", options: ["প্রধানমন্ত্রী", "সংসদ", "রাষ্ট্রপতি", "সুপ্রিম কোর্ট"], correct: 2, exp: "কেন্দ্রীয় ক্যাবিনেটের লিখিত সুপারিশে রাষ্ট্রপতি জাতীয়, রাষ্ট্রীয় বা আর্থিক জরুরি অবস্থা জারি করতে পারেন।" },
-            { question: "ভারতের অ্যাটর্নি জেনারেলকে কে নিযুক্ত করেন?", options: ["প্রধান বিচারপতি", "প্রধানমন্ত্রী", "রাষ্ট্রপতি", "আইন মন্ত্রী"], correct: 2, exp: "৭৬ নম্বর অনুচ্ছেদ অনুযায়ী ভারতের最高 আইনি অফিসার বা অ্যাটর্নি জেনারেলকে রাষ্ট্রপতি নিযুক্ত করেন।" }
+            { question: "ভারতের অ্যাটর্নি জেনারেলকে কে নিযুক্ত করেন?", options: ["প্রধান বিচারপতি", "প্রধানমন্ত্রী", "রাষ্ট্রপতি", "আইন মন্ত্রী"], correct: 2, exp: "৭৬ নম্বর অনুচ্ছেদ অনুযায়ী ভারতের সর্বোচ্চ আইনি অফিসার বা অ্যাটর্নি জেনারেলকে রাষ্ট্রপতি নিযুক্ত করেন।" }
         ],
         science: [
-            { question: "মানবদেহের বৃহত্তম মিশ্র গ্রন্থি (Mixed Gland) কোনটি?", options: ["যকৃৎ", "অগ্ন্যাশয়", "থাইরয়েড", "পিটুইটারি"], correct: 1, exp: "অগ্ন্যাশয় অন্তক্ষরা ও বহিঃক্ষরা উভয় গ্রন্থির কাজ করে বলে একে মিশ্র গ্রন্থি বলে।" },
+            { question: "মানবدهহের বৃহত্তম মিশ্র গ্রন্থি (Mixed Gland) কোনটি?", options: ["যকৃৎ", "অগ্ন্যাশয়", "থাইরয়েড", "পিটুইটারি"], correct: 1, exp: "অগ্ন্যাশয় অন্তক্ষরা ও বহিঃক্ষরা উভয় গ্রন্থির কাজ করে বলে একে মিশ্র গ্রন্থি বলে।" },
             { question: "কোন ভিটামিনের রাসায়নিক নাম 'টোকোফেরল' (Tocopherol)?", options: ["ভিটামিন A", "ভিটামিন D", "ভিটামিন E", "ভিটামিন K"], correct: 2, exp: "ভিটামিন E-এর নাম টোকোফেরল। ভিটামিন A হলো রেটিনল, D হলো ক্যালসিফেরল।" },
             { question: "নিউটনের কোন গতিসূত্র থেকে বলের সংজ্ঞা (Definition of Force) পাওয়া যায়?", options: ["প্রথম গতিসূত্র", "দ্বিতীয় গতিসূত্র", "তৃতীয় গতিসূত্র", "মহাকর্ষ সূত্র"], correct: 0, exp: "প্রথম সূত্র থেকে বলের সংজ্ঞা ও জাড্য ধর্ম পাওয়া যায়। দ্বিতীয় সূত্র থেকে বলের পরিমাপ পাওয়া যায়।" },
             { question: "শব্দ তরঙ্গের কম্পাঙ্ক ২০ হার্জের কম হলে তাকে কী বলা হয়?", options: ["আল্ট্রাসনিক", "ইনফ্রাসনিক", "সুপারসনিক", "অডিবল"], correct: 1, exp: "২০ Hz-এর কম কম্পাঙ্কের শব্দ মানুষ শুনতে পায় না, একে ইনফ্রাসনিক বা শব্দেতর শব্দ বলে।" },
@@ -244,33 +372,33 @@ const quizQuestions = {
             { question: "কোন রোগের চিকিৎসার জন্য 'ডট' (DOTS) পদ্ধতি ব্যবহার করা হয়?", options: ["পোলিও", "যক্ষ্মা (TB)", "এইডস", "ক্যান্সার"], correct: 1, exp: "যক্ষ্মা বা টিউবারкиউলোসিস রোগের সম্পূর্ণ নিরাময়ের জন্য বিশ্ব স্বাস্থ্য সংস্থার নির্দেশিত ডট চিকিৎসা করা হয়।" },
             { question: "রক্ত জমাট বাঁধতে (Blood Clotting) সাহায্য করে কোন রক্তকণিকা?", options: ["লোহিত রক্তকণিকা", "শ্বেত রক্তকণিকা", "অণুচক্রিকা (Platelets)", "প্লাজমা"], correct: 2, exp: "অণুচক্রিকা বা প্লেটলেটস কেটে যাওয়া স্থানে দ্রুত রক্ত তঞ্চন ঘটিয়ে রক্তপাত বন্ধ করে।" },
             { question: "বিমানের টায়ারে কোন নিষ্ক্রিয় গ্যাসটি ভরা হয়?", options: ["হিলিয়াম", "আর্গন", "নিয়ন", "নাইট্রোজেন"], correct: 3, exp: "উচ্চ চাপ ও তাপমাত্রায় আগুন লাগার ঝুঁকি কমাতে টায়ারে শুষ্ক নাইট্রোজেন গ্যাস ব্যবহার করা হয়।" },
-            { question: "মানবদেহের স্বাভাবিক তাপমাত্রা ফারেনহایت স্কেলে কত?", options: ["৯৮.৪° F", "৯৬.৬° F", "৩৭° F", "৯৮.৬° F"], correct: 0, exp: "স্বাভাবিক তাপমাত্রা ৯৮.৪ ডিগ্রি ফারেনহাইট বা ৩৭ ডিগ্রি সেলসিয়াস।" },
-            { question: "পিত্তরস (Bile Juice) মানবদেহের কোন অঙ্গে তৈরি বা নিঃসৃত হয়?", options: ["পিত্তথলি", "যকৃৎ (Liver)", "অগ্ন্যাশয়", "পাকস্থলী"], correct: 1, exp: "তৈরি ও ক্ষরণ হয় যকৃতে, কিন্তু জমা থাকে পিত্তথলিতে।" },
-            { question: "গাড়ির রিয়ার ভিউ আয়না (Rear View Mirror) হিসেবে কোন দর্পণ ব্যবহার করা হয়?", options: ["অবতল দর্পণ", "উত্তল দর্পণ", "সমতল দর্পণ", "গোলাকার দর্পণ"], correct: 1, exp: "উত্তল দর্পণ ಪੇছনের অনেক বড় অংশকে সোজা ও ছোট আকারে আয়নায় দেখাতে পারে।" },
-            { question: "কোন dাতুটির গলনাঙ্ক সবথেকে কম এবং ঘরের তাপমাত্রায় তরল থাকে?", options: ["সোডিয়াম", "পারদ (Mercury)", "গ্যালিয়াম", "লিথিয়াম"], correct: 1, exp: "পারদ একমাত্র ধাতু যা সাধারণ তাপমাত্রায় তরল অবস্থায় পাওয়া যায়।" },
+            { question: "মানবدهহের স্বাভাবিক তাপমাত্রা ফারেনহাইট স্কেলে কত?", options: ["৯৮.৪° F", "৯৬.৬° F", "৩৭° F", "৯৮.৬° F"], correct: 0, exp: "স্বাভাবিক তাপমাত্রা ৯৮.৪ ডিগ্রি ফারেনহাইট বা ৩৭ ডিগ্রি সেলসিয়াস।" },
+            { question: "পিত্তরস (Bile Juice) মানবدهহের কোন অঙ্গে তৈরি বা নিঃসৃত হয়?", options: ["পিত্তথলি", "যকৃৎ (Liver)", "অগ্ন্যাশয়", "পাকস্থলী"], correct: 1, exp: "তৈরি ও ক্ষরণ হয় যকৃতে, কিন্তু জমা থাকে পিত্তথলিতে।" },
+            { question: "গাড়ির রিয়ার ভিউ আয়না (Rear View Mirror) হিসেবে কোন দর্পণ ব্যবহার করা হয়?", options: ["অবতল দর্পণ", "উত্তল দর্পণ", "সমতল দর্পণ", "গোলাকার দর্পণ"], correct: 1, exp: "উত্তল দর্পণ পেছনের অনেক বড় অংশকে সোজা ও ছোট আকারে আয়নায় দেখাতে পারে।" },
+            { question: "কোন ধাতুটির গলনাঙ্ক সবথেকে কম এবং ঘরের তাপমাত্রায় তরল থাকে?", options: ["সোডিয়াম", "পারদ (Mercury)", "গ্যালিয়াম", "লিথিয়াম"], correct: 1, exp: "পারদ একমাত্র ধাতু যা সাধারণ তাপমাত্রায় তরল অবস্থায় পাওয়া যায়।" },
             { question: "রান্নার গ্যাসের (LPG) প্রধান উপাদান দুটি কী কী?", options: ["মিথেন ও ইথেন", "প্রোপেন ও বিউটেন", "ইথেন ও প্রোপেন", "হাইড্রোজেন ও মিথেন"], correct: 1, exp: "এলপিজিতে মূলত তরলীকৃত প্রোপেন ও বিউটেন থাকে।" },
             { question: "মহাবিশ্বে সবচেয়ে বেশি পরিমাণে পাওয়া যায় কোন মৌলটি?", options: ["অক্সিজেন", "নাইট্রোজেন", "হাইড্রোজেন", "হিলিয়াম"], correct: 2, exp: "মহাবিশ্বে হাইড্রোজেন সবচেয়ে বেশি (৭৫%)। তবে পৃথিবীর বায়ুমণ্ডলে নাইট্রোজেন সবচেয়ে বেশি।" },
-            { question: "রোধের (Resistance) আন্তর্জাতিক এসআই (SI) একক কী?", options: ["অ্যাম্পিয়ার", "ভোল্ট", "ওহম (Ohm)", "ওয়াট"], correct: 2, exp: "ওহম ওহমের সূত্র থেকে প্রাপ্ত রোধের একক।" },
-            { question: "কোন লেন্সের সাহায্যে 'ক্ষীণদৃষ্টি' বা মায়োপিয়া (Myopia) রোগ দূর করা হয়?", options: ["উত্তল লেন্স", "অবতল Lেন্স (Concave)", "バイফোকাল লেন্স", "বেলনাকার লেন্স"], correct: 1, exp: "মায়োপিয়া আক্রান্ত ব্যক্তি দূরের জিনিস স্পষ্ট দেখতে পান না, এটি অবতল লেন্স দিয়ে ঠিক করা হয়।" },
+            { question: "রোধের (Resistance) আন্তর্জাতিক এসআই (SI) একক কী?", options: ["অ্যাম্পিয়াি", "ভোল্ট", "ওহম (Ohm)", "ওয়াট"], correct: 2, exp: "ওহম ওহমের সূত্র থেকে প্রাপ্ত রোধের একক।" },
+            { question: "কোন লেন্সের সাহায্যে 'ক্ষীণদৃষ্টি' বা মায়োপিয়া (Myopia) রোগ দূর করা হয়?", options: ["উত্তল লেন্স", "অবতল লেন্স (Concave)", "বাইফোকাল লেন্স", "বেলনাকার লেন্স"], correct: 1, exp: "মায়োপিয়া আক্রান্ত ব্যক্তি দূরের জিনিস স্পষ্ট দেখতে পান না, এটি অবতল লেন্স দিয়ে ঠিক করা হয়।" },
             { question: "পারমাণবিক চুল্লিতে মডারেটর (Moderator) হিসেবে নিচের কোনটি ব্যবহৃত হয়?", options: ["ইউরেনিয়াম", "ভারী জল (Heavy Water)", "ক্যাডমিয়াম রড", "তরল সোডিয়াম"], correct: 1, exp: "ভারী জল বা গ্রাফایت নিউট্রনের গতি কমানোর জন্য মডারেটর হিসেবে কাজ করে।" },
-            { question: "লেবুর রসে কোন অ্যাসিডটি প্রধানত উপস্থিত থাকে?", options: ["টারটারিক অ্যাসিড", "সাইट्रিক অ্যাসিড", "অক্সালিক অ্যাসিড", "ল্যাকটিক অ্যাসিড"], correct: 1, exp: "লেবু বা সাইট্রাস জাতীয় ফলে সাইট্রিক অ্যাসিড থাকে।" },
+            { question: "লেবুর রসে কোন অ্যাসিডটি প্রধানত উপস্থিত থাকে?", options: ["টারтарিক অ্যাসিড", "সাইট্রিক অ্যাসিড", "অক্সালিক অ্যাসিড", "ল্যাকটিক অ্যাসিড"], correct: 1, exp: "লেবু বা সাইट्रাস জাতীয় ফলে সাইট্রিক অ্যাসিড থাকে।" },
             { question: "কোষের আত্মঘাতী থলি (Suicidal Bag) কাকে বলা হয়?", options: ["মাইটোকন্ড্রিয়া", "লাইসোজোম", "রাইবোজোম", "গলগি বডি"], correct: 1, exp: "লাইসোজোমের হাইড্রোলাইটিক এনজাইম নিজের কোষকে ধ্বংস করতে পারে বলে একে সুসাইডাল ব্যাগ বলে।" }
         ],
         math: [
             { question: "কোনো আসল সরল সুদে ৫ বছরে দ্বিগুণ হলে, সুদের হার কত?", options: ["১০%", "১৫%", "২০%", "২৫%"], correct: 2, exp: "শর্ট ট্রিক: Rate = $(N - ১) \times ১০০ / Time$ ➔ $(২ - ১) \times ১০০ / ৫ = ২০\%$।" },
             { question: "এক ব্যক্তির আয় ও ব্যয়ের অনুপাত ১১:১০। যদি তিনি বছরে ৯,০০০ টাকা সঞ্চয় করেন, তবে তাঁর মাসিক আয় কত?", options: ["৮,২৫০ টাকা", "৭,৫০০ টাকা", "৯,০০০ টাকা", "৮,০০০ টাকা"], correct: 1, exp: "বার্ষিক সঞ্চয় ১ ইউনিট = ৯০০০। বার্ষিক আয় ১১ × ৯০০০ = ৯৯,০০০ টাকা। মাসিক আয় = ৯৯,০০০ / ১২ = ৭,৫০০ টাকা।" },
             { question: "একটি সংখ্যার ৪/৫ অংশ এবং ৩/৪ অংশের পার্থক্য ৪ হলে, সংখ্যাটি কত?", options: ["৬০", "৮০", "১০০", "১২০"], correct: 1, exp: "শর্ট ট্রিক: অংশের বিয়োগফল = $৪/৫ - ৩/৪ = ১/২০$ অংশ। ১/২০ অংশ = ৪ হলে, সম্পূর্ণ অংশ = ৪ × ২০ = ৮০।" },
-            { question: "যদি $x + \frac{1}{x} = 3$ হয়, তবে $x^2 + \frac{1}{x^2}$ এর মান কত?", options: ["৯", "৭", "১১", "৬"], correct: 1, exp: "বীজগণিত ট্রিক: যদি $x + \frac{1}{x} = k$ হয়, তবে স্কয়ারের মান হবে $k^2 - ২$। এখানে $৩^২ - ২ = ৯ - ২ = ۷$।" },
+            { question: "যদি $x + \frac{1}{x} = 3$ হয়, তবে $x^2 + \frac{1}{x^2}$ এর মান কত?", options: ["৯", "৭", "১১", "৬"], correct: 1, exp: "বীজগণিত ট্রিক: যদি $x + \frac{1}{x} = k$ হয়, তবে স্কয়ারের মান হবে $k^2 - ২$। এখানে $৩^২ - ২ = ৯ - ২ = ৭$।" },
             { question: "১৫টি বস্তুর ক্রয়মূল্য ১০টি বস্তুর বিক্রয়মূল্যের সমান হলে, লাভের শতকরা হার কত?", options: ["২৫%", "৩৩.৩৩%", "৫০%", "২০%"], correct: 2, exp: "শর্ট ট্রিক: লাভ % = $\frac{১৫ - ১০}{১০} \times ১০০ = ৫০\%$।" },
-            { question: "একটি পরীক্ষায় পাস নম্বর ৩৬%। এক ছাত্র ১৯0 নম্বর পেয়ে ৩৫ নম্বরের জন্য ফেল করল। পরীক্ষার মোট নম্বর কত ছিল?", options: ["৫০০", "৬২৫", "৬০০", "৪৫০"], correct: 1, exp: "পাস করতে লাগত = ১৯০ + ৩৫ = ২২৫ নম্বর। ৩৬% = ২২৫ হলে ১০০% = ৬২৫।" },
+            { question: "একটি পরীক্ষায় পাস নম্বর ৩৬%। এক ছাত্র ১৯০ নম্বর পেয়ে ৩৫ নম্বরের জন্য ফেল করল। পরীক্ষার মোট নম্বর কত ছিল?", options: ["৫০০", "৬২৫", "৬০০", "৪৫০"], correct: 1, exp: "পাস করতে লাগত = ১৯০ + ৩৫ = ২২৫ নম্বর। ৩৬% = ২২৫ হলে ১০০% = 六২৫।" },
             { question: "দুটি বৃত্তের ব্যাসার্ধের অনুপাত ২:৩ হলে, তাদের ক্ষেত্রফলের অনুপাত কত হবে?", options: ["২:৩", "৪:৯", "৮:২৭", "১:৪"], correct: 1, exp: "ক্ষেত্রফলের অনুপাত ব্যাসার্ধের বর্গের সমান হয়। অর্থাৎ $২^২ : ৩^২ = ৪:৯$।" },
             { question: "কোনো সমবাহু ত্রিভুজের বাহুর দৈর্ঘ্য ৪ সেমি হলে, তার ক্ষেত্রফল কত?", options: ["৪√৩ বর্গ সেমি", "৮√৩ বর্গ সেমি", "১৬ বর্গ সেমি", "২√৩ বর্গ সেমি"], correct: 0, exp: "সমবাহু ত্রিভুজের ক্ষেত্রফল = $\frac{\sqrt{৩}}{৪} \times \text{বাহু}^২$ ➔ $\frac{\sqrt{৩}}{৪} \times ৪ \times ৪ = ৪\sqrt{৩}$ বর্গ সেমি।" },
             { question: "A, B ও C একটি যৌথ ব্যবসায় যথাক্রমে ২০০০, ৩০০০ এবং ৪০০Metrics টাকা বিনিয়োগ করে। বছরের শেষে ১৪৪Metrics টাকা লাভ হলে, C কত টাকা পাবে?", options: ["৪৮০ টাকা", "৬৪০ টাকা", "৩৬০ টাকা", "৪০০ টাকা"], correct: 1, exp: "মূলধনের অনুপাত = ২:৩:৪। C এর লাভ = $\frac{৪}{৯} \times ১৪৪০ = ৬৪০$ টাকা।" },
-            { question: "একটি ট্রেন ঘন্টায় ৭২ কিমি বেগে চললে, সেকেন্ডে তার গতিবেগ কত মিটার?", options: ["১৫ মি/সে", "২০ মি/সে", "২৫ মি/সে", "৩০ মি/সে"], correct: 1, exp: "কিমি/ঘন্টাকে মি/সেকেন্ড করতে ৫/১৮ দিয়ে গুণ করতে হয়। ৭২ × ৫/১৮ = ২০ মিটার/সেকেন্ড।" },
-            { question: "১২০ মিটার দীর্ঘ একটি ট্রেন একটি টেলিগ্রাফ পোস্টকে ৬ সেকেন্ডে অতিক্রম করলে ট্রেনটির গতিবেগ কত?", options: ["২০ মি/সে", "১২ মি/সে", "৩০ মি/সে", "১৫ মি/সে"], correct: 0, exp: "গতিবেগ = দূরত্ব / সময় = ১২০ / ৬ = ২০ মিটার/সেকেন্ড।" },
+            { question: "একটি ট্রেন ঘন্টায় ৭২ কিমি বেগে চললে, সেকেন্ডে তার গতিবেগ কত মিটার?", options: ["১৫ মি/সে", "২০ মি/সে", "২৫ মি/সে", "৩০ mi/সে"], correct: 1, exp: "কিমি/ঘন্টাকে মি/সেকেন্ড করতে ৫/১৮ দিয়ে গুণ করতে হয়। ৭২ × ৫/১৮ = ২০ মিটার/সেকেন্ড।" },
+            { question: "১২০ মিটার দীর্ঘ একটি ট্রেন একটি টেলিগ্রাফ পোস্টকে ৬ সেকেন্ডে অতিক্রম করলে ট্রেনটির গতিবেগ কত?", options: ["২০ মি/সে", "১২ মি/সে", "৩০ মি/সে", "১৫ মি/সে"], correct: 0, exp: "গতিবেগ = দূরত্ব / সময় = ১২০ / 六 = ২০ মিটার/সেকেন্ড।" },
             { question: "বার্ষিক ৫% সরল সুদে কত টাকার দৈনিক সুদ ১ টাকা হবে?", options: ["৩,৬৫০ টাকা", "৫,০০০ টাকা", "৭,৩০০ টাকা", "১০,০০০ টাকা"], correct: 2, exp: "বছরে মোট সুদ = ৩৬৫ টাকা। সূত্র: $I = \frac{PRT}{১০০}$ ➔ ৩৬৫ = $\frac{P \times ৫ \times ১}{১০০}$ ➔ P = ৭,৩০০ টাকা।" },
             { question: "১০% এবং ২০% এর দুটি পরপর ছাড় (Successive Discount) একক কত শতাংশ ছাড়ের সমান?", options: ["৩০%", "২৮%", "৩২%", "২৫%"], correct: 1, exp: "ডিসকাউন্ট সূত্র: $-১০ - ২০ + \frac{১০ \times ২০}{১০০} = -২৮\%$ (অর্থাৎ ২৮% একক ছাড়)।" },
-            { question: "১০টি সংখ্যার গড় ২০ এবং অন্য ১৫টি সংখ্যার গড় ৩০ হলে, সব সংখ্যার সম্মিলিত গড় কত?", options: ["২৫", "২৬", "২৪", "২৭.৫"], correct: 1, exp: "মোট যোগফল = ২০০ + ৪৫০ = ৬五০। সম্মিলিত গড় = ৬৫০ / ২৫ = ২৬।" },
+            { question: "১০টি সংখ্যার গড় ২০ এবং অন্য ১৫টি সংখ্যার গড় ৩০ হলে, সব সংখ্যার সম্মিলিত গড় কত?", options: ["২৫", "২৬", "২৪", "২৭.৫"], correct: 1, exp: "মোট যোগফল = ২০০ + ৪৫০ = ৬৫০। সম্মিলিত গড় = 六৫০ / ২৫ = ২৬।" },
             { question: "একটি পাত্রে দুধ ও জলের অনুপাত ৫:২। যদি পাত্রে আরও ৪ লিটার জল ঢালা হয়, তবে অনুপাত হয় ৫:৩। পাত্রে দুধের পরিমাণ কত ছিল?", options: ["২০ লিটার", "১০ লিটার", "১৫ লিটার", "২৫ লিটার"], correct: 0, exp: "জলের অনুপাত বেড়েছে ১ ইউনিট = ৪ লিটার। দুধের পরিমাণ ৫ ইউনিট = ৫ × ৪ = ২০ লিটার।" },
             { question: "কোনো ক্ষুদ্রতম সংখ্যাকে ৬, ৭, ৮ এবং ৯ দ্বারা ভাগ করলে প্রতি ক্ষেত্রে ২ অবশিষ্ট থাকবে?", options: ["৫০৪", "৫০৬", "২৫৪", "৫০০"], correct: 1, exp: "৬, ৭, ৮, ৯ এর লসাগু = ৫০৪। সংখ্যাটি হবে ৫০৪ + ২ = ৫০৬।" },
             { question: "যদি ৫টি ক্রমান্বয়িক জোড় সংখ্যার গড় ৪২ হয়, তবে বৃহত্তম সংখ্যাটি কত?", options: ["৪৪", "৪৬", "৪২", "৪৮"], correct: 1, exp: "মাঝেরটি ৪২ হলে পরের দুটি হবে ৪৪ এবং ৪৬। বৃহত্তম সংখ্যা = ৪৬।" },
@@ -280,24 +408,24 @@ const quizQuestions = {
         ],
         ca: [
             { question: "২০২৬ সালের মে মাসে ভারতের ডিরেক্টরেট জেনারেল অফ ফরেন ট্রেড (DGFT) কোন পণ্যের রপ্তানি ৩০ সেপ্টেম্বর ২০২৬ পর্যন্ত সম্পূর্ণ নিষিদ্ধ করেছে?", options: ["গম", "চাল", "চিনি (সব ক্যাটাগরি)", "পেঁয়াজ"], correct: 2, exp: "ঘাটতির আশঙ্কায় অভ্যন্তরীণ বাজারে দাম নিয়ন্ত্রণে রাখতে চিনি রপ্তানির ওপর সম্পূর্ণ নিষেধাজ্ঞা জারি করা হয়েছে।" },
-            { question: "২০২৬ সালের মে মাসে অনুষ্ঠিত আইপিএলের ১৯তম সংস্করণে ১৫ বছর বয়সী কোন ক্রিকেটার এক মরসুমে সর্বোচ্চ ৬৫টি ছক্কা মেরে ক্রিস গেইলের রেকর্ড ভেঙেছেন?", options: ["বৈভব সূর্যবংশী", "অঙ্গকৃষ রঘুবংশী", "মুশীর খান", "তিলক বর্মা"], correct: 0, exp: "রাজস্থান রয়্যালসের বৈভব সূর্যবংশী ২০২৬ আইপিএলে ৬৫টি ছক্কা মেরে এই বিশ্বরেকর্ড গড়েন।" },
+            { question: "২০২৬ সালের মে মাসে অনুষ্ঠিত আইপিএলের ১৯তম সংস্করণে ১৫ বছর বয়সী কোন ক্রিকেটার এক মরসুমে সর্বোচ্চ ৬৫টি ছক্কা মেরে ক্রিস গেইলের রেকর্ড ভেঙেছেন?", options: ["বৈভব সূর্যবংশী", "অঙ্গকৃষ রঘুবংশী", "মুশীর خان", "তিলক বর্মা"], correct: 0, exp: "রাজস্থান রয়্যালসের বৈভব সূর্যবংশী ২০২৬ আইপিএলে ৬৫টি ছক্কা মেরে এই বিশ্বরেকর্ড গড়েন।" },
             { question: "সম্প্রতি ২০২৬ সালের মে মাসে কোন দেশকে ২৬তম সদস্য দেশ হিসেবে ভারত প্রতিষ্ঠিত 'ইন্টারন্যাশনাল বিগ ক্যাট অ্যালায়েন্স' (IBCA)-এ অন্তর্ভুক্ত করা হয়েছে?", options: ["ফ্রান্স", "সৌদি আরব", "সংযুক্ত আরব আমিরশাহী", "দক্ষিণ আফ্রিকা"], correct: 1, exp: "সৌদি আরব আনুষ্ঠানিকভাবে ভারতের এই বিশ্ব বন্যপ্রাণী সংরক্ষণ উদ্যোগে ২৬তম সদস্য হিসেবে যোগ দিয়েছে।" },
             { question: "বর্তমানে ২০২৬ সালে ভারতের সুপ্রিম কোর্টের অনুমোদিত বিচারপতির সংখ্যা (প্রধান বিচারপতি ছাড়া) বাড়িয়ে কত করার বিল পাস হয়েছে?", options: ["৩৪ জন", "৩৫ জন", "৩৭ জন", "৪০ জন"], correct: 2, exp: "সুপ্রিম কোর্ট বিল ২০২৬ এর মাধ্যমে বিচারপতির সংখ্যা ৩৩ থেকে বাড়িয়ে ৩৭ করা হয়েছে।" },
             { question: "২০২৬ সালের মে মাসে অনুষ্ঠিত বিখ্যাত থমাস কাপ (Thomas Cup) ব্যাডমিন্টন টুর্নামেন্টে কোন দেশ চ্যাম্পিয়ন হয়েছে?", options: ["ভারত", "ইন্দোনেশিয়া", "চীন", "ফ্রান্স"], correct: 2, exp: "ফাইনালে ফ্রান্সকে হারিয়ে চীন শিরোপা জিতেছে।" },
             { question: "রেলওয়ের দক্ষতা বাড়াতে ২০২৬ সালে ভারতের নবগঠিত ১৯তম রেলওয়ে জোনের সদর দপ্তর কোথায় করা হয়েছে?", options: ["কলকাতা", "বিশাখাপত্তনম", "ভুবনেশ্বর", "সেকেন্দ্রাবাদ"], correct: 1, exp: "অন্ধ্রপ্রদেশের বিশাখাপত্তনমকে ভারতের ১৯তম রেলওয়ে জোনের হেডকোয়ার্টার করা হয়েছে।" },
             { question: "২০২৬ সালে আন্তর্জাতিক যোগ দিবস (২১শে জুন) উপলক্ষে ১ কোটি মানুষের অংশগ্রহণের লক্ষ্যে কোন রাজ্য 'Yogandhra 2026' ক্যাম্পেন চালু করেছে?", options: ["অন্ধ্রপ্রদেশ", "তেলেঙ্গানা", "কর্ণাটক", "তামিলনাড়ু"], correct: 0, exp: "অন্ধ্রপ্রদেশ সরকার রাজ্যজুড়ে যোগাভ্যাস ছড়িয়ে দিতে এই বিশাল ১৪ দিনের ক্যাম্পেন শুরু করে।" },
             { question: "২০২৬ সালের মে মাসে কোন রোগটির মারাত্মক প্রাদুর্ভাবের কারণে বিশ্ব স্বাস্থ্য সংস্থা (WHO) এটিকে গ্লোবাল হেলথ ইমার্জেন্সি ঘোষণা করেছে?", options: ["মাঙ্কি পক্স", "ইবোলা (Ebola)", "বার্ড ফ্লু", "করোনা নতুন ভ্যারিয়েন্ট"], correct: 1, exp: "কঙ্গো এবং উগাণ্ডায় ইবোলার প্রকোপ বেড়ে যাওয়ায় WHO এটিকে জরুরি অবস্থা ঘোষণা করে।" },
-            { question: "২০২৬ সালের জুন মাসে অনুষ্ঠিত ওমেন সাফ (SAFF) চ্যাম্পিয়নশিপের ফাইনালে বাংলাদেশকে ৩-১ গোলে হারিয়ে কোন দেশ ষষ্ঠবার শিরোপা জিতল?", options: ["নেপাল", "ভারত", "শ্রীলঙ্কা", "মালদ্বীপ"], correct: 1, exp: "ভারতীয় ওমেন ফুটবল টিম বাংলাদেশকে হারিয়ে ষষ্ঠবারের মতো চ্যাম্পিয়ন হয়।" },
+            { question: "২০২৬ সালের জুন মাসে অনুষ্ঠিত ওমেন সাফ (SAFF) চ্যাম্পিয়নশিপের ফাইনালে বাংলাদেশকে ৩-১ গোলে হারিয়ে কোন দেশ ষষ্ঠবার শিরোপা জিতল?", options: ["নেপাল", "ভারত", "শ্রীলঙ্কা", "মালদ্বীপ"], correct: 1, exp: "भारतीय ওমেন ফুটবল টিম বাংলাদেশকে হারিয়ে ষষ্ঠবারের মতো চ্যাম্পিয়ন হয়।" },
             { question: "২০২৬ সালের শুরুতে ভারতের কোন ব্যাঘ্র প্রকল্পকে দেশের প্রথম 'ডার্ক স্কাই পার্ক' এর তকমা দেওয়া হয়েছে?", options: ["সুন্দরবন ব্যাঘ্র প্রকল্প", "পেন্চ ব্যাঘ্র প্রকল্প (মহারাষ্ট্র)", "করবেট জাতীয় উদ্যান", "বান্ধবগড় ব্যাঘ্র প্রকল্প"], correct: 1, exp: "মহারাষ্ট্রের পেন্চ ব্যাঘ্র প্রকল্প যা নৈশ আকাশ ও জ্যোতির্বিজ্ঞান চর্চার জন্য এই আন্তর্জাতিক তকমা পায়।" },
             { question: "২০২৬ সালে ভারতের বিমান বাহিনীর (IAF) নতুন ভাইস চিফ পদে কে নিযুক্ত হয়েছেন?", options: ["এয়ার মার্শাল আশুতোষ দীক্ষিত", "এয়ার মার্শাল অমর প্রীত সিং", "এয়ার সিগনাল বিবেক রাম", "এয়ার মার্শাল সন্দীপ সিং"], correct: 0, exp: "এয়ার মার্শাল আশুতোষ দীক্ষিতকে ভারতীয় বিমান বাহিনীর পরবর্তী ভাইস চিফ পদে মনোনীত করা হয়েছে।" },
             { question: "২০২৬ সালের ফুটবল যুব এশিয়া কাপ ফাইনালে জাপানকে হারিয়ে কোন দেশ রেকর্ড তৃতীয়বার খেতাব জিতল?", options: ["দক্ষিণ কোরিয়া", "ভারত", "پاکستان", "মালয়েশিয়া"], correct: 1, exp: "ভারতীয় অনূর্ধ্ব-১৮ হকি টিম রেকর্ড গড়ে জাপানকে হারিয়ে চ্যাম্পিয়ন হয়।" },
             { question: "২০২৬ সালের মে মাসে অনুষ্ঠিত 'সান্তা মার্তা জলবায়ু সম্মেলন' কোন দেশে আয়োজিত হয়েছিল?", options: ["নেদারল্যান্ডস", "কলম্বিয়া", "ফ্রান্স", "ব্রাজিল"], correct: 1, exp: "কলম্বিয়ার সান্তা মার্তায় এই ঐতিহাসিক সম্মেলন বসে।" },
             { question: "২০২৬ সালের হেনলি পাসপোর্ট ইনডেক্স অনুযায়ী কোন দেশের পাসপোর্ট বিশ্বের সবচেয়ে শক্তিশালী ঘোষিত হয়েছে?", options: ["জাপান", "সিঙ্গাপুর", "ফ্রান্স", "জার্মানি"], correct: 1, exp: "সিঙ্গাপুরের পাসপোর্ট বর্তমানে বিশ্বের সবচেয়ে শীর্ষে রয়েছে।" },
-            { question: "২০২৬ সালের অস্কার পুরস্কারে কোন চলচ্চিত্রটি 'সেরা ছবি'র পুরস্কার জিতেছে?", options: ["ওপেনহাইমার", "বার্বি", "দ্য জোন অফ ইন্টারেস্ট", "এভরিথিং এভরিহোয়্যার"], correct: 0, exp: "অস্কার মঞ্চে ক্রিস্টোফার নোলানের 'ওপেনহাইমার' ছবিটি সেরা ছবি হয়েছে।" },
+            { question: "২০২৬ সালের অস্কার পুরস্কারে কোন চলচ্চিত্রটি 'সেরা ছবি'র পুরস্কার জিতেছে?", options: ["오픈하이머", "বার্বি", "দ্য জোন অফ ইন্টারেস্ট", "এভরিথিং এভরিহোয়্যার"], correct: 0, exp: "অস্কার মঞ্চে ক্রিস্টোফার নোলানের 'ওপেনহাইমার' ছবিটি সেরা ছবি হয়েছে।" },
             { question: "২০২৬ সালের শুরুতে ভারতের কোন রাজ্যে শিশুদের শারীরিক মাপ ও পুষ্টি ট্র্যাক করতে কৃত্রিম বুদ্ধিমত্তা সম্পন্ন 'Shishu Maapan' অ্যাপ চালু হয়েছে?", options: ["কেরালা", "অন্ধ্রপ্রদেশ", "মহারাষ্ট্র", "গুজরাট"], correct: 1, exp: "Wadhwani AI এর সহায়তায় এই এআই অ্যাপ চালু করেছে অন্ধ্রপ্রদেশ।" },
             { question: "২০২৬ সালের আন্তর্জাতিক বুকার পুরস্কার কোন উপন্যাসটির জন্য দেওয়া হয়েছে?", options: ["কাইরোস (Kairos)", "টাইম শেল্টার", "টম্ব অফ স্যান্ড", "দি প্রফেট"], correct: 0, exp: "জেনি এরপেনবেক-এর জার্মান উপন্যাস 'Kairos' এই সম্মান জিতেছে।" },
             { question: "২০২৬ সালের জানুয়ারিতে জম্মু-কাশ্মীরের রাজৌরি-পুঞ্চ সেক্টর থেকে সন্ত্রাসবাদীদের নির্মূল করতে ভারতীয় সেনা কোন অপারেশন চালু করেছিল?", options: ["অপারেশন অল-আউট", "অপারেশন সর্বশক্তি", "অপারেশন বিজয়", "অপারেশন শক্তি"], correct: 1, exp: "পাক মদতপুষ্ট জঙ্গি দমনে ভারতীয় সেনা 'Operation Sarvashakti' লঞ্চ করে।" },
-            { question: "২০২৬ সালের প্রজাতন্ত্র দিবসের প্যারেডে কোন দেশের সামরিক বাহিনী ভারতের আমন্ত্রিত বিশেষ কন্টিনজেন্ট হিসেবে অংশ নিয়েছিল?", options: ["ফ্রান্স", "ইউএসএ", "মিশর", "ইউনাইটেড কিংডম"], correct: 0, exp: "ফ্রান্সের একটি বিশেষ সামরিক দল প্যারেডে যোগ দেয়।" },
+            { question: "২০২৬ সালের প্রজাতন্ত্র দিবেনর প্যারেডে কোন দেশের সামরিক বাহিনী ভারতের আমন্ত্রিত বিশেষ কন্টিনজেন্ট হিসেবে অংশ নিয়েছিল?", options: ["ফ্রান্স", "ইউএসএ", "মিশর", "ইউনাইটেড কিংডম"], correct: 0, exp: "ফ্রান্সের একটি বিশেষ সামরিক দল প্যারেডে যোগ দেয়।" },
             { question: "নীতি আয়োগের ২০২৬ সালের লেটেস্ট রিপোর্ট অনুযায়ী, গত ৯ বছরে ভারতের কত কোটি মানুষ বহুমুখী দারিদ্র্য থেকে মুক্তি পেয়েছেন?", options: ["১০ কোটি", "১৫ কোটি", "২৫ কোটি", "৩০ কোটি"], correct: 2, exp: "রিপোর্ট অনুযায়ী ২৫ কোটি মানুষ দারিদ্র্য থেকে মুক্ত হয়েছেন।" }
         ],
         english: [
@@ -369,7 +497,7 @@ const quizQuestions = {
             { question: "What is the rank of Earth in terms of distance from the Sun?", options: ["Second", "Third", "Fourth", "Fifth"], correct: 1, exp: "Earth is the third planet from the Sun, following Mercury and Venus." }
         ],
         polity: [
-            { question: "In which part of the Indian Constitution are Fundamental Rights described?", options: ["Part II", "Part III", "Part IV", "Part V"], correct: 1, exp: "Fundamental Rights are guaranteed under Part III (Articles 12 to 35)." },
+            { question: "In which part of the Indian Constitution are Fundamental Rights described?", options: ["Part I", "Part II", "Part III", "Part IV"], correct: 2, exp: "Fundamental Rights are guaranteed under Part III (Articles 12 to 35)." },
             { question: "Who was elected as the first temporary President of the Constituent Assembly?", options: ["Dr. Rajendra Prasad", "Dr. B.R. Ambedkar", "Dr. Sachchidanand Sinha", "Jawaharlal Nehru"], correct: 2, exp: "Dr. Sachchidanand Sinha presided over the opening meeting on 9 December 1946 as the oldest member." },
             { question: "The concept of suspension of fundamental rights during Emergency is borrowed from:", options: ["USA", "Germany (Weimar)", "Ireland", "Australia"], correct: 1, exp: "This feature is adapted from the Weimar Constitution of Germany." },
             { question: "Which Article states the Abolition of Untouchability?", options: ["Article 14", "Article 15", "Article 16", "Article 17"], correct: 3, exp: "Article 17 forbids the practice of untouchability in any form." },
@@ -391,7 +519,7 @@ const quizQuestions = {
             { question: "Who appoints the Attorney General for India?", options: ["Chief Justice", "Prime Minister", "President", "Law Minister"], correct: 2, exp: "The President appoints the Attorney General under Article 76 as the chief legal advisor." }
         ],
         science: [
-            { question: "Which is the largest mixed gland in the human body?", options: ["Liver", "Pancreas", "Thyroid", "Pituitary"], correct: 1, exp: "The pancreas serves as a mixed gland because it features both exocrine and endocrine components." },
+            { question: "Which is the largest mixed gland in the human body?", options: ["Liver", "Pancreas", "Thyroid", "Parathyroid"], correct: 1, exp: "The pancreas serves as a mixed gland because it features both exocrine and endocrine components." },
             { question: "What is the chemical name of Vitamin E?", options: ["Retinol", "Calciferol", "Tocopherol", "Phylloquinone"], correct: 2, exp: "Vitamin E is chemically called Tocopherol. Retinol is Vitamin A." },
             { question: "Which of Newton's laws gives the qualitative definition of force?", options: ["First Law", "Second Law", "Third Law", "Law of Gravitation"], correct: 0, exp: "The First Law defines force and inertia. The Second Law provides the formula for calculating force." },
             { question: "Sound waves with frequencies below 20 Hz are classified as:", options: ["Ultrasonic", "Infrasonic", "Supersonic", "Audible"], correct: 1, exp: "Frequencies below 20 Hz cannot be perceived by human ears and are called infrasonic." },
@@ -437,7 +565,7 @@ const quizQuestions = {
         ca: [
             { question: "In May 2026, the DGFT of India banned the export of which commodity completely until September 30, 2026?", options: ["Wheat", "Rice", "Sugar (all categories)", "Onions"], correct: 2, exp: "A complete export ban was imposed on sugar to manage domestic supply constraints triggered by El Nino." },
             { question: "Which 15-year-old cricketer hit a record 65 sixes in the 19th edition of the IPL held in May 2026, breaking Chris Gayle's record?", options: ["Vaibhav Suryavanshi", "Angkrish Raghuvanshi", "Musheer Khan", "Tilak Varma"], correct: 0, exp: "Rajasthan Royals' Vaibhav Suryavanshi hit 65 sixes in the 2026 IPL season to break the world record." },
-            { question: "In May 2026, which nation joined the International Big Catted Alliance (IBCA) initiated by India as its 26th member?", options: ["France", "Saudi Arabia", "UAE", "South Africa"], correct: 1, exp: "Saudi Arabia officially joined the international wildlife conservation framework as the 26th member." },
+            { question: "In May 2026, which nation joined the International Big Cat Alliance (IBCA) initiated by India as its 26th member?", options: ["France", "Saudi Arabia", "UAE", "South Africa"], correct: 1, exp: "Saudi Arabia officially joined the international wildlife conservation framework as the 26th member." },
             { question: "The Supreme Court (Number of Judges) Amendment Bill 2026 proposes to increase the judge strength (excluding CJI) to:", options: ["34", "35", "37", "40"], correct: 2, exp: "The bill intends to expand the sanctioned strength from 33 to 37 judges to handle high caseloads." },
             { question: "Which country won the prestigious Thomas Cup badminton title in May 2026?", options: ["India", "Indonesia", "China", "France"], correct: 2, exp: "China clinched the 34th Thomas Cup title by defeating France in the final match in Denmark." },
             { question: "Where is the headquarters of India's newly operational 19th railway zone (South Coast Railway)?", options: ["Kolkata", "Visakhapatnam", "Bhubaneswar", "Secunderabad"], correct: 1, exp: "Visakhapatnam serves as the headquarters of the newly formed South Coast Railway Zone." },
@@ -490,81 +618,76 @@ function updateUI() {
     document.getElementById("cat-m-text").innerText = uiLabels[currentLang].math;
     document.getElementById("cat-c-text").innerText = uiLabels[currentLang].ca;
     document.getElementById("cat-e-text").innerText = uiLabels[currentLang].english;
-    document.getElementById("next-button").innerText = uiLabels[currentLang].nextBtn;
-    document.getElementById("exp-title-text").innerText = uiLabels[currentLang].expTitle;
-    document.getElementById("result-title").innerText = uiLabels[currentLang].resultTitle;
-    document.getElementById("home-btn-text").innerText = uiLabels[currentLang].homeBtn;
+    document.getElementById("next-button").innerText = uiLabels[currentLang].next;
+    document.getElementById("exp-title").innerText = uiLabels[currentLang].exp;
+    document.getElementById("res-header").innerText = uiLabels[currentLang].resHeader;
+    document.getElementById("res-status").innerText = uiLabels[currentLang].status;
+    document.getElementById("lbl-correct").innerText = uiLabels[currentLang].lblCorrect;
+    document.getElementById("lbl-wrong").innerText = uiLabels[currentLang].lblWrong;
+    document.getElementById("lbl-accuracy").innerText = uiLabels[currentLang].accuracy;
+    document.getElementById("lbl-time").innerText = uiLabels[currentLang].time;
+    document.getElementById("back-home-text").innerText = uiLabels[currentLang].mainM;
+    document.getElementById("nav-home").innerText = uiLabels[currentLang].nHome;
+    document.getElementById("nav-quiz").innerText = uiLabels[currentLang].nQuiz;
+    document.getElementById("nav-analysis").innerText = uiLabels[currentLang].nAnalysis;
+    document.getElementById("nav-leader").innerText = uiLabels[currentLang].nLeader;
+    document.getElementById("b-welcome").innerText = uiLabels[currentLang].welcome;
+    document.getElementById("b-sub").innerText = uiLabels[currentLang].sub;
+    document.getElementById("lvl-text").innerText = uiLabels[currentLang].level;
+    document.getElementById("sect-title").innerText = uiLabels[currentLang].category;
+    
     document.getElementById("lang-toggle-btn").innerText = currentLang === 'bn' ? 'English' : 'বাংলা';
     
-    // কুইজ স্ক্রিন সচল থাকলে রানিং প্রশ্ন রি-লোড করা
     if(document.getElementById("quiz-screen").classList.contains("active-screen")) {
         currentQuestions = quizQuestions[currentLang][currentCategory];
         let currentQuestion = currentQuestions[currentQuestionIndex];
         document.getElementById("question-text").innerText = currentQuestion.question;
         document.getElementById("progress-text").innerText = `${uiLabels[currentLang].progress} ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
-        
         let buttons = document.getElementById("options-box").children;
-        for(let i=0; i<buttons.length; i++) {
-            buttons[i].innerText = currentQuestion.options[i];
-        }
-        if(answered) {
-            document.getElementById("explanation-text").innerText = currentQuestion.exp;
-        }
+        for(let i=0; i<buttons.length; i++) { buttons[i].innerText = currentQuestion.options[i]; }
+        if(answered) { document.getElementById("explanation-text").innerText = currentQuestion.exp; }
     }
 }
 
-// ভাষা পরিবর্তন করার সাথে সাথে কারেন্ট ডেটাবেস সিঙ্ক করা
-function toggleLanguage() {
-    currentLang = currentLang === 'bn' ? 'en' : 'bn';
-    updateUI();
+function toggleLanguage() { currentLang = currentLang === 'bn' ? 'en' : 'bn'; updateUI(); }
+function startTimer() {
+    totalSeconds = 0; clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+        totalSeconds++;
+        let mins = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+        let secs = String(totalSeconds % 60).padStart(2, '0');
+        document.getElementById("timer-val").innerText = `${mins}:${secs}`;
+    }, 1000);
 }
 
 function startQuiz(category) {
-    currentCategory = category; 
-    currentQuestions = quizQuestions[currentLang][currentCategory];
-    currentQuestionIndex = 0; 
-    score = 0;
-    document.getElementById("category-screen").classList.remove("active-screen");
+    currentCategory = category; currentQuestions = quizQuestions[currentLang][currentCategory];
+    currentQuestionIndex = 0; score = 0; wrongAnswers = 0;
+    document.getElementById("home-screen").classList.remove("active-screen");
     document.getElementById("quiz-screen").classList.add("active-screen");
-    loadQuestion();
+    startTimer(); loadQuestion();
 }
 
 function loadQuestion() {
-    answered = false; 
-    document.getElementById("next-button").style.display = "none";
+    answered = false; document.getElementById("next-button").style.display = "none";
     document.getElementById("explanation-container").style.display = "none";
-    
-    currentQuestions = quizQuestions[currentLang][currentCategory]; // নিশ্চিত করার জন্য ল্যাঙ্গুয়েজ সিঙ্ক
+    currentQuestions = quizQuestions[currentLang][currentCategory];
     let currentQuestion = currentQuestions[currentQuestionIndex];
-    
-    document.getElementById("progress-text").innerText = `${uiLabels[currentLang].progress} ${currentQuestionIndex + 1} of ${currentQuestions.length}`;
+    document.getElementById("progress-text").innerText = `Question ${currentQuestionIndex + 1}/${currentQuestions.length}`;
     document.getElementById("question-text").innerText = currentQuestion.question;
-    
-    let optionsBox = document.getElementById("options-box"); 
-    optionsBox.innerHTML = "";
-    
+    let optionsBox = document.getElementById("options-box"); optionsBox.innerHTML = "";
     currentQuestion.options.forEach((option, index) => {
-        let button = document.createElement("button"); 
-        button.innerText = option; 
-        button.classList.add("option-btn");
-        button.onclick = () => selectOption(button, index); 
-        optionsBox.appendChild(button);
+        let button = document.createElement("button"); button.innerText = option; button.classList.add("opt-btn");
+        button.onclick = () => selectOption(button, index); optionsBox.appendChild(button);
     });
 }
 
 function selectOption(selectedBtn, optionIndex) {
-    if(answered) return; 
-    answered = true;
-    
+    if(answered) return; answered = true;
     let currentQuestion = currentQuestions[currentQuestionIndex];
     let allOptions = document.getElementById("options-box").children;
-    if(optionIndex === currentQuestion.correct) { 
-        selectedBtn.classList.add("correct"); 
-        score++; 
-    } else { 
-        selectedBtn.classList.add("wrong"); 
-        allOptions[currentQuestion.correct].classList.add("correct"); 
-    }
+    if(optionIndex === currentQuestion.correct) { selectedBtn.classList.add("correct"); score++; }
+    else { selectedBtn.classList.add("wrong"); wrongAnswers++; allOptions[currentQuestion.correct].classList.add("correct"); }
     document.getElementById("explanation-text").innerText = currentQuestion.exp;
     document.getElementById("explanation-container").style.display = "block";
     document.getElementById("next-button").style.display = "block";
@@ -572,18 +695,24 @@ function selectOption(selectedBtn, optionIndex) {
 
 function nextQuestion() {
     currentQuestionIndex++;
-    if(currentQuestionIndex < currentQuestions.length) { 
-        loadQuestion(); 
-    } else {
+    if(currentQuestionIndex < currentQuestions.length) { loadQuestion(); }
+    else {
+        clearInterval(timerInterval);
         document.getElementById("quiz-screen").classList.remove("active-screen");
         document.getElementById("result-screen").classList.add("active-screen");
-        document.getElementById("final-score-text").innerText = `Your Score: ${score} / ${currentQuestions.length}`;
+        document.getElementById("final-score-text").innerText = `${score} / ${currentQuestions.length}`;
+        document.getElementById("stat-correct").innerText = score;
+        document.getElementById("stat-wrong").innerText = wrongAnswers;
+        let accValue = Math.round((score / currentQuestions.length) * 100);
+        document.getElementById("stat-accuracy").innerText = `${accValue}%`;
+        document.getElementById("stat-time").innerText = document.getElementById("timer-val").innerText;
     }
 }
-
 function goToHome() {
     document.getElementById("result-screen").classList.remove("active-screen");
-    document.getElementById("category-screen").classList.add("active-screen");
+    document.getElementById("quiz-screen").classList.remove("active-screen");
+    document.getElementById("home-screen").classList.add("active-screen");
+    updateUI();
 }
 updateUI();
 </script>
