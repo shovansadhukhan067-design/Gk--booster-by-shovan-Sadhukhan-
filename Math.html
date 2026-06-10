@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GK Booster - Math Tricks Solver</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0b111e; color: #ffffff; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 15px; }
+        .app-container { background-color: #111827; width: 100%; max-width: 450px; min-height: 85vh; border-radius: 30px; border: 1px solid #1f2937; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); position: relative; padding-bottom: 75px; }
+        .app-header { display: flex; justify-content: space-between; align-items: center; padding: 20px; background-color: #111827; border-bottom: 1px solid #1f2937; }
+        .app-title { font-size: 20px; font-weight: 800; color: #facc15; }
+        .screen { padding: 20px; animation: fadeIn 0.3s ease; }
+        .welcome-banner { background: linear-gradient(135deg, #a855f7, #6b21a8); border-radius: 16px; padding: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .welcome-text h3 { font-size: 18px; color: #ffffff; margin-bottom: 4px; }
+        .welcome-text p { font-size: 13px; color: #e9d5ff; }
+        .search-container { background-color: #1f2937; border: 1px solid #374151; border-radius: 14px; padding: 10px 15px; display: flex; align-items: center; gap: 10px; margin-bottom: 25px; }
+        .search-container input { flex-grow: 1; background: none; border: none; color: white; font-size: 15px; outline: none; }
+        .search-container button { background: none; border: none; color: #facc15; cursor: pointer; font-size: 18px; }
+        .solution-area { display: none; background-color: rgba(168, 85, 247, 0.05); border: 1px solid #a855f7; border-radius: 16px; padding: 20px; text-align: left; }
+        .trick-badge { background-color: #facc15; color: #0b111e; font-weight: bold; font-size: 11px; padding: 4px 10px; border-radius: 20px; display: inline-block; margin-bottom: 12px; text-transform: uppercase; }
+        .formula-box { background-color: #1f2937; padding: 12px; border-radius: 10px; font-weight: bold; color: #64ffda; margin: 12px 0; text-align: center; border: 1px dashed #4b5563; font-size: 16px; }
+        .bottom-nav { position: absolute; bottom: 0; left: 0; width: 100%; height: 65px; background-color: #1f2937; border-top: 1px solid #374151; display: flex; justify-content: space-around; align-items: center; border-bottom-left-radius: 28px; border-bottom-right-radius: 28px; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; color: #9ca3af; font-size: 12px; cursor: pointer; gap: 4px; text-decoration: none; }
+        .nav-item i { font-size: 18px; }
+        .nav-active { color: #facc15; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="app-header">
+        <div class="app-title">⚡ TRICK SOLVER</div>
+        <div class="header-icons" style="color: #9ca3af;"><i class="fas fa-brain"></i></div>
+    </div>
+
+    <div class="screen">
+        <div class="welcome-banner">
+            <div class="welcome-text">
+                <h3>Math Shortcut Engine</h3>
+                <p>অংকের টাইপ বা কি-ওয়ার্ড সার্চ করুন</p>
+            </div>
+            <div style="font-size: 40px; color: #facc15;"><i class="fas fa-bolt"></i></div>
+        </div>
+
+        <div class="search-container">
+            <input type="text" id="math-search" placeholder="যেমন: দ্বিগুণ, লাভ ক্ষতি, চৌবাচ্চা, CP SP...">
+            <button onclick="solveMath()"><i class="fas fa-search"></i></button>
+        </div>
+
+        <div id="solution-box" class="solution-area">
+            <span class="trick-badge">🚀 5-Sec Booster Trick</span>
+            <h4 id="matched-q" style="margin-bottom: 10px; color: #fff; font-size: 15px; line-height: 1.4;"></h4>
+            <div class="formula-box" id="trick-formula"></div>
+            <p id="trick-exp" style="color: #cbd5e1; font-size: 14px; line-height: 1.6;"></p>
+        </div>
+    </div>
+
+    <div class="bottom-nav">
+        <a href="quiz.html" class="nav-item"><i class="fas fa-home"></i><span>Home</span></a>
+        <a href="quiz.html" class="nav-item"><i class="fas fa-book-open"></i><span>Quiz</span></a>
+        <div class="nav-item nav-active"><i class="fas fa-calculator"></i><span>Math Solver</span></div>
+    </div>
+</div>
+
+<script>
+const mathDatabase = [
+    {
+        keywords: ["দ্বিগুণ", "সরল সুদ", "সুদের হার", "double", "simple interest"],
+        question: "কোনো আসল সরল সুদে ৫ বছরে দ্বিগুণ হলে, সুদের হার কত?",
+        formula: "Rate (%) = (N - 1) × 100 / সময় (T)",
+        explanation: "এখানে কত গুণ (N) = ২, এবং সময় (T) = ৫ বছর।<br><b>Booster Method:</b><br>সুদের হার = (২ - ১) × ১০০ / ৫ = ২০%। মুখে মুখেই উত্তর শেষ!"
+    },
+    {
+        keywords: ["ক্রয়মূল্য", "বিক্রয়মূল্য", "সমান", "cost price", "selling price"],
+        question: "১৫টি বস্তুর ক্রয়মূল্য ১০টি বস্তুর বিক্রয়মূল্যের সমান হলে, লাভের হার কত?",
+        formula: "লাভ (%) = (ক্রয় সংখ্যা - বিক্রয় সংখ্যা) × 100 / বিক্রয় সংখ্যা",
+        explanation: "এখানে ক্রয় = ১৫, বিক্রয় = ১০।<br><b>Booster Method:</b><br>লাভের হার = (১৫ - ১০) × ১০০ / ১০ = ৫/১০ × ১০০ = ৫০% লাভ!"
+    },
+    {
+        keywords: ["কাজ", "দিন", "একসাথে", "work", "time", "together"],
+        question: "A একটি কাজ ১০ দিনে এবং B সেই কাজ ১৫ দিনে করতে পারে। তারা একসাথে কাজটি কত দিনে শেষ করবে?",
+        formula: "দিন = (A × B) / (A + B)",
+        explanation: "এখানে A = ১০, B = ১৫।<br><b>Booster Method:</b><br>একসাথে সময় লাগবে = (১০ × ১৫) / (১০ + ১৫) = ১৫০ / ২৫ = ৬ দিন।"
+    }
+];
+
+function solveMath() {
+    let input = document.getElementById("math-search").value.toLowerCase();
+    let solutionBox = document.getElementById("solution-box");
+    if(input.trim() === "") { alert("দয়া করে কিছু টাইপ করুন!"); return; }
+    
+    let match = mathDatabase.find(item => item.keywords.some(key => input.includes(key)));
+    
+    if(match) {
+        document.getElementById("matched-q").innerHTML = "<b>প্রশ্ন টাইপ:</b> " + match.question;
+        document.getElementById("trick-formula").innerText = match.formula;
+        document.getElementById("trick-exp").innerHTML = "<b>শর্টকাট ট্রিকস ও সমাধান:</b><br>" + match.explanation;
+        solutionBox.style.display = "block";
+    } else {
+        document.getElementById("matched-q").innerText = "দুঃখিত! এই টাইপের অংকটি এখনও ডাটাবেসে নেই।";
+        document.getElementById("trick-formula").innerText = "No Shortcut Found";
+        document.getElementById("trick-exp").innerText = "খুব শীঘ্রই এই টাইপের অংকের শর্টকাট ট্রিকস এখানে আপডেট করে দেওয়া হবে।";
+        solutionBox.style.display = "block";
+    }
+}
+</script>
+</body>
+</html>
